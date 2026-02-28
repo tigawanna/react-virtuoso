@@ -203,7 +203,7 @@ sidebar:
         {
           attrs: {
             async: true,
-            src: 'https://www.googletagmanager.com/gtag/js?id=G-FXF8T3XR4N',
+            src: 'https://www.googletagmanager.com/gtag/js?id=G-DFBQLG3NZ2',
           },
           tag: 'script',
         },
@@ -212,7 +212,7 @@ sidebar:
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-FXF8T3XR4N');
+        gtag('config', 'G-DFBQLG3NZ2');
       `,
           tag: 'script',
         },
