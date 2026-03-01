@@ -16,7 +16,6 @@
     "typescript/switch-exhaustiveness-check": "off",
     "typescript/no-unsafe-return": "off",
     "typescript/no-unsafe-member-access": "off",
-    "typescript/no-unsafe-argument": "off",
     "typescript/no-unsafe-assignment": "off",
     "typescript/no-unsafe-call": "off",
     "typescript/no-unnecessary-type-assertion": "off",
@@ -25,7 +24,6 @@
     "no-shadow-restricted-names": "off",
     "react/jsx-no-constructed-context-values": "off",
     "react/jsx-curly-brace-presence": "off",
-    "react/iframe-missing-sandbox": "off",
     "react/no-array-index-key": "off"
   },
   "overrides": [
@@ -39,6 +37,7 @@
       ],
       "rules": {
         "typescript/no-misused-spread": "off",
+        "react/iframe-missing-sandbox": "off",
         "no-console": "off",
         "no-debugger": "off"
       }

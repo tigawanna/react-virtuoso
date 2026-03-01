@@ -95,7 +95,7 @@ export const sizeRangeSystem = u.system(
             return null
           }
         ),
-        u.filter((value) => value != null) as u.Operator<null | NumberTuple, NumberTuple>,
+        u.filter((value) => value !== null) as u.Operator<null | NumberTuple, NumberTuple>,
         u.distinctUntilChanged(tupleComparator)
       ),
       [0, 0]

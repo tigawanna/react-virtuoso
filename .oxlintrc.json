@@ -69,6 +69,7 @@
     "typescript/return-await": "off",
     "typescript/strict-boolean-expressions": "off",
     "typescript/no-unsafe-type-assertion": "off",
+    "typescript/no-unsafe-argument": "off",
 
     "import/no-named-export": "off",
     "import/group-exports": "off",
@@ -85,14 +86,12 @@
     "no-duplicate-imports": "off",
     "no-await-in-loop": "off",
     "default-param-last": "off",
-    "eqeqeq": "off",
     "no-inner-declarations": "off",
     "typescript/ban-types": "off",
     "react/jsx-no-useless-fragment": "off",
     "prefer-promise-reject-errors": "off",
     "typescript/unified-signatures": "off",
-    "typescript/no-this-alias": "off",
-    "typescript/no-unsafe-argument": "off"
+    "typescript/no-this-alias": "off"
   },
   "ignorePatterns": ["node_modules/", "dist/", "test-results"]
 }

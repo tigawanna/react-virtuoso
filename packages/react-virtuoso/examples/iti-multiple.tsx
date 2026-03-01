@@ -17,7 +17,7 @@ export function App() {
               data={data}
               //initialScrollTop={200}
               initialTopMostItemIndex={5}
-              itemContent={(_, i) => <div style={{ backgroundColor: i == 0 ? 'red' : 'transparent' }}>{i}</div>}
+              itemContent={(_, i) => <div style={{ backgroundColor: i === 0 ? 'red' : 'transparent' }}>{i}</div>}
               key={i}
               style={{
                 border: '2px black solid',

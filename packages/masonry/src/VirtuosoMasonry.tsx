@@ -242,7 +242,7 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
         observer.observe(el, { box: 'border-box' })
       } else {
         const current = listRef.current[index]
-        if (current != null) {
+        if (current !== null) {
           observer.unobserve(current)
           listRef.current[index] = null
         }
