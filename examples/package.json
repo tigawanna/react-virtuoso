@@ -21,7 +21,6 @@
     "@tanstack/react-table": "^8.21.3",
     "@virtuoso.dev/reactive-engine-core": "workspace:*",
     "@virtuoso.dev/reactive-engine-react": "workspace:*",
-    "@virtuoso.dev/tooling": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-virtuoso": "workspace:*",

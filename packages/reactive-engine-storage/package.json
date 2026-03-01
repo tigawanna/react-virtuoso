@@ -43,7 +43,6 @@
     "@types/react-dom": "catalog:",
     "@virtuoso.dev/reactive-engine-core": "workspace:*",
     "@virtuoso.dev/reactive-engine-react": "workspace:*",
-    "@virtuoso.dev/tooling": "workspace:*",
     "@vitejs/plugin-react": "catalog:",
     "jsdom": "^27.4.0",
     "react": "catalog:",

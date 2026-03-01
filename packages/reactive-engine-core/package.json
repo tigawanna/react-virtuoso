@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "@virtuoso.dev/tooling": "workspace:*",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plugin-dts": "catalog:",

@@ -41,7 +41,6 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@virtuoso.dev/reactive-engine-core": "workspace:*",
-    "@virtuoso.dev/tooling": "workspace:*",
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser": "catalog:",
     "@vitest/browser-playwright": "catalog:",
