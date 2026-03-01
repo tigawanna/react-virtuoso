@@ -41,6 +41,7 @@ export function autoImports(options: Options): RemarkPlugin {
         if (!imports.includes(alias)) {
           imports.push(alias)
           const program = createProgram(toImport(exp, alias))
+          // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
           tree.children.unshift(program as unknown as RootContent)
         }
       } else {

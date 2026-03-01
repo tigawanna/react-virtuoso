@@ -142,7 +142,10 @@ export const TanstackTableExample = () => {
                         tabIndex={header.column.getCanSort() ? 0 : undefined}
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{ asc: ' 🔼', desc: ' 🔽' }[header.column.getIsSorted() as string] ?? null}
+                        {(() => {
+                          const sorted = header.column.getIsSorted()
+                          return sorted === 'asc' ? ' 🔼' : sorted === 'desc' ? ' 🔽' : null
+                        })()}
                       </div>
                     )}
                   </th>

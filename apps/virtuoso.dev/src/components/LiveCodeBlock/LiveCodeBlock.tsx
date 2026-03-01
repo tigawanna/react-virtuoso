@@ -102,6 +102,7 @@ const IframePortal: React.FC<{ children: React.ReactNode; theme: Theme }> = ({ c
     <iframe
       onLoad={(e) => {
         if (isFirefox) {
+          // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
           setIframeEl(e.target as HTMLIFrameElement)
         }
       }}
@@ -296,6 +297,7 @@ export default function LiveCodeBlock({ code, disableSandbox = false }: { code: 
       .then((result) => {
         if (result.type === 'success') {
           try {
+            // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
             const NewComp = new Function(result.code ?? '')(importMap) as React.FC
             setComp(() => NewComp)
             setUsedPackages(result.packages ?? [])

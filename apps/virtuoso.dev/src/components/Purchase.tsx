@@ -14,6 +14,7 @@ export default function Purchase(): JSX.Element {
 
   useEffect(() => {
     void initializePaddle({
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       environment: PADDLE_ENVIRONMENT as Environments,
       token: PADDLE_TOKEN,
     }).then((paddleInstance: Paddle | undefined) => {

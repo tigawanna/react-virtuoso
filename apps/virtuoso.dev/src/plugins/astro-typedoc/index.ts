@@ -50,6 +50,7 @@ const getGroupFromComment = (comment: CommentType | undefined): string | undefin
 // For function reflections (created by @function tag), the comment may be on the signature
 const getGroupFromReflection = (reflection: DeclarationReflection): string | undefined => {
   // Check direct comment first
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   const directGroup = getGroupFromComment(reflection.comment as CommentType)
   if (directGroup !== undefined) {
     return directGroup
@@ -58,6 +59,7 @@ const getGroupFromReflection = (reflection: DeclarationReflection): string | und
   // For functions, check signatures
   if (reflection.signatures && reflection.signatures.length > 0) {
     for (const sig of reflection.signatures) {
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       const sigGroup = getGroupFromComment(sig.comment as CommentType)
       if (sigGroup !== undefined) {
         return sigGroup
@@ -74,6 +76,7 @@ const onRendererPageEnd = (frontmatterObject?: FrontmatterObject) => (event: Pag
   }
 
   // Extract group from the model's comment (or from signatures for functions)
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   const group = getGroupFromReflection(event.model as DeclarationReflection)
 
   const prependix = `---
@@ -166,6 +169,7 @@ const ITEM_SORT_ORDER: Record<string, string[]> = {
 
 // Get sort priority for an item within a group (lower = first)
 const getItemSortPriority = (group: string, title: string): number => {
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   const order = ITEM_SORT_ORDER[group] as string[] | undefined
   if (!order) {
     return Infinity

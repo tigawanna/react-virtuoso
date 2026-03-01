@@ -120,6 +120,7 @@ export const VirtuosoMasonry = forwardRef<Record<string, never>, VirtuosoMasonry
       </RealmContext.Provider>
     )
   }
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion) -- generic forwardRef pattern requires cast
 ) as <Data, Context>(props: VirtuosoMasonryProps<Data, Context> & { ref?: NoInfer<React.Ref<Record<string, never>>> }) => React.ReactElement
 
 // @ts-expect-error not typing this
@@ -153,10 +154,12 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
 
       for (let i = 0; i < length; i++) {
         const entry = entries[i]
+        // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
         const element = entry.target as HTMLDivElement
 
         if (element === scrollerRef.current) {
-          const theWindow = element.ownerDocument.defaultView as Window
+          const theWindow = element.ownerDocument.defaultView!
+
           pubPayload = {
             ...pubPayload,
             [scrollHeight$]: useWindowScroll ? theWindow.document.documentElement.scrollHeight : element.scrollHeight,
@@ -281,7 +284,8 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
 
   useEffect(() => {
     if (useWindowScroll) {
-      const theWin = scrollerRef.current?.ownerDocument.defaultView as Window
+      const theWin = scrollerRef.current?.ownerDocument.defaultView!
+
       const handleWindowScroll = () => {
         realm.pubIn({
           [listOffset$]: scrollerRef.current?.getBoundingClientRect().top ?? 0,

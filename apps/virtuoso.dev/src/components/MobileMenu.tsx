@@ -34,6 +34,7 @@ export function MobileMenu({ navLinks }: MobileMenuProps) {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       if (isOpen && menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setIsOpen(false)
       }

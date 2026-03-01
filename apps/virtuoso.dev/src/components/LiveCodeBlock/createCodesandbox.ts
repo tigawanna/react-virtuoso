@@ -107,6 +107,7 @@ root.render(
       throw new Error(`HTTP error! Status: ${response.status}`)
     }
 
+    // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
     const data = (await response.json()) as CodeSandboxResponse
 
     // Construct the sandbox URL from the returned sandbox ID

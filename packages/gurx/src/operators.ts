@@ -23,6 +23,7 @@ export function map<I, R>(mapFunction: (value: I) => R) {
     const sink = r.signalInstance<R>()
     r.connect({
       map: (done) => (value) => {
+        // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
         done(mapFunction(value as I))
       },
       sink,
@@ -69,6 +70,7 @@ export function withLatestFrom<I>(...nodes: Out[]) {
       sources: [source],
     })
     return sink
+    // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   }) as Operator<I, unknown[]>
 }
 
@@ -100,6 +102,7 @@ export function filter<I, R = I>(predicate: (value: I) => boolean): Operator<I, 
     const sink = r.signalInstance<R>()
     r.connect({
       map: (done) => (value) => {
+        // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
         if (predicate(value as I)) {
           done(value)
         }
@@ -145,6 +148,7 @@ export function scan<I, R>(accumulator: (current: R, value: I) => R, seed: R): O
     const sink = r.signalInstance<R>()
     r.connect({
       map: (done) => (value) => {
+        // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
         done((seed = accumulator(seed, value as I)))
       },
       sink,

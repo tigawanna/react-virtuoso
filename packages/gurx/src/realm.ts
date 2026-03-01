@@ -151,9 +151,11 @@ export class Realm {
       this.state.set(node, value)
     }
     if (distinct !== false && !this.distinctNodes.has(node)) {
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       this.distinctNodes.set(node, distinct === true ? defaultComparator : (distinct as Comparator<unknown>))
     }
 
+    // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
     return node as NodeRef<T>
   }
 
@@ -611,6 +613,7 @@ export class Realm {
 
     for (const node of [...sources, ...pulls]) {
       this.register(node)
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       this.graph.getOrCreate(node).add(dependency as RealmProjection)
     }
 
@@ -634,6 +637,7 @@ export class Realm {
    */
   getValue<T>(node: Out<T>): T {
     this.register(node)
+    // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
     return this.state.get(node) as T
   }
   /**
@@ -760,14 +764,13 @@ export class Realm {
    */
   pubIn(values: Record<symbol, unknown>) {
     // if we have pipe nodes, we need to use their input symbols for publishing instead
-    const ids = (Reflect.ownKeys(values) as symbol[]).map((id) => {
+    const ids = Object.getOwnPropertySymbols(values).map((id) => {
       return this.pipeMap.get(id) ?? id
     })
 
-    const mappedValues = Reflect.ownKeys(values).reduce<Record<symbol, unknown>>((acc, key) => {
-      const symbolKey = key as symbol
-      const value = values[symbolKey]
-      const pipeMappedKey: symbol = this.pipeMap.get(symbolKey) ?? symbolKey
+    const mappedValues = Object.getOwnPropertySymbols(values).reduce<Record<symbol, unknown>>((acc, key) => {
+      const value = values[key]
+      const pipeMappedKey: symbol = this.pipeMap.get(key) ?? key
       acc[pipeMappedKey] = value
       return acc
     }, {})
@@ -890,8 +893,10 @@ export class Realm {
    */
   signalInstance<T>(distinct: Distinct<T> = true, node = Symbol()): NodeRef<T> {
     if (distinct !== false) {
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       this.distinctNodes.set(node, distinct === true ? defaultComparator : (distinct as Comparator<unknown>))
     }
+    // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
     return node as NodeRef<T>
   }
   /**
@@ -916,6 +921,7 @@ export class Realm {
     if (subscription === undefined) {
       this.singletonSubscriptions.delete(node)
     } else {
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       this.singletonSubscriptions.set(node, subscription as Subscription<unknown>)
     }
     return () => this.singletonSubscriptions.delete(node)
@@ -939,7 +945,9 @@ export class Realm {
   sub<T>(node: Out<T>, subscription: Subscription<T>): UnsubscribeHandle {
     this.register(node)
     const nodeSubscriptions = this.subscriptions.getOrCreate(node)
+    // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
     nodeSubscriptions.add(subscription as Subscription<unknown>)
+    // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
     return () => nodeSubscriptions.delete(subscription as Subscription<unknown>)
   }
 
@@ -1048,6 +1056,7 @@ export class Realm {
         return
       }
 
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       this.register(node as NodeRef)
 
       pendingPulls.use(node, (pulls) => {
@@ -1092,6 +1101,7 @@ export class Realm {
       for (const op of o) {
         source = op(source, this)
       }
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       return source as NodeRef
     }
   }
@@ -1136,6 +1146,7 @@ export class Realm {
  * @category Nodes
  */
 export function Cell<T>(value: T, init: (r: Realm) => void = noop, distinct: Distinct<T> = true): NodeRef<T> {
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   return tap(Symbol(), (id) => {
     nodeDefs$$.set(id, { distinct, init, initial: value, type: CELL_TYPE })
   }) as NodeRef<T>
@@ -1146,6 +1157,7 @@ export function Pipe<I, Result>(
   init: (r: Realm, input$: Out<I>, output$: Out<Result>) => void,
   distinct: Distinct<I> = true
 ): PipeRef<I, Result> {
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   return tap(Symbol(), (id) => {
     nodeDefs$$.set(id, { distinct, init, initial: value, type: PIPE_TYPE })
   }) as PipeRef<I, Result>
@@ -1170,6 +1182,7 @@ export function Pipe<I, Result>(
  * @category Nodes
  */
 export function DerivedCell<T>(value: T, linkFn: (r: Realm, cell: NodeRef<T>) => NodeRef<T>, distinct: Distinct<T> = true): NodeRef<T> {
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   return tap(Symbol(), (id) => {
     nodeDefs$$.set(id, {
       distinct,
@@ -1198,6 +1211,7 @@ export function DerivedCell<T>(value: T, linkFn: (r: Realm, cell: NodeRef<T>) =>
  * @category Nodes
  */
 export function Signal<T>(init: NodeInit<T> = noop, distinct: Distinct<T> = false): NodeRef<T> {
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   return tap(Symbol(), (id) => {
     nodeDefs$$.set(id, { distinct, init, type: 'signal' })
   }) as NodeRef<T>
@@ -1219,6 +1233,7 @@ export function Signal<T>(init: NodeInit<T> = noop, distinct: Distinct<T> = fals
  * @remarks An action is just a signal with `void` value. It can be used to trigger side effects.
  */
 export function Action(init: NodeInit<void> = noop): NodeRef<void> {
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   return tap(Symbol(), (id) => {
     nodeDefs$$.set(id, { distinct: false, init, type: 'signal' })
   }) as NodeRef<void>

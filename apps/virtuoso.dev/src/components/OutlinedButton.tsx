@@ -25,16 +25,20 @@ export default function OutlinedButton({ as = 'a', children, className = '', ...
   const combinedClassName = `${baseClassName} ${className}`
 
   if (as === 'button') {
+    // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
+    const buttonProps = props as ComponentPropsWithoutRef<'button'>
     return (
-      <button className={combinedClassName} {...(props as ComponentPropsWithoutRef<'button'>)}>
+      <button className={combinedClassName} {...buttonProps}>
         {children}
         <DashboardIcon className="size-5" />
       </button>
     )
   }
 
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
+  const anchorProps = props as ComponentPropsWithoutRef<'a'>
   return (
-    <a className={combinedClassName} {...(props as ComponentPropsWithoutRef<'a'>)}>
+    <a className={combinedClassName} {...anchorProps}>
       {children}
       <DashboardIcon className="size-5" />
     </a>

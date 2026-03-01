@@ -111,6 +111,7 @@ export function autoImports(options: AutoImportsOptions) {
       }
 
       const importNode = createProgram(importStatement)
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       tree.children.unshift(importNode as unknown as RootContent)
     }
   }

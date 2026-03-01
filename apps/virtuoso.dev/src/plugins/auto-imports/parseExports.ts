@@ -25,6 +25,7 @@ function findDefaultExport(root: Program): string | undefined {
   let name: string | undefined
   visit(root, (node) => {
     if (isExportDefaultDeclaration(node)) {
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       name = (node.declaration as { name: string }).name
       return EXIT
     }
@@ -38,9 +39,11 @@ function findDeclarators(root: Program, predicate: NameFilter, defaultExport?: s
 
   visit(root, (n, _, __, ancestors) => {
     if (isVariableDeclarator(n)) {
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       const declaration = ancestors[ancestors.length - 1] as VariableDeclaration
       const init = n.init
       if (declaration.kind === 'const' && isObjectExpression(init)) {
+        // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
         const name = (n.id as Identifier).name
         const isDefault = name === defaultExport
         if (isDefault || ancestors[ancestors.length - 2]?.type === 'ExportNamedDeclaration') {

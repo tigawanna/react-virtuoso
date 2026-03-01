@@ -8,7 +8,9 @@ export function findExportInProgram(program: Program): undefined | VariableDecla
   let found: undefined | VariableDeclarator
   esVisit(program, (n, _, __, ancestors) => {
     if (isVariableDeclarator(n)) {
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       const name = (n.id as Identifier).name
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       const declaration = ancestors[ancestors.length - 1] as VariableDeclaration
       if (name === 'components' && declaration.kind === 'const' && isObjectExpression(n.init)) {
         found = n

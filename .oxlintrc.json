@@ -58,7 +58,6 @@
     "symbol-description": "off",
 
     "typescript/restrict-template-expressions": ["error", { "allowNumber": true }],
-    "typescript/no-unsafe-type-assertion": "off",
     "typescript/ban-types": "off",
 
     "import/no-named-export": "off",
@@ -78,12 +77,6 @@
       "files": ["**/vite.config.*", "**/playwright.config.*"],
       "rules": {
         "import/no-nodejs-modules": "off"
-      }
-    },
-    {
-      "files": ["packages/react-virtuoso/**"],
-      "rules": {
-        "no-shadow": "off"
       }
     }
   ],

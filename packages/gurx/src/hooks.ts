@@ -165,7 +165,9 @@ export function usePublisher<T>(node: Inp<T>) {
  * @returns A tuple of the current value of the cell and a publisher function.
  * @category Hooks
  */
+export function useCell<T>(cell: NodeRef<T>): [T, (value: T) => void]
+export function useCell<I, O>(cell: PipeRef<I, O>): [O, (value: I) => void]
 export function useCell<O, I = O>(cell: NodeRef<O> | PipeRef<I, O>): [O, (value: I) => void] {
-  // oxlint-disable-next-line typescript-eslint(no-unsafe-argument)
-  return [useCellValue<O>(cell), usePublisher<I>(cell as any)]
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
+  return [useCellValue<O>(cell), usePublisher<I>(cell as Inp<I>)]
 }

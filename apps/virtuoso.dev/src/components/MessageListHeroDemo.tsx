@@ -82,6 +82,7 @@ export default function MessageListHeroDemo() {
           dark:bg-gray-700 dark:hover:bg-gray-600
         `}
         onClick={(e) => {
+          // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
           ;(e.target as HTMLButtonElement).disabled = true
           setData((current) => {
             const myMessage = randomMessage('me')
@@ -111,7 +112,8 @@ export default function MessageListHeroDemo() {
             let counter = 0
             const interval = setInterval(() => {
               if (counter++ > 20) {
-                clearInterval(interval as unknown as number)
+                clearInterval(interval)
+                // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
                 ;(e.target as HTMLButtonElement).disabled = false
               }
 
