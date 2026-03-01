@@ -91,8 +91,8 @@ const GridItems: React.FC = /*#__PURE__*/ React.memo(function GridItems() {
       () => (el) => {
         const scrollHeight = el.parentElement!.parentElement!.scrollHeight
         scrollHeightCallback(scrollHeight)
-        const firstItem = el.firstChild as HTMLElement
-        if (firstItem) {
+        const firstItem = el.firstChild as HTMLElement | null
+        if (firstItem !== null) {
           const { height, width } = firstItem.getBoundingClientRect()
           itemDimensions({ height, width })
         }
@@ -165,7 +165,7 @@ const Header: React.FC = React.memo(function VirtuosoHeader() {
     false
   )
   const context = useEmitterValue('context')
-  return Header ? (
+  return Header !== null && Header !== undefined ? (
     <HeaderFooterTag ref={ref}>
       <Header {...contextPropIfNotDomElement(Header, context)} />
     </HeaderFooterTag>
@@ -187,7 +187,7 @@ const Footer: React.FC = React.memo(function VirtuosoGridFooter() {
     false
   )
   const context = useEmitterValue('context')
-  return Footer ? (
+  return Footer !== null && Footer !== undefined ? (
     <HeaderFooterTag ref={ref}>
       <Footer {...contextPropIfNotDomElement(Footer, context)} />
     </HeaderFooterTag>
@@ -315,7 +315,7 @@ const Scroller = /*#__PURE__*/ buildScroller({ useEmitter, useEmitterValue, useP
 const WindowScroller = /*#__PURE__*/ buildWindowScroller({ useEmitter, useEmitterValue, usePublisher })
 
 function resolveGapValue(property: string, value: string | undefined, log: Log) {
-  if (value !== 'normal' && !value?.endsWith('px')) {
+  if (value !== 'normal' && value?.endsWith('px') !== true) {
     log(`${property} was not resolved to pixel value correctly`, value, LogLevel.WARN)
   }
   if (value === 'normal') {

@@ -91,14 +91,14 @@ export const EngineProvider: React.FC<EngineProviderProps> = ({
     const instance = new Engine(initWith, id)
     setEngine(instance)
     initFn?.(instance)
-    if (id) {
+    if (id !== undefined) {
       setRegistryEngine(id, instance)
     }
     if (engineRef) {
       getRefInternal(engineRef).set(instance)
     }
     return () => {
-      if (id) {
+      if (id !== undefined) {
         setRegistryEngine(id, null)
       }
       if (engineRef) {

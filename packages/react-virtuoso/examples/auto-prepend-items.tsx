@@ -30,7 +30,7 @@ const generateUsers = (length: number, startIndex = 0) => {
 }
 
 const getUser = (index: number) => {
-  if (!generated[index]) {
+  if (generated[index] === undefined) {
     generated[index] = user(index)
   }
 

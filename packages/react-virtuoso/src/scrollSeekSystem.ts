@@ -13,7 +13,7 @@ export const scrollSeekSystem = u.system(
       u.pipe(
         scrollVelocity,
         u.withLatestFrom(scrollSeekConfiguration, isSeeking, rangeChanged),
-        u.filter(([_, config]) => !!config),
+        u.filter(([_, config]) => config !== false && config !== undefined),
         u.map(([speed, config, isSeeking, range]) => {
           const { enter, exit } = config as ScrollSeekConfiguration
           if (isSeeking) {
@@ -35,7 +35,7 @@ export const scrollSeekSystem = u.system(
     u.subscribe(
       u.pipe(u.combineLatest(isSeeking, scrollVelocity, rangeChanged), u.withLatestFrom(scrollSeekConfiguration)),
       ([[isSeeking, velocity, range], config]) => {
-        if (isSeeking && config && config.change) {
+        if (isSeeking && config !== false && config !== undefined && config.change) {
           config.change(velocity, range)
         }
       }

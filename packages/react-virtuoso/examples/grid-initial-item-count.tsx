@@ -19,7 +19,7 @@ const itemContent = (index: number, data: string | undefined) => {
   return (
     <div style={{ backgroundColor: 'red', border: '1px solid black', height: 200 }}>
       Item {index} -{' '}
-      {data ? (
+      {data !== undefined && data !== '' ? (
         <div>
           <Link to={`/item/${index}`}>See details</Link>
           {data}
@@ -40,7 +40,7 @@ const persistState = debounce((snapshot: GridStateSnapshot) => {
 function loadPersistedState() {
   let snapshot: GridStateSnapshot | null = null
   const savedState = localStorage.getItem(LOCAL_STORAGE_KEY)
-  if (savedState) {
+  if (savedState !== null && savedState !== '') {
     snapshot = JSON.parse(savedState) as GridStateSnapshot
   }
   return snapshot

@@ -66,10 +66,10 @@ function buildProbeGridState<D = unknown>(items: GridItem<D>[]): GridState {
 }
 
 function dimensionComparator(prev: ElementDimensions, next: ElementDimensions) {
-  return prev && prev.width === next.width && prev.height === next.height
+  return prev.width === next.width && prev.height === next.height
 }
 function gapComparator(prev: Gap, next: Gap) {
-  return prev && prev.column === next.column && prev.row === next.row
+  return prev.column === next.column && prev.row === next.row
 }
 
 export const gridSystem = /*#__PURE__*/ u.system(
@@ -104,7 +104,7 @@ export const gridSystem = /*#__PURE__*/ u.system(
       u.pipe(
         didMount,
         u.withLatestFrom(initialTopMostItemIndex),
-        u.filter(([_, location]) => !!location)
+        u.filter(([_, location]) => location !== 0)
       ),
       () => {
         u.publish(scrolledToInitialItem, false)
@@ -180,7 +180,7 @@ export const gridSystem = /*#__PURE__*/ u.system(
         u.combineLatest(
           u.duc(viewportDimensions, dimensionComparator),
           u.duc(itemDimensions, dimensionComparator),
-          u.duc(gap, (prev, next) => prev && prev.column === next.column && prev.row === next.row),
+          u.duc(gap, (prev, next) => prev.column === next.column && prev.row === next.row),
           u.duc(scrollTop)
         ),
         u.map(([viewport, item, gap, scrollTop]) => ({
@@ -320,7 +320,7 @@ export const gridSystem = /*#__PURE__*/ u.system(
           const isLastItemRendered = lastIndex === totalCount - 1
 
           // User has scrolled
-          if (hasScrolled) return isLastItemRendered
+          if (hasScrolled) {return isLastItemRendered}
 
           // User has not scrolled, so check whether grid is fully rendered
           const isFullyRendered =
@@ -387,7 +387,7 @@ export const gridSystem = /*#__PURE__*/ u.system(
             top = round(top - viewportDimensions.height / 2 + itemDimensions.height / 2)
           }
 
-          if (offset) {
+          if (offset !== undefined && offset !== 0) {
             top += offset
           }
 

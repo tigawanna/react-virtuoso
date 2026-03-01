@@ -18,18 +18,17 @@
         "caughtErrorsIgnorePattern": "^_"
       }
     ],
-    "typescript/restrict-template-expressions": ["error", { "allowNumber": true }],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-boolean-value": "off",
     "react/jsx-max-depth": "off",
     "react/self-closing-comp": "off",
+    "react/jsx-no-useless-fragment": "off",
 
     "arrow-body-style": "off",
     "capitalized-comments": "off",
     "consistent-type-imports": "off",
-    "curly": "off",
     "func-names": "off",
     "func-style": "off",
     "id-length": "off",
@@ -62,7 +61,7 @@
     "sort-keys": "off",
     "symbol-description": "off",
 
-    "typescript/strict-boolean-expressions": "off",
+    "typescript/restrict-template-expressions": ["error", { "allowNumber": true }],
     "typescript/no-unsafe-type-assertion": "off",
     "typescript/no-unsafe-argument": "off",
     "typescript/ban-types": "off",
@@ -80,7 +79,6 @@
     "no-await-in-loop": "off",
     "default-param-last": "off",
     "no-inner-declarations": "off",
-    "react/jsx-no-useless-fragment": "off",
     "prefer-promise-reject-errors": "off"
   },
   "overrides": [

@@ -170,7 +170,7 @@ function transposeItems(items: Item<any>[], sizes: SizeState, firstItemIndex: nu
 }
 
 function getMinOverscanItemCount(value: MinOverscanItemCount | undefined, end: typeof TOP | typeof BOTTOM) {
-  if (value === undefined) return 0
+  if (value === undefined) {return 0}
   return typeof value === 'number' ? value : (value[end] ?? 0)
 }
 
@@ -211,7 +211,7 @@ export const listStateSystem = u.system(
         u.filter(([mount, recalcInProgress, , totalCount, , , , , , , , data]) => {
           // When data length changes, it is synced to totalCount, both of which trigger a recalc separately.
           // Recalc should be skipped then, as the calculation expects both data and totalCount to be in sync.
-          const dataChangeInProgress = data && data.length !== totalCount
+          const dataChangeInProgress = data !== undefined && data.length !== totalCount
           return mount && !recalcInProgress && !dataChangeInProgress
         }),
         u.map(

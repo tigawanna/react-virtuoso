@@ -344,10 +344,12 @@ function useRemoteEngine(source: EngineSource): Engine | null {
   const engineId = isRef ? null : source
   const engineRef = isRef ? source : null
 
-  const [engineFromRegistry, setEngineFromRegistry] = React.useState<Engine | null>(() => (engineId ? getRegistryEngine(engineId) : null))
+  const [engineFromRegistry, setEngineFromRegistry] = React.useState<Engine | null>(() =>
+    engineId !== null ? getRegistryEngine(engineId) : null
+  )
 
   useIsomorphicLayoutEffect(() => {
-    if (!engineId) {
+    if (engineId === null) {
       setEngineFromRegistry(null)
       return
     }

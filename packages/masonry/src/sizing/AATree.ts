@@ -38,7 +38,7 @@ export function newTree(): AANode {
 }
 
 export function remove(node: AANode, key: number): AANode {
-  if (empty(node)) return NIL_NODE
+  if (empty(node)) {return NIL_NODE}
 
   const { k, l, r } = node
 

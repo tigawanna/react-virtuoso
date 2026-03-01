@@ -17,7 +17,7 @@ export class Exports {
   }
 
   async find(name: null | string): Promise<Export | null> {
-    if (!name) return null
+    if (name === null) {return null}
 
     let exports = this.exports[this.file]
     if (!exports) {

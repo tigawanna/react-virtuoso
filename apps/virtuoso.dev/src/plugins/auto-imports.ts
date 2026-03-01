@@ -48,7 +48,12 @@ function findUsedComponents(tree: Root): Set<string> {
   const used = new Set<string>()
 
   visit(tree, (node) => {
-    if ((node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') && node.name && /^[A-Z]/.test(node.name)) {
+    if (
+      (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') &&
+      node.name !== undefined &&
+      node.name !== null &&
+      /^[A-Z]/.test(node.name)
+    ) {
       used.add(node.name)
     }
   })
@@ -67,7 +72,7 @@ export function autoImports(options: AutoImportsOptions) {
     const needed: { config: ComponentImport; name: string }[] = []
     for (const component of usedComponents) {
       const importConfig = imports[component]
-      if (!existingImports.has(component) && importConfig) {
+      if (!existingImports.has(component) && importConfig !== undefined) {
         needed.push({ config: importConfig, name: component })
       }
     }

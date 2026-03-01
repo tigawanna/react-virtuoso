@@ -132,7 +132,7 @@ export const stateFlagsSystem = u.system(([{ footerHeight, headerHeight, scrollB
         } as AtBottomState
       }, INITIAL_BOTTOM_STATE),
       u.distinctUntilChanged((prev, next) => {
-        return prev && prev.atBottom === next.atBottom
+        return prev.atBottom === next.atBottom
       })
     )
   )

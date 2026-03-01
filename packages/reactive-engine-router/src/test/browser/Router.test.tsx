@@ -339,7 +339,7 @@ describe('Router', () => {
       <div>
         <div>Query: {query}</div>
         <div>Filter: {$search.filter}</div>
-        {$search.sort && <div>Sort: {$search.sort}</div>}
+        {$search.sort !== undefined && <div>Sort: {$search.sort}</div>}
       </div>
     ))
 

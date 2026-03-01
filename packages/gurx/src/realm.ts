@@ -792,7 +792,7 @@ export class Realm {
       let resolved = false
       const done = (value: unknown) => {
         const dnRef = this.distinctNodes.get(id)
-        if (dnRef?.(transientState.get(id), value)) {
+        if (dnRef?.(transientState.get(id), value) === true) {
           resolved = false
           return
         }

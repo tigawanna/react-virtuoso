@@ -21,7 +21,7 @@ export default function useChangedListContentsSizes(
       const ranges = getChangedChildSizes(el.children, itemSize, horizontalDirection ? 'offsetWidth' : 'offsetHeight', log)
       let scrollableElement = el.parentElement!
 
-      while (!scrollableElement.dataset.virtuosoScroller) {
+      while (scrollableElement.dataset.virtuosoScroller === undefined) {
         scrollableElement = scrollableElement.parentElement!
       }
 
@@ -129,7 +129,7 @@ function getChangedChildSizes(children: HTMLCollection, itemSize: SizeFunction, 
 }
 
 function resolveGapValue(property: string, value: string | undefined, log: Log) {
-  if (value !== 'normal' && !value?.endsWith('px')) {
+  if (value !== 'normal' && value?.endsWith('px') !== true) {
     log(`${property} was not resolved to pixel value correctly`, value, LogLevel.WARN)
   }
   if (value === 'normal') {

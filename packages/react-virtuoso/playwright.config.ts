@@ -6,7 +6,7 @@ const config: PlaywrightTestConfig = {
     command: 'npm run ladle',
     port: 61000,
     timeout: 120 * 1000,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: process.env.CI === undefined || process.env.CI === '',
   },
 
   use: {

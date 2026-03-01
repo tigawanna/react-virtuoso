@@ -26,7 +26,7 @@ export function user(index = 0) {
 }
 
 export const getUser = (index: number) => {
-  if (!generated[index]) {
+  if (generated[index] === undefined) {
     generated[index] = user(index)
   }
 

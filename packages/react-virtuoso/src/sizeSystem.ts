@@ -210,7 +210,7 @@ export function sizeStateReducer(state: SizeState, [ranges, groupIndices, log, g
 export function sizeTreeToRanges(sizeTree: AANode<number>): SizeRange[] {
   return walk(sizeTree).map(({ k: startIndex, v: size }, index, sizeArray) => {
     const nextSize = sizeArray[index + 1]
-    const endIndex = nextSize ? nextSize.k - 1 : Infinity
+    const endIndex = nextSize !== undefined ? nextSize.k - 1 : Infinity
 
     return { endIndex, size, startIndex }
   })
@@ -393,7 +393,7 @@ export const sizeSystem = u.system(
 
           // send the fake probe sizes only if we have group counts - otherwise, leave the tree empty.
           // this is necessary for the tree to be built correctly
-          if (groupSize) {
+          if (groupSize !== undefined && groupSize !== 0) {
             if (hasGroups) {
               return [
                 { endIndex: 0, size: groupSize, startIndex: 0 },

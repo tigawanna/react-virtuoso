@@ -50,7 +50,7 @@ export function RouterEngine(eng: Engine, routes: RouteRef[], layouts?: symbol[]
       // Find matching route and publish to it
       for (const route$ of routes) {
         const routeDef = routeDefinitions$$.get(route$ as symbol)
-        if (routeDef) {
+        if (routeDef !== undefined) {
           const parsed = parseUrl(url, routeDef)
           if (parsed !== null) {
             // Found a match! Publish to this route
@@ -95,17 +95,17 @@ function createRouteSubscription({
     const nullPayload = Object.fromEntries(restRoutes.map((r) => [r, null]))
     if (params !== null) {
       const routeDef = routeDefinitions$$.get(route$ as symbol)
-      if (routeDef) {
+      if (routeDef !== undefined) {
         const interpolated = interpolateRoute(routeDef, params)
 
         // STEP 1: Execute guards for this route before rendering
         const matchedGuards = guards
           .map((guardSymbol) => {
             const def = guardDefinitions$$.get(guardSymbol)
-            if (!def) return null
+            if (!def) {return null}
 
             const parsed = matchGuardPattern(interpolated, def.pattern)
-            if (parsed === null) return null
+            if (parsed === null) {return null}
 
             return { def, parsed }
           })
@@ -193,7 +193,7 @@ function createRouteSubscription({
 
           const awaitedResult = result instanceof Promise ? await result : result
 
-          if (!awaitedResult) continue
+          if (!awaitedResult) {continue}
 
           if ('type' in awaitedResult) {
             if (awaitedResult.type === REDIRECT_RESULT) {
@@ -207,7 +207,7 @@ function createRouteSubscription({
               // Find and activate the route that matches the new URL
               for (const r$ of routes) {
                 const rDef = routeDefinitions$$.get(r$ as symbol)
-                if (rDef) {
+                if (rDef !== undefined) {
                   const rParsed = parseUrl(targetUrl, rDef)
                   if (rParsed !== null) {
                     eng.pub(r$, rParsed)

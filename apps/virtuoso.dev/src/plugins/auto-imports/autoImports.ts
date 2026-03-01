@@ -18,7 +18,7 @@ export function autoImports(options: Options): RemarkPlugin {
   return async (tree: Root, file: VFile) => {
     const dir = file.dirname
 
-    if (!dir) {
+    if (dir === undefined) {
       return
     }
 

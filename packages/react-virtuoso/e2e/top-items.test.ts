@@ -28,7 +28,7 @@ test.describe('jagged list with 2 top items', () => {
   test('renders correct amount of items', async ({ page }) => {
     const childElementCount = await page.evaluate(() => {
       const listContainer = document.querySelector('[data-testid=virtuoso-item-list]')
-      return listContainer?.childElementCount || 0
+      return listContainer?.childElementCount ?? 0
     })
     expect(childElementCount).toBe(9)
   })

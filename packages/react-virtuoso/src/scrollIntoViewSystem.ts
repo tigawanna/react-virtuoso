@@ -54,7 +54,7 @@ export const scrollIntoViewSystem = u.system(
             viewportTop,
           })
 
-          if (location) {
+          if (location !== null) {
             done &&
               u.handleNext(
                 u.pipe(

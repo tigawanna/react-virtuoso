@@ -167,7 +167,7 @@ export function systemToComponent<SS extends AnySystemSpec, M extends SystemProp
   type CompMethods = MethodsFromPropMap<SS, M>
 
   function applyPropsToSystem(system: ContextValue, props: any) {
-    if (system.propsReady) {
+    if (system.propsReady !== undefined) {
       u.publish(system.propsReady, false)
     }
 
@@ -183,7 +183,7 @@ export function systemToComponent<SS extends AnySystemSpec, M extends SystemProp
       }
     }
 
-    if (system.propsReady) {
+    if (system.propsReady !== undefined) {
       u.publish(system.propsReady, true)
     }
   }
@@ -240,7 +240,7 @@ export function systemToComponent<SS extends AnySystemSpec, M extends SystemProp
     const RootComponent = Root as React.ComponentType<any>
     return (
       <Context.Provider value={system}>
-        {Root ? (
+        {Root !== undefined ? (
           <RootComponent {...omit([...requiredPropNames, ...optionalPropNames, ...eventNames], props)}>{children}</RootComponent>
         ) : (
           children

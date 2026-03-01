@@ -115,7 +115,7 @@ const Items = /*#__PURE__*/ React.memo(function VirtuosoItems({ showTopList = fa
   const itemContent = useEmitterValue('itemContent')
   const groupContent = useEmitterValue('groupContent')
 
-  const ScrollSeekPlaceholder = useEmitterValue('ScrollSeekPlaceholder') || DefaultScrollSeekPlaceholder
+  const ScrollSeekPlaceholder = useEmitterValue('ScrollSeekPlaceholder') ?? DefaultScrollSeekPlaceholder
   const GroupComponent = useEmitterValue('GroupComponent')!
   const TableRowComponent = useEmitterValue('TableRowComponent')!
 
@@ -216,13 +216,13 @@ const TableBody = /*#__PURE__*/ React.memo(function TableVirtuosoBody() {
     }
   })
   const EmptyPlaceholder = useEmitterValue('EmptyPlaceholder')
-  const FillerRow = useEmitterValue('FillerRow') || DefaultFillerRow
+  const FillerRow = useEmitterValue('FillerRow') ?? DefaultFillerRow
   const TableBodyComponent = useEmitterValue('TableBodyComponent')!
   const paddingTopAddition = useEmitterValue('paddingTopAddition')
   const statefulTotalCount = useEmitterValue('statefulTotalCount')
   const context = useEmitterValue('context')
 
-  if (statefulTotalCount === 0 && EmptyPlaceholder) {
+  if (statefulTotalCount === 0 && EmptyPlaceholder !== null && EmptyPlaceholder !== undefined) {
     return <EmptyPlaceholder {...contextPropIfNotDomElement(EmptyPlaceholder, context)} />
   }
 

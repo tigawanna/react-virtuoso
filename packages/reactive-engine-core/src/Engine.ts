@@ -215,7 +215,7 @@ export class Engine {
 
     // Dispose resources - check Symbol.dispose first, then fall back to dispose()
     for (const resource of this.resources.values()) {
-      if (resource && typeof resource === 'object') {
+      if (resource !== null && typeof resource === 'object') {
         if (Symbol.dispose in resource) {
           ;(resource as { [Symbol.dispose]: () => void })[Symbol.dispose]()
         } else if ('dispose' in resource && typeof (resource as { dispose?: unknown }).dispose === 'function') {
@@ -247,7 +247,7 @@ export class Engine {
    * @typeParam T - The type of values that the node emits.
    */
   getValue<T>(node: Out<T>): T {
-    if (this.parentEngine?.hasOwnOrParentHasRef(node)) {
+    if (this.parentEngine?.hasOwnOrParentHasRef(node) === true) {
       return this.parentEngine.getValue(node)
     }
     this.register(node)
@@ -388,7 +388,7 @@ export class Engine {
       let resolved = false
       const done = (value: unknown) => {
         const dnRef = this.distinctNodes.get(id)
-        if (transientState.has(id) && dnRef?.(transientState.get(id), value)) {
+        if (transientState.has(id) && dnRef?.(transientState.get(id), value) === true) {
           resolved = false
           return
         }
@@ -419,7 +419,7 @@ export class Engine {
         const value = transientState.get(id)
 
         const debugLabel = nodeDebugLabels$$.get(id)
-        if (debugLabel) {
+        if (debugLabel !== undefined) {
           const displayValue = value === undefined ? '[triggered]' : value
           // oxlint-disable-next-line no-console
           console.log(`[reactive-engine] ${debugLabel}:`, displayValue)
@@ -451,7 +451,7 @@ export class Engine {
    */
   register(node$: NodeRef) {
     // Check if already registered in this engine or parent
-    if (this.definitionRegistry.has(node$) || this.parentEngine?.hasOwnOrParentHasRef(node$)) {
+    if (this.definitionRegistry.has(node$) || this.parentEngine?.hasOwnOrParentHasRef(node$) === true) {
       return node$
     }
 
@@ -504,7 +504,7 @@ export class Engine {
    * @typeParam T - The type of values that the node will emit.
    */
   singletonSub<T>(node: Out<T>, subscription: Subscription<T> | undefined): UnsubscribeHandle {
-    if (this.parentEngine?.hasOwnOrParentHasRef(node)) {
+    if (this.parentEngine?.hasOwnOrParentHasRef(node) === true) {
       // Delegate to parent's singletonSub
       return this.parentEngine.singletonSub(node, subscription)
     }
@@ -536,7 +536,7 @@ export class Engine {
    * @typeParam T - The type of values that the node will emit.
    */
   sub<T>(node: Out<T>, subscription: Subscription<T>): UnsubscribeHandle {
-    if (this.parentEngine?.hasOwnOrParentHasRef(node)) {
+    if (this.parentEngine?.hasOwnOrParentHasRef(node) === true) {
       // Delegate to parent's sub
       return this.parentEngine.sub(node, subscription)
     }
@@ -630,7 +630,7 @@ export class Engine {
     let key: symbol | symbol[] = nodes
     if (nodes.length === 1) {
       const singleNode = nodes[0]
-      invariant(singleNode, 'Single node array should have one element')
+      invariant(singleNode !== undefined, 'Single node array should have one element')
       key = singleNode
       const existingMap = this.executionMaps.get(key)
       if (existingMap !== undefined) {

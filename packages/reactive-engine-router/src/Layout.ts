@@ -26,7 +26,7 @@ export function findMatchingLayouts(currentPath: string, layouts?: symbol[]): Re
       return { layoutComponent, layoutPath, layoutSymbol }
     })
     .filter(({ layoutComponent, layoutPath }) => {
-      if (!layoutPath || !layoutComponent) return false
+      if (layoutPath === undefined || !layoutComponent) {return false}
       // Use shared prefix matching logic
       return matchesPathPrefix(pathOnly, layoutPath)
     })

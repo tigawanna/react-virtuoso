@@ -110,7 +110,7 @@ const Items = /*#__PURE__*/ React.memo(function VirtuosoItems({ showTopList = fa
   })
 
   const EmptyPlaceholder = useEmitterValue('EmptyPlaceholder')
-  const ScrollSeekPlaceholder = useEmitterValue('ScrollSeekPlaceholder') || DefaultScrollSeekPlaceholder
+  const ScrollSeekPlaceholder = useEmitterValue('ScrollSeekPlaceholder') ?? DefaultScrollSeekPlaceholder
   const ListComponent = useEmitterValue('ListComponent')!
   const ItemComponent = useEmitterValue('ItemComponent')!
   const GroupComponent = useEmitterValue('GroupComponent')!
@@ -141,7 +141,7 @@ const Items = /*#__PURE__*/ React.memo(function VirtuosoItems({ showTopList = fa
         ...(initialItemFinalLocationReached ? {} : { visibility: 'hidden' }),
       }
 
-  if (!showTopList && listState.totalCount === 0 && EmptyPlaceholder) {
+  if (!showTopList && listState.totalCount === 0 && EmptyPlaceholder !== null && EmptyPlaceholder !== undefined) {
     return <EmptyPlaceholder {...contextPropIfNotDomElement(EmptyPlaceholder, context)} />
   }
 
@@ -261,7 +261,7 @@ const Header: React.FC = /*#__PURE__*/ React.memo(function VirtuosoHeader() {
     useEmitterValue('skipAnimationFrameInResizeObserver')
   )
   const context = useEmitterValue('context')
-  return Header ? (
+  return Header !== null && Header !== undefined ? (
     <HeaderFooterTag ref={ref}>
       <Header {...contextPropIfNotDomElement(Header, context)} />
     </HeaderFooterTag>
@@ -283,7 +283,7 @@ const Footer: React.FC = /*#__PURE__*/ React.memo(function VirtuosoFooter() {
     useEmitterValue('skipAnimationFrameInResizeObserver')
   )
   const context = useEmitterValue('context')
-  return Footer ? (
+  return Footer !== null && Footer !== undefined ? (
     <HeaderFooterTag ref={ref}>
       <Footer {...contextPropIfNotDomElement(Footer, context)} />
     </HeaderFooterTag>
@@ -429,7 +429,7 @@ const WindowViewport: React.FC<React.PropsWithChildren> = ({ children }) => {
 }
 
 const TopItemListContainer: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const TopItemList = useEmitterValue('TopItemListComponent') || 'div'
+  const TopItemList = useEmitterValue('TopItemListComponent') ?? 'div'
   const headerHeight = useEmitterValue('headerHeight')
   const style = { ...topItemListStyle, marginTop: `${headerHeight}px` }
   const context = useEmitterValue('context')

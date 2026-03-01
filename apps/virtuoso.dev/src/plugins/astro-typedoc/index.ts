@@ -34,7 +34,7 @@ interface CommentType {
 
 // Extract @group tag from a comment
 const getGroupFromComment = (comment: CommentType | undefined): string | undefined => {
-  if (!comment?.blockTags) return undefined
+  if (!comment?.blockTags) {return undefined}
 
   const groupTag = comment.blockTags.find((tag) => tag.tag === '@group')
   if (groupTag && groupTag.content.length > 0) {
@@ -48,13 +48,13 @@ const getGroupFromComment = (comment: CommentType | undefined): string | undefin
 const getGroupFromReflection = (reflection: DeclarationReflection): string | undefined => {
   // Check direct comment first
   const directGroup = getGroupFromComment(reflection.comment as CommentType)
-  if (directGroup) return directGroup
+  if (directGroup !== undefined) {return directGroup}
 
   // For functions, check signatures
   if (reflection.signatures && reflection.signatures.length > 0) {
     for (const sig of reflection.signatures) {
       const sigGroup = getGroupFromComment(sig.comment as CommentType)
-      if (sigGroup) return sigGroup
+      if (sigGroup !== undefined) {return sigGroup}
     }
   }
 
@@ -62,7 +62,7 @@ const getGroupFromReflection = (reflection: DeclarationReflection): string | und
 }
 
 const onRendererPageEnd = (frontmatterObject?: FrontmatterObject) => (event: PageEvent) => {
-  if (!event.contents) {
+  if (event.contents === undefined) {
     return
   }
 
@@ -71,7 +71,7 @@ const onRendererPageEnd = (frontmatterObject?: FrontmatterObject) => (event: Pag
 
   const prependix = `---
 title: '${event.model.name}'
-${group ? `group: '${group}'` : ''}
+${group !== undefined ? `group: '${group}'` : ''}
 ${objectToFrontmatter(frontmatterObject)}
 ---
 
@@ -281,7 +281,7 @@ const fixCrossLinks = (content: string, fileToGroupMap: Map<string, string>): st
     // Look up the group for this file
     const group = fileToGroupMap.get(baseFilename)
 
-    if (group) {
+    if (group !== undefined) {
       // Use just the kebab-case group name without order prefix
       // Starlight strips numeric prefixes from URLs
       const groupFilename = toKebabCase(group)
@@ -353,7 +353,7 @@ const mergeFilesByGroup = async (dir: string): Promise<void> => {
     groupFiles.sort((a, b) => {
       const priorityA = getItemSortPriority(group, a.title)
       const priorityB = getItemSortPriority(group, b.title)
-      if (priorityA !== priorityB) return priorityA - priorityB
+      if (priorityA !== priorityB) {return priorityA - priorityB}
       return a.title.localeCompare(b.title)
     })
 
@@ -481,7 +481,7 @@ export const initAstroTypedoc = async ({
 
       try {
         const watcher = watch(dir, { recursive: true }, (_eventType, filename) => {
-          if (filename?.endsWith('.ts')) {
+          if (filename?.endsWith('.ts') === true) {
             console.log(`[TypeDoc] File changed: ${filename}`)
             regenerateDocs()
           }

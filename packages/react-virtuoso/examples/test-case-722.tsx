@@ -66,7 +66,7 @@ export function Example() {
 
   const prepend = () => {
     setTimeout(() => {
-      if (loadedCount < TOTAL_COUNT) setLoadedCount(loadedCount + PAGE_COUNT > TOTAL_COUNT ? TOTAL_COUNT : loadedCount + PAGE_COUNT)
+      if (loadedCount < TOTAL_COUNT) {setLoadedCount(loadedCount + PAGE_COUNT > TOTAL_COUNT ? TOTAL_COUNT : loadedCount + PAGE_COUNT)}
     }, 250)
   }
 

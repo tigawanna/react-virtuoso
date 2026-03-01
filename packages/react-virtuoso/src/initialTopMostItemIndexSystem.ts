@@ -24,7 +24,7 @@ export const initialTopMostItemIndexSystem = u.system(
       u.pipe(
         didMount,
         u.withLatestFrom(initialTopMostItemIndex),
-        u.filter(([_, location]) => !!location),
+        u.filter(([_, location]) => location !== 0),
         u.mapTo(false)
       ),
       scrolledToInitialItem
@@ -33,7 +33,7 @@ export const initialTopMostItemIndexSystem = u.system(
       u.pipe(
         didMount,
         u.withLatestFrom(initialTopMostItemIndex),
-        u.filter(([_, location]) => !!location),
+        u.filter(([_, location]) => location !== 0),
         u.mapTo(false)
       ),
       initialItemFinalLocationReached

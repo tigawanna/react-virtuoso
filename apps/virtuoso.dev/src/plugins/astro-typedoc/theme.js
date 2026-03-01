@@ -24,8 +24,8 @@ class CustomMarkdownThemeContext extends MarkdownThemeContext {
         if (model.kind === ReflectionKind.Property) {
           const typeStr = model.type?.toString()
           // Skip function-like properties - they need the full signature
-          if (typeStr && !typeStr.includes('=>') && !typeStr.includes('(')) {
-            const type = model.type ? this.partials.someType(model.type) : 'unknown'
+          if (typeof typeStr === 'string' && !typeStr.includes('=>') && !typeStr.includes('(')) {
+            const type = model.type !== null && model.type !== undefined ? this.partials.someType(model.type) : 'unknown'
             return `${type}\n\n`
           }
         }

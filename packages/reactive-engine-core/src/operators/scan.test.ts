@@ -99,7 +99,7 @@ describe('scan operator', () => {
     const scanned = e.pipe(
       source,
       e.scan((acc: number, val: number) => {
-        if (val === 999) throw testErrors.simple
+        if (val === 999) {throw testErrors.simple}
         return acc + val
       }, 0)
     )

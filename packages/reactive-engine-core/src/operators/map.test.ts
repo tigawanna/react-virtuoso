@@ -51,7 +51,7 @@ describe('map operator', () => {
     const mapped = e.pipe(
       source,
       e.map((x: number) => {
-        if (x < 0) throw testErrors.simple
+        if (x < 0) {throw testErrors.simple}
         return x * 2
       })
     )
@@ -75,7 +75,7 @@ describe('map operator', () => {
     const mapped = e.pipe(
       source,
       e.map((x: number) => {
-        if (x === 999) throw testErrors.simple
+        if (x === 999) {throw testErrors.simple}
         return x
       })
     )
