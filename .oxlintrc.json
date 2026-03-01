@@ -40,7 +40,7 @@
     "new-cap": "off",
     "no-continue": "off",
     "no-else-return": "off",
-    "no-implicit-coercion": "off",
+    "no-implicit-coercion": "error",
     "no-inline-comments": "off",
     "no-lonely-if": "off",
     "no-magic-numbers": "off",
