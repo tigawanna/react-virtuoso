@@ -5,7 +5,6 @@ import { Virtuoso } from '../src'
 import type { IndexLocationWithAlign } from '../src'
 import type { IndexLocation } from '../src/scrollToIndexSystem'
 
-// @ts-expect-error I know, I know, I know
 globalThis.VIRTUOSO_LOG_LEVEL = 0
 
 const itemContent = (index: number) => <div style={{ background: 'white', height: index % 2 ? 30 : 20 }}>Item {index}</div>

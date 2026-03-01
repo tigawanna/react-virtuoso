@@ -1,13 +1,7 @@
 import * as u from './urx'
 
-declare namespace globalThis {
-  // oxlint-disable-next-line no-unused-vars
-  let VIRTUOSO_LOG_LEVEL: LogLevel | undefined
-}
-
-declare namespace window {
-  // oxlint-disable-next-line no-unused-vars
-  let VIRTUOSO_LOG_LEVEL: LogLevel | undefined
+declare global {
+  var VIRTUOSO_LOG_LEVEL: LogLevel | undefined
 }
 
 /**
