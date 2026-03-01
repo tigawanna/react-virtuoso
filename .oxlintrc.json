@@ -62,7 +62,7 @@
     "sort-keys": "off",
     "symbol-description": "off",
 
-    "typescript/parameter-properties": "off",
+    "typescript/parameter-properties": "error",
     "typescript/return-await": "off",
     "typescript/strict-boolean-expressions": "off",
     "typescript/no-unsafe-type-assertion": "off",

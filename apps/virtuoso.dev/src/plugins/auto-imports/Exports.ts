@@ -8,11 +8,13 @@ type Filename = string
 
 export class Exports {
   readonly exports: Partial<Record<Filename, Export[]>> = {}
+  private file: string
+  private nameFilter: NameFilter
 
-  constructor(
-    private file: string,
-    private nameFilter: NameFilter
-  ) {}
+  constructor(file: string, nameFilter: NameFilter) {
+    this.file = file
+    this.nameFilter = nameFilter
+  }
 
   async find(name: null | string): Promise<Export | null> {
     if (!name) return null
