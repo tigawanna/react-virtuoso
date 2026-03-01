@@ -138,12 +138,11 @@ export function originalIndexFromLocation(location: FlatOrGroupedLocation, sizes
   if (isGroupLocation(location)) {
     // return the index of the first item below the index
     return sizes.groupIndices[location.groupIndex] + 1
-  } else {
-    const numericIndex = location.index === 'LAST' ? lastIndex : location.index
-    let result = originalIndexFromItemIndex(numericIndex, sizes)
-    result = Math.max(0, result, Math.min(lastIndex, result))
-    return result
   }
+  const numericIndex = location.index === 'LAST' ? lastIndex : location.index
+  let result = originalIndexFromItemIndex(numericIndex, sizes)
+  result = Math.max(0, result, Math.min(lastIndex, result))
+  return result
 }
 
 export function rangesWithinOffsets(
@@ -399,12 +398,10 @@ export const sizeSystem = u.system(
                 { endIndex: 0, size: groupSize, startIndex: 0 },
                 { endIndex: 1, size: itemSize, startIndex: 1 },
               ] as SizeRange[]
-            } else {
-              return []
             }
-          } else {
-            return [{ endIndex: 0, size: itemSize, startIndex: 0 }] as SizeRange[]
+            return []
           }
+          return [{ endIndex: 0, size: itemSize, startIndex: 0 }] as SizeRange[]
         })
       ),
       sizeRanges
@@ -685,16 +682,16 @@ export const sizeSystem = u.system(
               sizeTree: newSizeTree,
               ...createOffsetTree(sizes.offsetTree, 0, newSizeTree, gap),
             }
-          } else {
-            const newSizeTree = walk(sizes.sizeTree).reduce((acc, { k, v }) => {
-              return insert(acc, Math.max(0, k + shiftWith), v)
-            }, newTree<number>())
+          }
 
-            return {
-              ...sizes,
-              sizeTree: newSizeTree,
-              ...createOffsetTree(sizes.offsetTree, 0, newSizeTree, gap),
-            }
+          const newSizeTree = walk(sizes.sizeTree).reduce((acc, { k, v }) => {
+            return insert(acc, Math.max(0, k + shiftWith), v)
+          }, newTree<number>())
+
+          return {
+            ...sizes,
+            sizeTree: newSizeTree,
+            ...createOffsetTree(sizes.offsetTree, 0, newSizeTree, gap),
           }
         })
       ),

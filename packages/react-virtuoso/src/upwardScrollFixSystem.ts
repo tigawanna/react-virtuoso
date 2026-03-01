@@ -114,33 +114,33 @@ export const upwardScrollFixSystem = u.system(
           }
           if (groupIndices.length === 0) {
             return getItemOffset(offset)
-          } else {
-            let amount = 0
-            const defaultGroupSize = find(sizeTree, 0)!
+          }
 
-            let recognizedOffsetItems = 0
-            let groupIndex = 0
-            while (recognizedOffsetItems < offset) {
-              // increase once for the group itself
-              recognizedOffsetItems++
-              amount += defaultGroupSize
+          let amount = 0
+          const defaultGroupSize = find(sizeTree, 0)!
 
-              let groupItemCount =
-                groupIndices.length === groupIndex + 1 ? Infinity : groupIndices[groupIndex + 1] - groupIndices[groupIndex] - 1
+          let recognizedOffsetItems = 0
+          let groupIndex = 0
+          while (recognizedOffsetItems < offset) {
+            // increase once for the group itself
+            recognizedOffsetItems++
+            amount += defaultGroupSize
 
-              // if the group is larger than the offset, we have an expanded group. remove the group size, and replace with 1 item.
-              if (recognizedOffsetItems + groupItemCount > offset) {
-                amount -= defaultGroupSize
-                groupItemCount = offset - recognizedOffsetItems + 1
-              }
+            let groupItemCount =
+              groupIndices.length === groupIndex + 1 ? Infinity : groupIndices[groupIndex + 1] - groupIndices[groupIndex] - 1
 
-              recognizedOffsetItems += groupItemCount
-              amount += getItemOffset(groupItemCount)
-              groupIndex++
+            // if the group is larger than the offset, we have an expanded group. remove the group size, and replace with 1 item.
+            if (recognizedOffsetItems + groupItemCount > offset) {
+              amount -= defaultGroupSize
+              groupItemCount = offset - recognizedOffsetItems + 1
             }
 
-            return amount
+            recognizedOffsetItems += groupItemCount
+            amount += getItemOffset(groupItemCount)
+            groupIndex++
           }
+
+          return amount
         })
       ),
       (offset) => {

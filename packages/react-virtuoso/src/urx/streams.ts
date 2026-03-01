@@ -72,10 +72,9 @@ export function eventHandler<T>(emitter: Emitter<T>) {
           currentSubscription = subscription
           unsub = subscribe(emitter, subscription)
           return unsub
-        } else {
-          cleanup()
-          return noop
         }
+        cleanup()
+        return noop
       case RESET:
         cleanup()
         currentSubscription = null

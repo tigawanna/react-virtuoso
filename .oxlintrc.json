@@ -39,7 +39,6 @@
     "max-statements": "off",
     "new-cap": "off",
     "no-continue": "off",
-    "no-else-return": "off",
     "no-inline-comments": "off",
     "no-magic-numbers": "off",
     "no-negated-condition": "off",

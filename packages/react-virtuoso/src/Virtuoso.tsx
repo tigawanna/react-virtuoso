@@ -182,24 +182,24 @@ const Items = /*#__PURE__*/ React.memo(function VirtuosoItems({ showTopList = fa
               {groupContent(item.index, context)}
             </GroupComponent>
           )
-        } else {
-          return (
-            <ItemComponent
-              {...contextPropIfNotDomElement(ItemComponent, context)}
-              {...itemPropIfNotDomElement(ItemComponent, item.data)}
-              data-index={index}
-              data-item-group-index={item.groupIndex}
-              data-item-index={item.index}
-              data-known-size={item.size}
-              key={key}
-              style={horizontalDirection ? HORIZONTAL_ITEM_STYLE : ITEM_STYLE}
-            >
-              {hasGroups
-                ? (itemContent as GroupItemContent<any, any>)(item.index, item.groupIndex!, item.data, context)
-                : (itemContent as ItemContent<any, any>)(item.index, item.data, context)}
-            </ItemComponent>
-          )
         }
+
+        return (
+          <ItemComponent
+            {...contextPropIfNotDomElement(ItemComponent, context)}
+            {...itemPropIfNotDomElement(ItemComponent, item.data)}
+            data-index={index}
+            data-item-group-index={item.groupIndex}
+            data-item-index={item.index}
+            data-known-size={item.size}
+            key={key}
+            style={horizontalDirection ? HORIZONTAL_ITEM_STYLE : ITEM_STYLE}
+          >
+            {hasGroups
+              ? (itemContent as GroupItemContent<any, any>)(item.index, item.groupIndex!, item.data, context)
+              : (itemContent as ItemContent<any, any>)(item.index, item.data, context)}
+          </ItemComponent>
+        )
       })}
     </ListComponent>
   )

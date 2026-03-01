@@ -17,13 +17,11 @@ export type ViewportIncrease = number | Partial<Record<ListEnd, number>>
 export function getOverscan(overscan: Overscan, end: ListEnd, direction: ScrollDirection) {
   if (typeof overscan === 'number') {
     return (direction === UP && end === TOP) || (direction === DOWN && end === BOTTOM) ? overscan : 0
-  } else {
-    if (direction === UP) {
-      return end === TOP ? overscan.main : overscan.reverse
-    } else {
-      return end === BOTTOM ? overscan.main : overscan.reverse
-    }
   }
+  if (direction === UP) {
+    return end === TOP ? overscan.main : overscan.reverse
+  }
+  return end === BOTTOM ? overscan.main : overscan.reverse
 }
 
 function getViewportIncrease(value: ViewportIncrease, end: ListEnd) {

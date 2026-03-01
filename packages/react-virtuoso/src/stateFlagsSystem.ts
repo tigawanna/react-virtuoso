@@ -152,21 +152,19 @@ export const stateFlagsSystem = u.system(([{ footerHeight, headerHeight, scrollB
                 scrollHeight,
                 scrollTop,
               }
-            } else {
-              return {
-                changed: true,
-                jump: 0,
-                scrollHeight,
-                scrollTop,
-              }
             }
-          } else {
             return {
-              changed: false,
+              changed: true,
               jump: 0,
               scrollHeight,
               scrollTop,
             }
+          }
+          return {
+            changed: false,
+            jump: 0,
+            scrollHeight,
+            scrollTop,
           }
         },
         { changed: false, jump: 0, scrollHeight: 0, scrollTop: 0 }

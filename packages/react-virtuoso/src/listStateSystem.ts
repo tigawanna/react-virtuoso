@@ -243,9 +243,8 @@ export const listStateSystem = u.system(
             if (startOffset === 0 && endOffset === 0) {
               if (initialItemCountValue === 0) {
                 return { ...EMPTY_LIST_STATE, totalCount }
-              } else {
-                return buildListStateFromItemCount(initialItemCountValue, initialTopMostItemIndex, sizes, firstItemIndex, gap, data || [])
               }
+              return buildListStateFromItemCount(initialItemCountValue, initialTopMostItemIndex, sizes, firstItemIndex, gap, data || [])
             }
 
             if (empty(sizeTree)) {

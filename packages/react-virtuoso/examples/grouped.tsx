@@ -57,21 +57,20 @@ export function Unshifting() {
           const newGroups = Array.from({ length: newGroupCount }, () => ITEMS_PER_GROUP)
 
           return [...newGroups, firstGroupNewCount, ...prevGroups]
-        } else {
-          let removedItems = 0
+        }
 
-          while (true) {
-            const firstGroup = prevGroups.shift()!
-            if (removedItems + firstGroup < -amount) {
-              removedItems += firstGroup
-            } else {
-              const newFirstGroup = firstGroup + amount + removedItems
-              if (newFirstGroup === 0) {
-                return prevGroups
-              } else {
-                return [newFirstGroup, ...prevGroups]
-              }
+        let removedItems = 0
+
+        while (true) {
+          const firstGroup = prevGroups.shift()!
+          if (removedItems + firstGroup < -amount) {
+            removedItems += firstGroup
+          } else {
+            const newFirstGroup = firstGroup + amount + removedItems
+            if (newFirstGroup === 0) {
+              return prevGroups
             }
+            return [newFirstGroup, ...prevGroups]
           }
         }
       })

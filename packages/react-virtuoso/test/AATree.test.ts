@@ -45,13 +45,14 @@ function isInvariant(node: AANode<any>): boolean {
 
   if (level !== left.lvl + 1) {
     return false
-  } else if (level !== right.lvl && level !== right.lvl + 1) {
-    return false
-  } else if (!AA.empty(right) && level <= right.r.lvl) {
-    return false
-  } else {
-    return isInvariant(left) && isInvariant(right)
   }
+  if (level !== right.lvl && level !== right.lvl + 1) {
+    return false
+  }
+  if (!AA.empty(right) && level <= right.r.lvl) {
+    return false
+  }
+  return isInvariant(left) && isInvariant(right)
 }
 
 function keyMatchesValues(numbers: number[], tree: AANode<number>): void {
