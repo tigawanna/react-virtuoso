@@ -24,6 +24,7 @@ import { systemToComponent } from './react-urx'
 import * as u from './urx'
 import { VirtuosoMockContext } from './utils/context'
 import { correctItemSize } from './utils/correctItemSize'
+import { positionStickyCssValue } from './utils/positionStickyCssValue'
 import {
   buildScroller,
   buildWindowScroller,
@@ -32,7 +33,6 @@ import {
   itemPropIfNotDomElement,
   viewportStyle,
 } from './Virtuoso'
-import { positionStickyCssValue } from './utils/positionStickyCssValue'
 
 const tableComponentPropsSystem = /*#__PURE__*/ u.system(() => {
   const itemContent = u.statefulStream<ItemContent<any, unknown>>((index: number) => <td>Item ${index}</td>)

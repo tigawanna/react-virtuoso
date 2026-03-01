@@ -1,8 +1,8 @@
 import invariant from 'tiny-invariant'
 
-import type { RouteReference, RouteRefValue } from './types'
-
 import { routeDefinitions$$ } from './Route'
+
+import type { RouteReference, RouteRefValue } from './types'
 
 export function interpolateRoute(route: string, params: NonNullable<RouteRefValue>): string {
   const { $search, ...pathParams } = params as Record<string, unknown> & { $search?: Record<string, unknown> }

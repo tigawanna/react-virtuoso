@@ -1,6 +1,7 @@
+import { type JSX, useEffect, useState } from 'react'
+
 import { type Environments, initializePaddle, type Paddle } from '@paddle/paddle-js'
 import { PADDLE_ENVIRONMENT, PADDLE_PRO_PRICE_ID, PADDLE_STANDARD_PRICE_ID, PADDLE_TOKEN } from 'astro:env/client'
-import { type JSX, useEffect, useState } from 'react'
 
 import { Button } from './ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'

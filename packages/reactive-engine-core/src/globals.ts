@@ -1,7 +1,7 @@
+import { SetMap } from './SetMap'
+
 import type { Engine } from './Engine'
 import type { CellDefinition, NodeInit, NodeRef, ResourceDefinition, StreamDefinition } from './types'
-
-import { SetMap } from './SetMap'
 
 export const CELL_TYPE = 'cell'
 

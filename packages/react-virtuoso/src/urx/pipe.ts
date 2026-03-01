@@ -200,9 +200,15 @@ export function pipe<T, O1, O2, O3, O4>(s: Emitter<T>, ...o: [O<T, O1>, O<O1, O2
 
 export function pipe<T, O1, O2, O3, O4, O5>(s: Emitter<T>, ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>]): Emitter<O5> // prettier-ignore
 
-export function pipe<T, O1, O2, O3, O4, O5, O6>(s: Emitter<T>, ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>]): Emitter<O6> // prettier-ignore
+export function pipe<T, O1, O2, O3, O4, O5, O6>(
+  s: Emitter<T>,
+  ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>]
+): Emitter<O6> // prettier-ignore
 
-export function pipe<T, O1, O2, O3, O4, O5, O6, O7>(s: Emitter<T>, ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>]): Emitter<O7> // prettier-ignore
+export function pipe<T, O1, O2, O3, O4, O5, O6, O7>(
+  s: Emitter<T>,
+  ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>]
+): Emitter<O7> // prettier-ignore
 
 export function pipe<T>(source: Emitter<T>, ...operators: O<any, any>[]): Emitter<any> {
   // prettier-ignore
@@ -325,11 +331,19 @@ export function throttleTime<T>(interval: number): Operator<T> {
 export function withLatestFrom<T, R1>(...s: [Emitter<R1>]): Operator<T, [T, R1]> // prettier-ignore
 
 export function withLatestFrom<T, R1, R2>(...s: [Emitter<R1>, Emitter<R2>]): Operator<T, [T, R1, R2]> // prettier-ignore
-export function withLatestFrom<T, R1, R2, R3>( ...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>]): Operator<T, [T, R1, R2, R3]> // prettier-ignore
-export function withLatestFrom<T, R1, R2, R3, R4>( ...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>, Emitter<R4>]): Operator<T, [T, R1, R2, R3, R4]> // prettier-ignore
-export function withLatestFrom<T, R1, R2, R3, R4, R5>( ...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>, Emitter<R4>, Emitter<R5>]): Operator<T, [T, R1, R2, R3, R4, R5]> // prettier-ignore
-export function withLatestFrom<T, R1, R2, R3, R4, R5, R6>( ...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>, Emitter<R4>, Emitter<R5>, Emitter<R6>]): Operator<T, [T, R1, R2, R3, R4, R5, R6]> // prettier-ignore
-export function withLatestFrom<T, R1, R2, R3, R4, R5, R6, R7>( ...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>, Emitter<R4>, Emitter<R5>, Emitter<R6>, Emitter<R7>]): Operator<T, [T, R1, R2, R3, R4, R5, R6, R7]> // prettier-ignore
+export function withLatestFrom<T, R1, R2, R3>(...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>]): Operator<T, [T, R1, R2, R3]> // prettier-ignore
+export function withLatestFrom<T, R1, R2, R3, R4>(
+  ...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>, Emitter<R4>]
+): Operator<T, [T, R1, R2, R3, R4]> // prettier-ignore
+export function withLatestFrom<T, R1, R2, R3, R4, R5>(
+  ...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>, Emitter<R4>, Emitter<R5>]
+): Operator<T, [T, R1, R2, R3, R4, R5]> // prettier-ignore
+export function withLatestFrom<T, R1, R2, R3, R4, R5, R6>(
+  ...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>, Emitter<R4>, Emitter<R5>, Emitter<R6>]
+): Operator<T, [T, R1, R2, R3, R4, R5, R6]> // prettier-ignore
+export function withLatestFrom<T, R1, R2, R3, R4, R5, R6, R7>(
+  ...s: [Emitter<R1>, Emitter<R2>, Emitter<R3>, Emitter<R4>, Emitter<R5>, Emitter<R6>, Emitter<R7>]
+): Operator<T, [T, R1, R2, R3, R4, R5, R6, R7]> // prettier-ignore
 export function withLatestFrom(...sources: Emitter<any>[]): Operator<any, any> {
   const values = new Array(sources.length)
   let called = 0

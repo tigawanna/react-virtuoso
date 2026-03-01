@@ -1,13 +1,12 @@
-import type { Root, RootContent } from 'mdast'
-
 import { createProgram } from '@virtuoso.dev/m2dx-utils'
-
-import type { RemarkPlugin, VFile } from '../types'
 
 import { capitalize, shortHash, toCamelCase } from '../common'
 import { findUnresolved } from './findUnresolved'
 import { getExports } from './getExports'
 import { toImport } from './toImport'
+
+import type { RemarkPlugin, VFile } from '../types'
+import type { Root, RootContent } from 'mdast'
 
 interface Options {
   autoImportFile: string

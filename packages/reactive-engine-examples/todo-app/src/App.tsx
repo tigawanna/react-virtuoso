@@ -1,6 +1,8 @@
 import { Suspense } from 'react'
+
 import { EngineProvider, useCellValue, usePublisher } from '@virtuoso.dev/reactive-engine-react'
 import { Router } from '@virtuoso.dev/reactive-engine-router'
+
 import { lists$, tasks$ } from './routes'
 import { theme$, toggleTheme$ } from './theme'
 

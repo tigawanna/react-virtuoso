@@ -1,7 +1,7 @@
+import { ReflectionKind } from 'typedoc'
 /* eslint-disable */
 // @ts-nocheck - TypeDoc plugin integration with complex external types
 import { MarkdownTheme, MarkdownThemeContext } from 'typedoc-plugin-markdown'
-import { ReflectionKind } from 'typedoc'
 
 export function load(app) {
   app.renderer.defineTheme('custom-markdown-theme', CustomMarkdownTheme)

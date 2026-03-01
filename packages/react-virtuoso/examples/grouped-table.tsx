@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+
 import { GroupedTableVirtuoso } from '../src/'
 
 export function Example() {

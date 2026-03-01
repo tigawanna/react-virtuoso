@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
 
-import type { Export } from './types'
-
 import { parseExports } from './parseExports'
+
+import type { Export } from './types'
 
 const CAPITAL_LETTER = /[A-Z]/
 

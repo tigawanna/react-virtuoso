@@ -1,5 +1,3 @@
-import type { Expression, Identifier, PrivateIdentifier, Program, VariableDeclaration } from 'estree'
-
 import {
   isExportDefaultDeclaration,
   isIdentifier,
@@ -11,6 +9,7 @@ import {
 import { EXIT, visit } from 'estree-util-visit'
 
 import type { Export, NameFilter } from './types'
+import type { Expression, Identifier, PrivateIdentifier, Program, VariableDeclaration } from 'estree'
 
 function getName(key: Expression | PrivateIdentifier): string {
   if (isIdentifier(key)) {

@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import type { Inp, NodeRef, Out, PipeRef } from './realm'
-
 import { RealmContext } from './react'
+
+import type { Inp, NodeRef, Out, PipeRef } from './realm'
 
 const useIsomorphicLayoutEffect = typeof document !== 'undefined' ? React.useLayoutEffect : React.useEffect
 

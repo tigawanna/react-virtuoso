@@ -1,3 +1,5 @@
+import { LogLevel } from '../loggerSystem'
+
 import type {
   Components,
   ComputeItemKey,
@@ -17,8 +19,6 @@ import type {
   StateCallback,
   StateSnapshot,
 } from '../interfaces'
-
-import { LogLevel } from '../loggerSystem'
 
 /**
  * Exposes the GroupedVirtuoso component methods for imperative control.

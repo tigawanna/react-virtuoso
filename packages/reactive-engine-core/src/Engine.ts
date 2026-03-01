@@ -1,5 +1,10 @@
 import invariant from 'tiny-invariant'
 
+import { CELL_TYPE, inEngineContext, nodeDebugLabels$$, nodeDefs$$, nodeInits$$, nodeInitSubscriptions$$, resourceDefs$$ } from './globals'
+import { RefCount } from './RefCount'
+import { SetMap } from './SetMap'
+import { combinedCellProjection, defaultComparator, tap } from './utils'
+
 import type { O } from './operators'
 import type {
   CombinedCellRecord,
@@ -15,11 +20,6 @@ import type {
   Subscription,
   UnsubscribeHandle,
 } from './types'
-
-import { CELL_TYPE, inEngineContext, nodeDebugLabels$$, nodeDefs$$, nodeInits$$, nodeInitSubscriptions$$, resourceDefs$$ } from './globals'
-import { RefCount } from './RefCount'
-import { SetMap } from './SetMap'
-import { combinedCellProjection, defaultComparator, tap } from './utils'
 
 // use this so that streams don't skip undefined values
 const emptyStreamValue = Symbol('empty stream')
@@ -614,8 +614,12 @@ export class Engine {
   private combineOperators<T, O1, O2, O3>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>]): (s: Out<T>) => NodeRef<O3> // prettier-ignore
   private combineOperators<T, O1, O2, O3, O4>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>]): (s: Out<T>) => NodeRef<O4> // prettier-ignore
   private combineOperators<T, O1, O2, O3, O4, O5>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>]): (s: Out<T>) => NodeRef<O5> // prettier-ignore
-  private combineOperators<T, O1, O2, O3, O4, O5, O6>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>]): (s: Out<T>) => NodeRef<O6> // prettier-ignore
-  private combineOperators<T, O1, O2, O3, O4, O5, O6, O7>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>]): (s: Out<T>) => NodeRef<O7> // prettier-ignore
+  private combineOperators<T, O1, O2, O3, O4, O5, O6>(
+    ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>]
+  ): (s: Out<T>) => NodeRef<O6> // prettier-ignore
+  private combineOperators<T, O1, O2, O3, O4, O5, O6, O7>(
+    ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>]
+  ): (s: Out<T>) => NodeRef<O7> // prettier-ignore
   private combineOperators<T>(...o: O<unknown, unknown>[]): (s: Out<T>) => NodeRef
   private combineOperators<T>(...o: O<unknown, unknown>[]): (s: Out<T>) => NodeRef {
     return (source: Out) => {

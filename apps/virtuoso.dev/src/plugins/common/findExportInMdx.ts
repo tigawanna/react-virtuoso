@@ -1,8 +1,8 @@
-import type { Identifier, Program, VariableDeclaration, VariableDeclarator } from 'estree'
-import type { Root } from 'mdast'
-
 import { EXIT, isMdxjsEsm, isObjectExpression, isVariableDeclarator, visit } from '@virtuoso.dev/m2dx-utils'
 import { EXIT as esEXIT, visit as esVisit } from 'estree-util-visit'
+
+import type { Identifier, Program, VariableDeclaration, VariableDeclarator } from 'estree'
+import type { Root } from 'mdast'
 
 export function findExportInProgram(program: Program): undefined | VariableDeclarator {
   let found: undefined | VariableDeclarator

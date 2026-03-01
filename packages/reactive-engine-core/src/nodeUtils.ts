@@ -1,8 +1,8 @@
 import invariant from 'tiny-invariant'
 
-import type { NodeInit, NodeRef } from './types'
-
 import { getCurrentEngine, nodeDebugLabels$$, nodeInits$$, nodeInitSubscriptions$$ } from './globals'
+
+import type { NodeInit, NodeRef } from './types'
 
 /**
  * Registers an initialization function to be called when any of the specified nodes are initialized in an engine.

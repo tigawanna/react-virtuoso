@@ -1,5 +1,6 @@
-import { faker } from '@faker-js/faker'
 import { useCallback, useState } from 'react'
+
+import { faker } from '@faker-js/faker'
 
 import { Virtuoso } from '../src'
 

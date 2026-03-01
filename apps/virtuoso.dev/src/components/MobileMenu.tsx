@@ -1,5 +1,6 @@
-import { ChevronDownIcon, GitHubLogoIcon } from '@radix-ui/react-icons'
 import { useEffect, useRef, useState } from 'react'
+
+import { ChevronDownIcon, GitHubLogoIcon } from '@radix-ui/react-icons'
 
 import { ThemeSelect } from './ThemeSelect'
 

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 // biome-ignore-all lint/complexity/noBannedTypes: this is ok here.
 
-import type { NodeRef } from '@virtuoso.dev/reactive-engine-core'
 import type * as React from 'react'
+
+import type { NodeRef } from '@virtuoso.dev/reactive-engine-core'
 
 /**
  * Checks if a type has all optional properties (is "fully partial").

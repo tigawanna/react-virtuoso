@@ -1,8 +1,8 @@
-import type { O } from './operators'
-
 import { RefCount } from './RefCount'
 import { SetMap } from './SetMap'
 import { noop, tap } from './utils'
+
+import type { O } from './operators'
 
 const CELL_TYPE = 'cell'
 const SIGNAL_TYPE = 'signal'

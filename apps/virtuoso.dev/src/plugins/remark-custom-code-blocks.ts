@@ -1,7 +1,7 @@
+import { visit } from 'unist-util-visit'
+
 import type { Code, Root, RootContent } from 'mdast'
 import type { MdxJsxFlowElement } from 'mdast-util-mdx-jsx'
-
-import { visit } from 'unist-util-visit'
 
 /**
  * Remark plugin that transforms ALL code blocks:

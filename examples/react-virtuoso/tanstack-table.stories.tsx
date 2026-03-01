@@ -1,6 +1,7 @@
-import { flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table'
 import { useMemo, useReducer, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
+
+import { flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table'
 
 function makeData(count: number) {
   return Array.from({ length: count }, (_, index) => {

@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import type { AstroIntegration } from 'astro'
-
 import { type FSWatcher, watch } from 'node:fs'
 import { mkdir, readdir, readFile, rm, stat, unlink, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import type { AstroIntegration } from 'astro'
 
 export interface DocsSyncSource {
   /** Target subdirectory under src/content/docs/ */

@@ -1,7 +1,7 @@
 import * as React from 'react'
+import { useState } from 'react'
 
 import { Virtuoso, VirtuosoHandle } from '../src'
-import { useState } from 'react'
 
 export function TotalCountChange() {
   const ref = React.useRef<VirtuosoHandle>(null)

@@ -1,6 +1,7 @@
-import { debounce } from 'lodash'
 import * as React from 'react'
 import { createHashRouter, Link, RouterProvider, useParams, useSearchParams } from 'react-router-dom'
+
+import { debounce } from 'lodash'
 
 import { GridComponents, GridStateSnapshot, ListRange, VirtuosoGrid } from '../src'
 

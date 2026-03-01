@@ -1,7 +1,7 @@
-import type { SizeRange } from '../interfaces'
-
 import { type AANode, empty, insert, newTree } from './AATree'
 import { insertRanges } from './insertRanges'
+
+import type { SizeRange } from '../interfaces'
 
 export function sizeTreeReducer(currentTree: AANode, [ranges, groupIndices]: [SizeRange[], number[]]) {
   // We receive probe item results from a group probe,

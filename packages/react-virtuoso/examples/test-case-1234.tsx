@@ -1,6 +1,8 @@
-import { Virtuoso } from '../src'
 import { useState, useCallback, forwardRef, useRef, ReactNode } from 'react'
+
 import { v4 as uuidv4 } from 'uuid'
+
+import { Virtuoso } from '../src'
 
 interface SteamItem {
   _id: string

@@ -1,8 +1,8 @@
 import type * as React from 'react'
 
-import type { LayoutComponent } from './types'
-
 import { matchesPathPrefix } from './utils'
+
+import type { LayoutComponent } from './types'
 
 export function Layout(path: string, component: LayoutComponent): symbol {
   const layoutSymbol = Symbol('layout')

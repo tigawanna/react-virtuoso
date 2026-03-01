@@ -1,10 +1,10 @@
-/* eslint-disable no-console */
-import type { AstroIntegration } from 'astro'
-
 import { watch } from 'node:fs'
 import { readdir, readFile, rename, rmdir, unlink, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+/* eslint-disable no-console */
+import type { AstroIntegration } from 'astro'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 import {

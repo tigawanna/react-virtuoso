@@ -1,8 +1,8 @@
 import { describe, expectTypeOf, it } from 'vitest'
 
-import type { NodeRef } from '../types'
-
 import { Cell, e } from '..'
+
+import type { NodeRef } from '../types'
 
 describe('filter operator type narrowing', () => {
   it('narrows type with type predicate', () => {

@@ -1,7 +1,8 @@
 /// <reference types="@vitest/browser/matchers" />
 
-import { EngineProvider, usePublisher } from '@virtuoso.dev/reactive-engine-react'
 import * as React from 'react'
+
+import { EngineProvider, usePublisher } from '@virtuoso.dev/reactive-engine-react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { render } from 'vitest-browser-react'
 

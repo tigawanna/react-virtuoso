@@ -1,10 +1,9 @@
-import type { Engine } from '@virtuoso.dev/reactive-engine-core'
-
 import { addNodeInit, Cell, e, Trigger } from '@virtuoso.dev/reactive-engine-core'
 
-import type { QueryOptions, QueryResult } from './types'
-
 import { defaultRetryDelay, executeWithRetry } from './utils'
+
+import type { QueryOptions, QueryResult } from './types'
+import type { Engine } from '@virtuoso.dev/reactive-engine-core'
 
 /**
  * Creates a reactive query for fetching remote data with automatic retry, polling, and cache management.

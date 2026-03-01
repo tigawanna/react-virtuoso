@@ -1,12 +1,12 @@
 import { Cell, changeWith, combine, DerivedCell, link, map, pipe, scan, Signal, withLatestFrom } from '@virtuoso.dev/gurx'
 
-import type { OffsetPoint, SizeRange } from './interfaces'
-
 import { totalCount$ } from './data'
 import { type AANode, newTree } from './sizing/AATree'
 import { insertRanges } from './sizing/insertRanges'
 import { offsetTreeReducer } from './sizing/offsetTreeReducer'
 import { sizeTreeReducer } from './sizing/sizeTreeReducer'
+
+import type { OffsetPoint, SizeRange } from './interfaces'
 
 type SizeTreeState = [AANode, number]
 type OffsetTreeState = [OffsetPoint[], number, number, number]

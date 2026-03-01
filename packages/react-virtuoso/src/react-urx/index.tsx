@@ -32,9 +32,9 @@
  */
 import React from 'react'
 
-import type { AnySystemSpec, Emitter, Publisher, SR, StatefulStream, Stream } from '../urx'
-
 import * as u from '../urx'
+
+import type { AnySystemSpec, Emitter, Publisher, SR, StatefulStream, Stream } from '../urx'
 
 /** @internal */
 type Dict<T> = Record<string, T>

@@ -10,10 +10,10 @@
 
 import { describe, expect, it } from 'vitest'
 
-import type { RouteReference } from './types'
-
 import { Route } from './Route'
 import { getUrl } from './utils'
+
+import type { RouteReference } from './types'
 
 const TEST_ROUTES = {
   ADMIN: '/admin/{section}',

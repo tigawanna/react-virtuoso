@@ -1,11 +1,12 @@
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 // @ts-check
 import react from '@astrojs/react'
 import starlight from '@astrojs/starlight'
 import starlightUtils from '@lorenzo_lewis/starlight-utils'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig, envField } from 'astro/config'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
 
 import { docsSync } from './src/integrations/docs-sync'
 import initAstroTypedoc from './src/plugins/astro-typedoc'

@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises'
 
-import type { Export, NameFilter } from './types'
-
 import { parseExports } from './parseExports'
+
+import type { Export, NameFilter } from './types'
 
 type Filename = string
 

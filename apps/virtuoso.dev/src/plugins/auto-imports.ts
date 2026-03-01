@@ -1,8 +1,8 @@
-import type { Root, RootContent } from 'mdast'
-import type { MdxjsEsm } from 'mdast-util-mdx'
-
 import { createProgram } from '@virtuoso.dev/m2dx-utils'
 import { visit } from 'unist-util-visit'
+
+import type { Root, RootContent } from 'mdast'
+import type { MdxjsEsm } from 'mdast-util-mdx'
 
 interface ComponentImport {
   /** Whether this is a default import (default: true) */

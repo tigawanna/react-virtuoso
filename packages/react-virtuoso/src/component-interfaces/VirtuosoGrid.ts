@@ -1,3 +1,5 @@
+import { LogLevel } from '../loggerSystem'
+
 import type {
   GridComponents,
   GridComputeItemKey,
@@ -7,8 +9,6 @@ import type {
   ListRange,
   ScrollSeekConfiguration,
 } from '../interfaces'
-
-import { LogLevel } from '../loggerSystem'
 
 /**
  * Dimensions of an element in pixels.

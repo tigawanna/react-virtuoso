@@ -1,9 +1,6 @@
-import type { Engine, NodeRef, Subscription, UnsubscribeHandle } from '@virtuoso.dev/reactive-engine-core'
-
-import { Cell, Stream } from '@virtuoso.dev/reactive-engine-core'
 import * as React from 'react'
 
-import type { ActiveComponent, RouteRef, RouteReference, RouteRefValue } from './types'
+import { Cell, Stream } from '@virtuoso.dev/reactive-engine-core'
 
 import { guardDefinitions$$ } from './Guard'
 import {
@@ -18,6 +15,9 @@ import { findMatchingLayouts } from './Layout'
 import { routeComponents$$, routeDefinitions$$ } from './Route'
 import { SuspenceTrigger } from './SuspenceTrigger'
 import { getUrl, interpolateRoute, matchGuardPattern, parseUrl } from './utils'
+
+import type { ActiveComponent, RouteRef, RouteReference, RouteRefValue } from './types'
+import type { Engine, NodeRef, Subscription, UnsubscribeHandle } from '@virtuoso.dev/reactive-engine-core'
 
 export function RouterEngine(eng: Engine, routes: RouteRef[], layouts?: symbol[], guards?: symbol[]) {
   const currentRoute$ = Cell<null | string>(null)

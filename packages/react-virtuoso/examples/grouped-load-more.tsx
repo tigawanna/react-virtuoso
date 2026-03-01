@@ -1,7 +1,8 @@
-import { faker } from '@faker-js/faker'
-import { groupBy } from 'lodash'
 import * as React from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
+
+import { faker } from '@faker-js/faker'
+import { groupBy } from 'lodash'
 
 import { Components, GroupedVirtuoso } from '../src'
 

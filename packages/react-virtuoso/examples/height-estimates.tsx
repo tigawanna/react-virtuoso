@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+
 import { Virtuoso } from '../src'
 
 // Simulate a scenario where item heights vary widely

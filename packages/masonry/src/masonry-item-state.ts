@@ -1,12 +1,12 @@
 import { Cell, combine, filter, link, pipe, pub, scan, sub } from '@virtuoso.dev/gurx'
 
-import type { Data, OffsetPoint } from './interfaces'
-
 import { data$, totalCount$ } from './data'
 import { listOffset$, scrollTop$, useWindowScroll$, visibleListHeight$ } from './dom'
 import { columnCount$, indexesInColumns$, initialItemCount$, offsetTrees$, sizeTrees$, totalHeights$ } from './masonry-sizes'
 import { empty, newTree } from './sizing/AATree'
 import { rangesWithinOffsets } from './sizing/rangesWithinOffsets'
+
+import type { Data, OffsetPoint } from './interfaces'
 
 export interface MasonryItem<T> {
   columnIndex: number

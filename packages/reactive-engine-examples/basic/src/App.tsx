@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 
 import { EngineProvider, usePublisher } from '@virtuoso.dev/reactive-engine-react'
 import { Layout, Router } from '@virtuoso.dev/reactive-engine-router'
+
 import { notFound$ } from './pages/404'
 import { about$ } from './pages/about'
 import { blog$ } from './pages/blog'

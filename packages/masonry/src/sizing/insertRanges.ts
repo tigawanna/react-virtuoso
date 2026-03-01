@@ -1,6 +1,6 @@
-import type { SizeRange } from '../interfaces'
-
 import { type AANode, empty, insert, type Range, rangesWithin, remove } from './AATree'
+
+import type { SizeRange } from '../interfaces'
 
 function rangeIncludes(refRange: SizeRange) {
   const { endIndex, size, startIndex } = refRange

@@ -1,5 +1,6 @@
-import { Half2Icon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import { useEffect, useState } from 'react'
+
+import { Half2Icon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 
 type Theme = 'auto' | 'dark' | 'light'
 

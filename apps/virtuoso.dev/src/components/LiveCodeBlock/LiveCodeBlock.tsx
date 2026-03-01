@@ -1,10 +1,11 @@
+import React, { type ComponentProps, type ReactNode, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { ErrorBoundary } from 'react-error-boundary'
+
 /* eslint-disable no-console */
 import { CheckIcon, ClipboardCopyIcon, CubeIcon, ReloadIcon, ResetIcon } from '@radix-ui/react-icons'
 import { shikiToMonaco } from '@shikijs/monaco'
 import copy from 'copy-text-to-clipboard'
-import React, { type ComponentProps, type ReactNode, useEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
-import { ErrorBoundary } from 'react-error-boundary'
 
 import { type Theme, useStarlightTheme } from '@/components/theme-utils'
 import { Button } from '@/components/ui/button'

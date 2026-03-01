@@ -1,6 +1,8 @@
 import { lazy } from 'react'
+
 import { e } from '@virtuoso.dev/reactive-engine-core'
 import { Route } from '@virtuoso.dev/reactive-engine-router'
+
 import { tasksQuery } from './queries'
 
 const TasksPage = lazy(() => import('./TasksPage').then((m) => ({ default: m.TasksPage })))

@@ -1,6 +1,5 @@
-import type { Engine } from '@virtuoso.dev/reactive-engine-core'
-
 import type { RouteReference } from './types'
+import type { Engine } from '@virtuoso.dev/reactive-engine-core'
 
 // Guard result types - use symbols for type discrimination
 export const REDIRECT_RESULT = Symbol('redirect')

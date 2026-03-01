@@ -1,11 +1,12 @@
+import { forwardRef, useMemo } from 'react'
+import { GroupedVirtuoso, GroupedVirtuosoProps } from 'react-virtuoso'
+
 import Avatar from '@mui/material/Avatar'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import ListSubheader from '@mui/material/ListSubheader'
-import { forwardRef, useMemo } from 'react'
-import { GroupedVirtuoso, GroupedVirtuosoProps } from 'react-virtuoso'
 
 const MUIComponents: GroupedVirtuosoProps<unknown, unknown>['components'] = {
   Group: ({ children, style, ...props }) => {

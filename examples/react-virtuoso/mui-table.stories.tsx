@@ -1,3 +1,6 @@
+import { forwardRef, useMemo } from 'react'
+import { TableVirtuoso, TableVirtuosoProps } from 'react-virtuoso'
+
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -5,8 +8,6 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import { forwardRef, useMemo } from 'react'
-import { TableVirtuoso, TableVirtuosoProps } from 'react-virtuoso'
 
 const TableComponents: TableVirtuosoProps<{ description: string; name: string }, unknown>['components'] = {
   Scroller: forwardRef((props, ref) => <TableContainer component={Paper} {...props} ref={ref} />),

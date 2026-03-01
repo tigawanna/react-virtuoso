@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+
 import { Guard, Route } from '@virtuoso.dev/reactive-engine-router'
 
 const GuardedPage = lazy(() => import('./GuardedPage').then((m) => ({ default: m.GuardedPage })))

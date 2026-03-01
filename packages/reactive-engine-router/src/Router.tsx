@@ -1,9 +1,10 @@
-import { useCellValue, useEngine, useIsomorphicLayoutEffect, usePublisher } from '@virtuoso.dev/reactive-engine-react'
 import * as React from 'react'
 
-import type { RouteRef } from './types'
+import { useCellValue, useEngine, useIsomorphicLayoutEffect, usePublisher } from '@virtuoso.dev/reactive-engine-react'
 
 import { RouterEngine } from './RouterEngine'
+
+import type { RouteRef } from './types'
 
 /**
  * Props for the Router component

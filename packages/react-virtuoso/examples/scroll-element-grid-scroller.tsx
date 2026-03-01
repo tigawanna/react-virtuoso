@@ -1,6 +1,7 @@
+import * as React from 'react'
+
 //@ts-nocheck
 import styled from '@emotion/styled'
-import * as React from 'react'
 
 import { GridComponents, VirtuosoGrid } from '../src'
 

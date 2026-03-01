@@ -1,8 +1,8 @@
-import type { OffsetPoint } from '../interfaces'
-
 import { type AANode, findMaxKeyValue, rangesWithin } from './AATree'
 import { findIndexOfClosestSmallerOrEqual } from './binaryArraySearch'
 import { indexComparator } from './rangesWithinOffsets'
+
+import type { OffsetPoint } from '../interfaces'
 
 export const OFFSET_TREE_SEED = [[], 0, 0, 0] as [OffsetPoint[], number, number, number]
 export function offsetTreeReducer(offsetTree: OffsetPoint[], [sizeTree, lastRangeStart]: [AANode, number]) {
