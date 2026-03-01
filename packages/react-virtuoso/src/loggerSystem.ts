@@ -21,16 +21,18 @@ declare global {
  *
  * @group Common
  */
-export enum LogLevel {
+export const LogLevel = {
   /** Detailed debugging information including item measurements */
-  DEBUG,
+  DEBUG: 0,
   /** General informational messages */
-  INFO,
+  INFO: 1,
   /** Warning messages for potential issues */
-  WARN,
+  WARN: 2,
   /** Error messages for failures (default level) */
-  ERROR,
-}
+  ERROR: 3,
+} as const
+
+export type LogLevel = (typeof LogLevel)[keyof typeof LogLevel]
 export type Log = (label: string, message: any, level?: LogLevel) => void
 
 const CONSOLE_METHOD_MAP = {

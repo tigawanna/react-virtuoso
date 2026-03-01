@@ -349,10 +349,10 @@ export function withLatestFrom(...sources: Emitter<any>[]): Operator<any, any> {
   const values = new Array(sources.length)
   let called = 0
   let pendingCall: (() => void) | null = null
-  const allCalled = Math.pow(2, sources.length) - 1
+  const allCalled = 2 ** sources.length - 1
 
   sources.forEach((source, index) => {
-    const bit = Math.pow(2, index)
+    const bit = 2 ** index
     subscribe(source, (value) => {
       const prevCalled = called
       called |= bit

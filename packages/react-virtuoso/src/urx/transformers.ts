@@ -101,10 +101,10 @@ export function combineLatest(...emitters: Emitter<any>[]): Emitter<any> {
   const innerSubject = stream<any>()
   const values = new Array(emitters.length)
   let called = 0
-  const allCalled = Math.pow(2, emitters.length) - 1
+  const allCalled = 2 ** emitters.length - 1
 
   emitters.forEach((source, index) => {
-    const bit = Math.pow(2, index)
+    const bit = 2 ** index
     subscribe(source, (value) => {
       values[index] = value
       called |= bit
