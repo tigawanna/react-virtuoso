@@ -23,7 +23,6 @@
     "react/jsx-props-no-spreading": "off",
     "react/jsx-boolean-value": "off",
     "react/jsx-max-depth": "off",
-    "react/self-closing-comp": "off",
     "react/jsx-no-useless-fragment": "off",
 
     "arrow-body-style": "off",

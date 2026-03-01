@@ -90,13 +90,13 @@ const combinedSystem = /*#__PURE__*/ u.system(
 
 const DefaultScrollSeekPlaceholder = ({ height }: { height: number }) => (
   <tr>
-    <td style={{ height }}></td>
+    <td style={{ height }} />
   </tr>
 )
 
 const DefaultFillerRow = ({ height }: { height: number }) => (
   <tr>
-    <td style={{ border: 0, height: height, padding: 0 }}></td>
+    <td style={{ border: 0, height: height, padding: 0 }} />
   </tr>
 )
 

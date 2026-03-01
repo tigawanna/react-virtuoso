@@ -64,7 +64,7 @@ const combinedSystem = /*#__PURE__*/ u.system(
   u.tup(listSystem, listComponentPropsSystem)
 )
 
-const DefaultScrollSeekPlaceholder = ({ height }: { height: number }) => <div style={{ height }}></div>
+const DefaultScrollSeekPlaceholder = ({ height }: { height: number }) => <div style={{ height }} />
 
 const GROUP_STYLE = { overflowAnchor: 'none', position: positionStickyCssValue(), zIndex: 1 } as const
 const ITEM_STYLE = { overflowAnchor: 'none' } as const

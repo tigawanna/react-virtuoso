@@ -26,7 +26,7 @@ const generateItems = () => {
 }
 
 const StreamCardsWrapper = forwardRef<HTMLDivElement>(function StreamCardsWrapper(props, ref) {
-  return <div className="stream-cards-wrapper" ref={ref} {...props}></div>
+  return <div className="stream-cards-wrapper" ref={ref} {...props} />
 })
 
 const StreamCard = ({ children }: { children: ReactNode }) => {
