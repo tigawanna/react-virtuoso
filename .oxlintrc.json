@@ -62,7 +62,6 @@
     "import/default": "off",
     "max-depth": "off",
     "no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
-    "default-param-last": "off",
     "no-inner-declarations": "off"
   },
   "overrides": [
