@@ -21,6 +21,7 @@
     "typescript/no-unnecessary-type-assertion": "off",
     "typescript/no-confusing-void-expression": "off",
     "typescript/no-confusing-non-null-assertion": "off",
+    "typescript/no-unsafe-argument": "off",
     "no-shadow-restricted-names": "off",
     "react/jsx-no-constructed-context-values": "off",
     "react/jsx-curly-brace-presence": "off",
