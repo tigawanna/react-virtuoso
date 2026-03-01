@@ -3,15 +3,15 @@
   "plugins": ["typescript", "react", "import"],
   "categories": {
     "correctness": "error",
-    "suspicious": "warn",
-    "pedantic": "warn",
-    "style": "warn",
-    "perf": "warn"
+    "suspicious": "error",
+    "pedantic": "error",
+    "style": "error",
+    "perf": "error"
   },
   "rules": {
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "typescript/no-unused-vars": [
-      "warn",
+      "error",
       {
         "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^_",
@@ -22,7 +22,7 @@
     "react/display-name": "off",
     "react/prop-types": "off",
     "react/rules-of-hooks": "error",
-    "react/exhaustive-deps": "warn",
+    "react/exhaustive-deps": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-boolean-value": "off",
@@ -87,16 +87,11 @@
     "default-param-last": "off",
     "eqeqeq": "off",
     "no-inner-declarations": "off",
-    "no-throw-literal": "error",
     "typescript/ban-types": "off",
     "react/jsx-no-useless-fragment": "off",
-    "react/no-array-index-key": "error",
-    "no-useless-call": "error",
     "prefer-promise-reject-errors": "off",
-    "prefer-for-of": "error",
     "typescript/unified-signatures": "off",
     "typescript/no-this-alias": "off",
-    "typescript/only-throw-error": "error",
     "typescript/no-unsafe-argument": "off"
   },
   "ignorePatterns": ["node_modules/", "dist/", "test-results"]
