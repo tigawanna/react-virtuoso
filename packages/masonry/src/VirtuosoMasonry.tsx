@@ -323,6 +323,7 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
         {itemsState.columns.map((columnState, index) => (
           <div
             data-testid="virtuoso-list"
+            // oxlint-disable-next-line no-array-index-key -- stable column layout
             key={`column-${index}`}
             ref={listCallbackRef(index)}
             style={{

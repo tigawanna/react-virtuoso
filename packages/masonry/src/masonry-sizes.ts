@@ -20,7 +20,7 @@ export const knownSizes$ = Cell<number[]>([], () => {
     for (const [index, size] of Object.entries(sizes)) {
       result[Number.parseInt(index, 10)] = size
     }
-    // - this is intentional. the array might have holes
+    // oxlint-disable-next-line prefer-for-of -- intentional: array may have holes
     for (let i = 0; i < result.length; i++) {
       if (result[i] === undefined) {
         return knownSizes
@@ -45,6 +45,7 @@ const sizeTreesState$ = Cell<SizeTreeState[]>([], () => {
           const columnHeights = Array.from({ length: columnCount }, () => 0)
           const columnCounts = Array.from({ length: columnCount }, () => 0)
 
+          // oxlint-disable-next-line prefer-for-of
           for (let i = 0; i < knownSizes.length; i++) {
             const size = knownSizes[i]
 

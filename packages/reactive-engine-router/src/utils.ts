@@ -40,6 +40,7 @@ export function interpolateRoute(route: string, params: NonNullable<RouteRefValu
             searchParams.append(name, String(v))
           })
         } else {
+          // oxlint-disable-next-line no-base-to-string
           searchParams.set(name, String(value))
         }
       }

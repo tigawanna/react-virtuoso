@@ -629,6 +629,7 @@ export function pipe<T>(source$: Out<T>, ...operators: O<unknown, unknown>[]): N
 export function pipe<T>(source$: Out<T>, ...operators: O<unknown, unknown>[]): NodeRef {
   return tap(Stream<unknown>(), (sink$) => {
     addNodeInit((eng) => {
+      // oxlint-disable-next-line no-useless-call
       const pipe$ = eng.pipe.apply(eng, [source$, ...operators])
       eng.link(pipe$, sink$)
       // call this after the sink has been linked

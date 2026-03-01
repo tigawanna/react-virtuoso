@@ -25,7 +25,8 @@
     "no-shadow-restricted-names": "off",
     "react/jsx-no-constructed-context-values": "off",
     "react/jsx-curly-brace-presence": "off",
-    "react/iframe-missing-sandbox": "off"
+    "react/iframe-missing-sandbox": "off",
+    "react/no-array-index-key": "off"
   },
   "overrides": [
     {

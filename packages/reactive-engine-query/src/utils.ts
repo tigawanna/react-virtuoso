@@ -33,5 +33,6 @@ export async function executeWithRetry<T>(
     }
   }
 
+  // oxlint-disable-next-line no-throw-literal -- re-throwing the original caught error
   throw lastError
 }
