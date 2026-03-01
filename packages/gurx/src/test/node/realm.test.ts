@@ -556,7 +556,7 @@ describe('singleton subscription', () => {
       r.pipe(
         s,
         map(async (val) => {
-          return await new Promise<string>((resolve, reject) => {
+          return new Promise<string>((resolve, reject) => {
             if (val === 2) {
               resolve('loaded')
             } else {

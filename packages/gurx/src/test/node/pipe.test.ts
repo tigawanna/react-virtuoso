@@ -5,7 +5,7 @@ import { debounceTime, filter, map, mapTo, once, onNext, scan, throttleTime, wit
 import { noop } from '../../utils'
 
 async function awaitCall(cb: () => unknown, delay: number) {
-  return await new Promise((resolve) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       cb()
       resolve(undefined)

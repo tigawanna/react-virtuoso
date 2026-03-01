@@ -416,7 +416,7 @@ export const initAstroTypedoc = async ({
   // Track the current page end handler to prevent duplicates
   let currentPageEndHandler: ((event: PageEvent) => void) | null = null
 
-  const getReflections = async (): Promise<ProjectReflection | undefined> => await app.convert()
+  const getReflections = (): Promise<ProjectReflection | undefined> => app.convert()
   const generateDocs = async ({ frontmatter, outputFolder = 'src/pages/docs', project }: GenerateDocsOptions): Promise<void> => {
     // Remove the previous handler if it exists
     if (currentPageEndHandler) {
