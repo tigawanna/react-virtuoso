@@ -153,7 +153,7 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
       let pubPayload = {}
 
       for (let i = 0; i < length; i++) {
-        const entry = entries[i]
+        const entry = entries[i]!
         // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
         const element = entry.target as HTMLDivElement
 
@@ -195,13 +195,13 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
           continue
         }
 
-        const columnResults = results[columnIndex]
+        const columnResults = results[columnIndex]!
 
         const lastResult = columnResults[columnResults.length - 1]
-        if (columnResults.length === 0 || lastResult.size !== size || lastResult.endIndex !== index - 1) {
+        if (columnResults.length === 0 || lastResult!.size !== size || lastResult!.endIndex !== index - 1) {
           columnResults.push({ endIndex: index, size: size, startIndex: index })
         } else {
-          columnResults[columnResults.length - 1].endIndex++
+          columnResults[columnResults.length - 1]!.endIndex++
         }
       }
 
@@ -247,7 +247,7 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
         observer.observe(el, { box: 'border-box' })
       } else {
         const current = listRef.current[index]
-        if (current !== null) {
+        if (current !== null && current !== undefined) {
           observer.unobserve(current)
           listRef.current[index] = null
         }
@@ -300,6 +300,7 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
         theWin.removeEventListener('scroll', handleWindowScroll)
       }
     }
+    return undefined
   }, [useWindowScroll, realm])
 
   const builtInStyle: CSSProperties = useWindowScroll

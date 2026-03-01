@@ -15,7 +15,7 @@ export function offsetTreeReducer(offsetTree: OffsetPoint[], [sizeTree, lastRang
 
   if (lastRangeStart !== 0) {
     startAtIndex = findIndexOfClosestSmallerOrEqual(offsetTree, lastRangeStart - 1, indexComparator)
-    const offsetInfo = offsetTree[startAtIndex]
+    const offsetInfo = offsetTree[startAtIndex]!
     prevOffset = offsetInfo.offset
     const kv = findMaxKeyValue(sizeTree, lastRangeStart - 1)
     if (kv[1] === undefined) {
@@ -24,7 +24,7 @@ export function offsetTreeReducer(offsetTree: OffsetPoint[], [sizeTree, lastRang
     prevIndex = kv[0]
     prevHeight = kv[1]
 
-    if (offsetTree.length && offsetTree[startAtIndex].height === findMaxKeyValue(sizeTree, lastRangeStart)[1]) {
+    if (offsetTree.length && offsetTree[startAtIndex]!.height === findMaxKeyValue(sizeTree, lastRangeStart)[1]) {
       startAtIndex -= 1
     }
 

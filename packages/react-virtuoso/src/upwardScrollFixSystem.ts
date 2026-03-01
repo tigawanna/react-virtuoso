@@ -38,7 +38,7 @@ export const upwardScrollFixSystem = u.system(
             let newDev = 0
             if (prevTotalCount === totalCount) {
               if (prevItems.length > 0 && items.length > 0) {
-                const atStart = items[0].originalIndex === 0 && prevItems[0].originalIndex === 0
+                const atStart = items[0]!.originalIndex === 0 && prevItems[0]!.originalIndex === 0
                 if (!atStart) {
                   newDev = totalHeight - prevTotalHeight
                   if (newDev !== 0) {
@@ -127,7 +127,7 @@ export const upwardScrollFixSystem = u.system(
             amount += defaultGroupSize
 
             let groupItemCount =
-              groupIndices.length === groupIndex + 1 ? Infinity : groupIndices[groupIndex + 1] - groupIndices[groupIndex] - 1
+              groupIndices.length === groupIndex + 1 ? Infinity : groupIndices[groupIndex + 1]! - groupIndices[groupIndex]! - 1
 
             // if the group is larger than the offset, we have an expanded group. remove the group size, and replace with 1 item.
             if (recognizedOffsetItems + groupItemCount > offset) {

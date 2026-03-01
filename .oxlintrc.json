@@ -49,7 +49,7 @@
     "symbol-description": "off",
 
     "typescript/restrict-template-expressions": ["error", { "allowNumber": true }],
-    "typescript/ban-types": "off",
+    "typescript/ban-types": "error",
 
     "import/no-named-export": "off",
     "import/group-exports": "off",

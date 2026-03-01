@@ -29,7 +29,7 @@ const emptyStreamValue = Symbol('empty stream')
  * @category Engine
  */
 export class Engine {
-  public readonly id?: string
+  public readonly id?: string | undefined
   private readonly calledInits = new Set<NodeInit<unknown>>()
   private childEngines: Engine[] = []
   private readonly combinedCells: CombinedCellRecord[] = []

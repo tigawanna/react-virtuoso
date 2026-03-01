@@ -77,7 +77,7 @@ export function Example() {
       <Virtuoso
         firstItemIndex={TOTAL_COUNT - loadedCount}
         itemContent={(index) => {
-          return <div style={{ height: SHORT_IDX[index] ? '15px' : '150px' }}>{index}</div>
+          return <div style={{ height: index in SHORT_IDX ? '15px' : '150px' }}>{index}</div>
         }}
         overscan={0}
         startReached={prepend}

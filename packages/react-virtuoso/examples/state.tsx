@@ -37,7 +37,7 @@ export function Example() {
         itemContent={(index) => <div style={{ height: index % 2 ? 30 : 20 }}>Item {index}</div>}
         key={key}
         ref={ref}
-        restoreStateFrom={state.current}
+        {...(state.current ? { restoreStateFrom: state.current } : {})}
         style={{ height: 300 }}
         totalCount={100}
       />

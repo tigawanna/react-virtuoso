@@ -1108,7 +1108,7 @@ export class Realm {
   private getExecutionMap(nodes: symbol[]) {
     let key: symbol | symbol[] = nodes
     if (nodes.length === 1) {
-      key = nodes[0]
+      key = nodes[0]!
       const existingMap = this.executionMaps.get(key)
       if (existingMap !== undefined) {
         return existingMap

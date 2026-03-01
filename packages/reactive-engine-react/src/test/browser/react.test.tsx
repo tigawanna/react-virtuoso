@@ -151,11 +151,7 @@ describe('Remote hooks', () => {
         return <div data-testid="remote-value">{value ?? 'loading'}</div>
       }
 
-      const screen = await render(
-        <>
-          <RemoteComponent />
-        </>
-      )
+      const screen = await render(<RemoteComponent />)
 
       await expect.element(screen.getByTestId('remote-value')).toHaveTextContent('loading')
 
@@ -190,11 +186,7 @@ describe('Remote hooks', () => {
 
       await expect.element(screen.getByTestId('remote-value')).toHaveTextContent('remote-value')
 
-      void screen.rerender(
-        <>
-          <RemoteComponent />
-        </>
-      )
+      void screen.rerender(<RemoteComponent />)
 
       await expect.element(screen.getByTestId('remote-value')).toHaveTextContent('loading')
     })

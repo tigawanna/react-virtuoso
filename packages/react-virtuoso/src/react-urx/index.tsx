@@ -44,7 +44,7 @@ function omit<O extends Dict<any>, K extends readonly string[]>(keys: K, obj: O)
   const len = keys.length
 
   while (idx < len) {
-    index[keys[idx]] = 1
+    index[keys[idx]!] = 1
     idx += 1
   }
 
@@ -172,13 +172,13 @@ export function systemToComponent<SS extends AnySystemSpec, M extends SystemProp
     }
 
     for (const requiredPropName of requiredPropNames) {
-      const stream = system[map.required![requiredPropName]]
+      const stream = system[map.required![requiredPropName] as keyof ContextValue]
       u.publish(stream, props[requiredPropName])
     }
 
     for (const optionalPropName of optionalPropNames) {
       if (optionalPropName in props) {
-        const stream = system[map.optional![optionalPropName]]
+        const stream = system[map.optional![optionalPropName] as keyof ContextValue]
         u.publish(stream, props[optionalPropName])
       }
     }
@@ -191,7 +191,7 @@ export function systemToComponent<SS extends AnySystemSpec, M extends SystemProp
   function buildMethods(system: ContextValue) {
     return methodNames.reduce((acc, methodName) => {
       ;(acc as any)[methodName] = (value: any) => {
-        const stream = system[map.methods![methodName]]
+        const stream = system[map.methods![methodName] as keyof ContextValue]
         u.publish(stream, value)
       }
       return acc
@@ -200,7 +200,7 @@ export function systemToComponent<SS extends AnySystemSpec, M extends SystemProp
 
   function buildEventHandlers(system: ContextValue) {
     return eventNames.reduce<Record<string, Emitter<any>>>((handlers, eventName) => {
-      handlers[eventName] = u.eventHandler(system[map.events![eventName]])
+      handlers[eventName] = u.eventHandler(system[map.events![eventName] as keyof ContextValue])
       return handlers
     }, {})
   }
@@ -223,7 +223,7 @@ export function systemToComponent<SS extends AnySystemSpec, M extends SystemProp
     useIsomorphicLayoutEffect(() => {
       for (const eventName of eventNames) {
         if (eventName in props) {
-          u.subscribe(handlers[eventName], props[eventName])
+          u.subscribe(handlers[eventName]!, props[eventName])
         }
       }
       return () => {

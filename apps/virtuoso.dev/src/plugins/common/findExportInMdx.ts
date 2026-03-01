@@ -24,9 +24,15 @@ export function findExportInProgram(program: Program): undefined | VariableDecla
 
 export function findExportInMdx(root: Root): undefined | VariableDeclarator {
   let found: undefined | VariableDeclarator
-  visit(root, isMdxjsEsm, (node) => {
-    if (node.data?.estree) {
-      found = findExportInProgram(node.data.estree)
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
+  const rootNode = root as unknown as Parameters<typeof visit>[0]
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
+  const predicate = isMdxjsEsm as Parameters<typeof visit>[1]
+  visit(rootNode, predicate, (node) => {
+    // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
+    const estree = (node.data as Record<string, unknown> | undefined)?.estree as Program | undefined
+    if (estree !== undefined) {
+      found = findExportInProgram(estree)
       if (found) {
         return EXIT
       }

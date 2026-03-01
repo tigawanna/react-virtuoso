@@ -110,11 +110,11 @@ export function Example() {
       groupCounts={groupCounts}
       itemContent={(index) => (
         <div>
-          <div>{users[index].initials}</div>
+          <div>{users[index]!.initials}</div>
           <div>
-            <strong>{users[index].name}</strong>
+            <strong>{users[index]!.name}</strong>
           </div>
-          <div>{users[index].description}</div>
+          <div>{users[index]!.description}</div>
         </div>
       )}
       overscan={400}

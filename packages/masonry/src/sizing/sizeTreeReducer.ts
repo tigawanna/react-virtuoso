@@ -9,8 +9,8 @@ export function sizeTreeReducer(currentTree: AANode, [ranges, groupIndices]: [Si
   // which should always pass an item and a group
   // the results contain two ranges, which we consider to mean that groups and items have different heights
   if (groupIndices.length > 0 && empty(currentTree) && ranges.length === 2) {
-    const groupSize = ranges[0].size
-    const itemSize = ranges[1].size
+    const groupSize = ranges[0]!.size
+    const itemSize = ranges[1]!.size
 
     return [
       groupIndices.reduce((tree, groupIndex) => {

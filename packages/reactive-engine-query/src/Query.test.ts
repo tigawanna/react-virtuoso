@@ -56,7 +56,7 @@ describe('Query', () => {
     })
 
     const query = Query({
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
       retry: false,
     })
@@ -157,7 +157,7 @@ describe('Query', () => {
 
     const query = Query({
       enabled: false,
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
     })
 
@@ -190,7 +190,7 @@ describe('Query', () => {
     })
 
     const query = Query({
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
     })
 
@@ -270,7 +270,7 @@ describe('Query', () => {
     })
 
     const query = Query({
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
       retry: 2,
       retryDelay: () => 10, // Short delay for testing
@@ -298,7 +298,7 @@ describe('Query', () => {
     })
 
     const query = Query({
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
       refetchInterval: 50,
     })
@@ -330,7 +330,7 @@ describe('Query', () => {
 
     const query = Query({
       initialData: 'Initial data',
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
     })
 
@@ -367,7 +367,7 @@ describe('Query', () => {
     })
 
     const query = Query({
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
     })
 
@@ -415,7 +415,7 @@ describe('Query', () => {
     })
 
     const query = Query({
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
       retry: false,
     })
@@ -440,7 +440,7 @@ describe('Query', () => {
     })
 
     const query = Query({
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
       retry: 0,
     })
@@ -464,7 +464,7 @@ describe('Query', () => {
     })
 
     const query = Query({
-      initialParams: {},
+      initialParams: {} as Record<string, never>,
       queryFn,
       refetchInterval: 50,
     })
@@ -494,7 +494,7 @@ describe('Query', () => {
       const queryFn = vi.fn(() => 'User data')
 
       const query = Query({
-        initialParams: {},
+        initialParams: {} as Record<string, never>,
         queryFn,
       })
 
@@ -530,7 +530,7 @@ describe('Query', () => {
       })
 
       const query = Query({
-        initialParams: {},
+        initialParams: {} as Record<string, never>,
         queryFn,
         retry: false,
       })
@@ -571,7 +571,7 @@ describe('Query', () => {
       })
 
       const query = Query({
-        initialParams: {},
+        initialParams: {} as Record<string, never>,
         queryFn,
       })
 
@@ -603,7 +603,7 @@ describe('Query', () => {
       const queryFn = vi.fn(() => 'User data')
 
       const query = Query({
-        initialParams: {},
+        initialParams: {} as Record<string, never>,
         queryFn,
       })
 

@@ -316,7 +316,7 @@ export const gridSystem = /*#__PURE__*/ u.system(
         u.filter(([{ items }]) => items.length > 0),
         u.withLatestFrom(hasScrolled),
         u.filter(([[gridState, totalCount], hasScrolled]) => {
-          const lastIndex = gridState.items[gridState.items.length - 1].index
+          const lastIndex = gridState.items[gridState.items.length - 1]!.index
           const isLastItemRendered = lastIndex === totalCount - 1
 
           // User has scrolled
@@ -341,7 +341,7 @@ export const gridSystem = /*#__PURE__*/ u.system(
       u.pipe(
         u.duc(gridState),
         u.filter(({ items }) => {
-          return items.length > 0 && items[0].index === 0
+          return items.length > 0 && items[0]!.index === 0
         }),
 
         u.mapTo(0),
@@ -356,8 +356,8 @@ export const gridSystem = /*#__PURE__*/ u.system(
         u.filter(([{ items }, stateRestoreInProgress]) => items.length > 0 && !stateRestoreInProgress),
         u.map(([{ items }]) => {
           return {
-            endIndex: items[items.length - 1].index,
-            startIndex: items[0].index,
+            endIndex: items[items.length - 1]!.index,
+            startIndex: items[0]!.index,
           }
         }),
         u.distinctUntilChanged(rangeComparator),
@@ -473,8 +473,8 @@ function gridLayout<D>(viewport: ElementDimensions, gap: Gap, item: ElementDimen
     return { bottom: 0, top: 0 }
   }
 
-  const top = itemTop(viewport, gap, item, items[0].index)
-  const bottom = itemTop(viewport, gap, item, items[items.length - 1].index) + itemHeight
+  const top = itemTop(viewport, gap, item, items[0]!.index)
+  const bottom = itemTop(viewport, gap, item, items[items.length - 1]!.index) + itemHeight
   return { bottom, top }
 }
 

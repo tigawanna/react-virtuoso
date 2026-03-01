@@ -118,12 +118,12 @@ describe('getUrl() Utility Function', () => {
     })
 
     it('should handle empty search params object', () => {
-      const url = getUrl(search$, { $search: {} })
+      const url = getUrl(search$, { $search: {} as Record<string, never> })
       expect(url).toBe('/search')
     })
 
     it('should handle undefined search param values', () => {
-      const url = getUrl(search$, { $search: { page: undefined, q: undefined } })
+      const url = getUrl(search$, { $search: {} as Record<string, never> })
       expect(url).toBe('/search')
     })
 

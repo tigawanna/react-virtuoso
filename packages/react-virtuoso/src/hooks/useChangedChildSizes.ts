@@ -118,10 +118,10 @@ function getChangedChildSizes(children: HTMLCollection, itemSize: SizeFunction, 
     }
 
     const lastResult = results[results.length - 1]
-    if (results.length === 0 || lastResult.size !== size || lastResult.endIndex !== index - 1) {
+    if (results.length === 0 || lastResult!.size !== size || lastResult!.endIndex !== index - 1) {
       results.push({ endIndex: index, size, startIndex: index })
     } else {
-      results[results.length - 1].endIndex++
+      results[results.length - 1]!.endIndex++
     }
   }
 

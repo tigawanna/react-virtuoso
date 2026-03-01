@@ -158,7 +158,7 @@ export const masonryItemsState$ = Cell<MasonryItemsState<unknown>>({ columns: []
                   if (listBottom >= viewportBottom) {
                     break
                   }
-                  const realIndex = indexes[i]
+                  const realIndex = indexes[i]!
                   const item: MasonryItem<unknown> = {
                     columnIndex,
                     data: data?.[realIndex],
@@ -215,7 +215,7 @@ export const masonryItemsState$ = Cell<MasonryItemsState<unknown>>({ columns: []
       filter((state) => state.columns.some((column) => column.listBottom < column.viewportBottom))
     ),
     (masonryItemsState) => {
-      const shortestColumn = masonryItemsState.columns.slice().sort((a, b) => a.listBottom - b.listBottom)[0]
+      const shortestColumn = masonryItemsState.columns.slice().sort((a, b) => a.listBottom - b.listBottom)[0]!
       const indexes = r.getValue(indexesInColumns$)
       const flattenedIndexes = indexes.flat()
       const nextIndex = flattenedIndexes.length ? Math.max(...flattenedIndexes) + 1 : 0

@@ -224,7 +224,7 @@ export const viewportStyle: (alignToBottom: boolean) => React.CSSProperties = (a
   position: 'absolute',
   top: 0,
   width: '100%',
-  ...(alignToBottom ? { display: 'flex', flexDirection: 'column' } : {}),
+  ...(alignToBottom ? { display: 'flex', flexDirection: 'column' } : undefined),
 })
 
 const topItemListStyle: React.CSSProperties = {
@@ -364,7 +364,7 @@ export function buildWindowScroller({ useEmitter, useEmitterValue, usePublisher 
       <ScrollerComponent
         ref={scrollerElRef}
         data-virtuoso-scroller={true}
-        style={{ position: 'relative', ...style, ...(totalListHeight !== 0 ? { height: totalListHeight + deviation } : {}) }}
+        style={{ position: 'relative', ...style, ...(totalListHeight !== 0 ? { height: totalListHeight + deviation } : undefined) }}
         {...props}
         {...contextPropIfNotDomElement(ScrollerComponent, context)}
       >
@@ -471,7 +471,6 @@ export const {
 } = /*#__PURE__*/ systemToComponent(
   combinedSystem,
   {
-    required: {},
     optional: {
       restoreStateFrom: 'restoreStateFrom',
       context: 'context',

@@ -60,7 +60,7 @@ export function Example() {
 
   const appendItem = useCallback(() => {
     setStreamItems((oldItems) => {
-      const newIndex = oldItems[0].index - 1
+      const newIndex = oldItems[0]!.index - 1
       const newItem: SteamItem = {
         _id: uuidv4(),
         label: `index ${newIndex}`,
@@ -82,7 +82,7 @@ export function Example() {
       <button onClick={appendItem}>Append Item</button>
       <div id="stream-item-listing" style={{ height: 500, overflow: 'auto' }} ref={listingRef}>
         <Virtuoso
-          customScrollParent={listingRef.current ?? undefined}
+          {...(listingRef.current ? { customScrollParent: listingRef.current } : {})}
           skipAnimationFrameInResizeObserver
           firstItemIndex={firstItemIndex}
           ref={virtuosoRef}

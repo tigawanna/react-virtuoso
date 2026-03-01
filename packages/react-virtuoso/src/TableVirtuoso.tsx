@@ -123,7 +123,7 @@ const Items = /*#__PURE__*/ React.memo(function VirtuosoItems({ showTopList = fa
     if (index === 0) {
       acc.push(item.size)
     } else {
-      acc.push(acc[index - 1] + item.size)
+      acc.push(acc[index - 1]! + item.size)
     }
     return acc
   }, [])
@@ -170,7 +170,7 @@ const Items = /*#__PURE__*/ React.memo(function VirtuosoItems({ showTopList = fa
         data-known-size={item.size}
         data-item-group-index={item.groupIndex}
         key={key}
-        style={showTopList ? { ...STICKY_ITEM_STYLE, top: fixedHeaderHeight + offsetTop } : ITEM_STYLE}
+        style={showTopList ? { ...STICKY_ITEM_STYLE, top: fixedHeaderHeight + offsetTop! } : ITEM_STYLE}
       >
         {hasGroups
           ? (itemContent as GroupItemContent<any, any>)(item.index, item.groupIndex!, item.data, context)
@@ -360,7 +360,6 @@ const {
 } = /*#__PURE__*/ systemToComponent(
   combinedSystem,
   {
-    required: {},
     optional: {
       restoreStateFrom: 'restoreStateFrom',
       context: 'context',
@@ -490,6 +489,6 @@ export const TableVirtuoso = Table as <ItemData = any, Context = any>(
  * @see {@link GroupedTableVirtuosoProps} for available props
  * @see {@link GroupedTableVirtuosoHandle} for imperative methods
  */
-export const GroupedTableVirtuoso = Table as <ItemData = any, Context = any>(
+export const GroupedTableVirtuoso = Table as unknown as <ItemData = any, Context = any>(
   props: GroupedTableVirtuosoProps<ItemData, Context> & { ref?: React.Ref<GroupedTableVirtuosoHandle> }
 ) => React.ReactElement

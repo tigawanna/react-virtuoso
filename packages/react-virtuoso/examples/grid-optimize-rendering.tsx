@@ -42,7 +42,7 @@ const ItemWrapper = styled.div`
 const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-` as GridComponents['List']
+` as NonNullable<GridComponents['List']>
 
 const Item = React.memo(function Item({ item }: { item: { index: number; selected: boolean } }) {
   return <div style={{ backgroundColor: item.selected ? 'blue' : 'white' }}>Item {item.index}</div>
@@ -67,7 +67,7 @@ export function Example() {
           })
         }}
       >
-        <Item item={items[index]} />
+        <Item item={items[index]!} />
       </ItemWrapper>
     ),
     [items, setItems]

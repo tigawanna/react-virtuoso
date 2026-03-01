@@ -16,10 +16,10 @@ const defaultCalculateViewLocation: CalculateViewLocation = ({
   viewportTop,
 }) => {
   if (itemTop < viewportTop) {
-    return { ...rest, align: align ?? 'start', behavior }
+    return { ...rest, align: align ?? 'start', ...(behavior !== undefined ? { behavior } : {}) }
   }
   if (itemBottom > viewportBottom) {
-    return { ...rest, align: align ?? 'end', behavior }
+    return { ...rest, align: align ?? 'end', ...(behavior !== undefined ? { behavior } : {}) }
   }
   return null
 }
@@ -38,7 +38,7 @@ export const scrollIntoViewSystem = u.system(
         u.withLatestFrom(sizes, viewportHeight, totalCount, headerHeight, fixedHeaderHeight, fixedFooterHeight, scrollTop),
         u.withLatestFrom(gap),
         u.map(([[viewLocation, sizes, viewportHeight, totalCount, headerHeight, fixedHeaderHeight, fixedFooterHeight, scrollTop], gap]) => {
-          const { align, behavior, calculateViewLocation = defaultCalculateViewLocation, done, ...rest } = viewLocation
+          const { calculateViewLocation = defaultCalculateViewLocation, done, ...locationParams } = viewLocation
           const actualIndex = originalIndexFromLocation(viewLocation, sizes, totalCount - 1)
 
           const itemTop = offsetOf(actualIndex, sizes.offsetTree, gap) + headerHeight + fixedHeaderHeight
@@ -49,7 +49,7 @@ export const scrollIntoViewSystem = u.system(
           const location = calculateViewLocation({
             itemBottom,
             itemTop,
-            locationParams: { align, behavior, ...rest },
+            locationParams,
             viewportBottom,
             viewportTop,
           })

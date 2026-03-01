@@ -88,10 +88,10 @@ describe('scan operator', () => {
     e.sub(scanned, spy)
 
     eng.pub(source, 10)
-    expect(history[0]).toEqual({ count: 1, values: [10] })
+    expect(history[0]!).toEqual({ count: 1, values: [10] })
 
     eng.pub(source, 20)
-    expect(history[1]).toEqual({ count: 2, values: [10, 20] })
+    expect(history[1]!).toEqual({ count: 2, values: [10, 20] })
   })
 
   it('does not contain accumulator function throwing errors', () => {
@@ -181,14 +181,14 @@ describe('scan operator', () => {
     e.sub(scanned, spy)
 
     eng.pub(source, { text: 'Learn React', type: 'add' })
-    expect(history[0].todos).toHaveLength(1)
-    expect(history[0].todos[0].text).toBe('Learn React')
+    expect(history[0]!.todos).toHaveLength(1)
+    expect(history[0]!.todos[0]!.text).toBe('Learn React')
 
     eng.pub(source, { text: 'Learn Testing', type: 'add' })
-    expect(history[1].todos).toHaveLength(2)
+    expect(history[1]!.todos).toHaveLength(2)
 
     eng.pub(source, { id: 1, type: 'toggle' })
-    expect(history[2].todos[0].done).toBe(true)
+    expect(history[2]!.todos[0]!.done).toBe(true)
   })
 
   it('handles immutable updates correctly', () => {
@@ -202,10 +202,10 @@ describe('scan operator', () => {
     e.sub(scanned, spy)
 
     eng.pub(source, 1)
-    const first = history[0]
+    const first = history[0]!
 
     eng.pub(source, 2)
-    const second = history[1]
+    const second = history[1]!
 
     expect(first).toEqual([1])
     expect(second).toEqual([1, 2])
@@ -378,8 +378,8 @@ describe('scan operator', () => {
     }
 
     expect(history).toHaveLength(1000)
-    expect(history[0]).toBe(1)
-    expect(history[999]).toBe(500500) // Sum of 1 to 1000
+    expect(history[0]!).toBe(1)
+    expect(history[999]!).toBe(500500) // Sum of 1 to 1000
   })
 
   // Complex function patterns

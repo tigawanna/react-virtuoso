@@ -48,7 +48,7 @@ export function Example() {
         )}
         key={key}
         ref={ref}
-        restoreStateFrom={state.current}
+        {...(state.current ? { restoreStateFrom: state.current } : {})}
         style={{ height: 400, marginTop: 8 }}
         totalCount={250}
       />

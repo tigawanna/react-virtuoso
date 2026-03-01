@@ -1,8 +1,5 @@
 {
   "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "noUncheckedIndexedAccess": true
-  },
   "include": ["**/*", ".ladle/**/*"],
   "exclude": ["dist"]
 }

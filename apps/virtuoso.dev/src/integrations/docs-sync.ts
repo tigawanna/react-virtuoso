@@ -32,7 +32,7 @@ const NUMERIC_PREFIX_PATTERN = /^(\d+)\./
 // Extract numeric prefix from filename (e.g., "6.troubleshooting.md" → 6)
 function getNumericPrefix(filename: string): null | number {
   const match = NUMERIC_PREFIX_PATTERN.exec(filename)
-  return match ? parseInt(match[1], 10) : null
+  return match ? parseInt(match[1]!, 10) : null
 }
 
 // Inject sidebar.order and prefixed label into frontmatter based on filename prefix

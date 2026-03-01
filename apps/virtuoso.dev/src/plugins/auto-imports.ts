@@ -27,14 +27,14 @@ function findExistingImports(tree: Root): Set<string> {
       const namedImports = importMatch[1]
       const defaultImport = importMatch[2]
 
-      if (defaultImport) {
+      if (defaultImport !== undefined && defaultImport !== '') {
         imported.add(defaultImport)
       }
 
-      if (namedImports) {
+      if (namedImports !== undefined && namedImports !== '') {
         const names = namedImports.split(',').map((s) => {
           const parts = s.trim().split(/\s+as\s+/)
-          return parts[parts.length - 1].trim()
+          return parts[parts.length - 1]!.trim()
         })
         names.forEach((n) => imported.add(n))
       }
@@ -101,10 +101,10 @@ export function autoImports(options: AutoImportsOptions) {
       let importStatement: string
       if (defaultImports.length > 0 && namedImports.length > 0) {
         // import Default, { Named } from 'source'
-        importStatement = `import ${defaultImports[0].name}, { ${namedImports.map((c) => c.name).join(', ')} } from '${source}'`
+        importStatement = `import ${defaultImports[0]!.name}, { ${namedImports.map((c) => c.name).join(', ')} } from '${source}'`
       } else if (defaultImports.length > 0) {
         // import Default from 'source'
-        importStatement = `import ${defaultImports[0].name} from '${source}'`
+        importStatement = `import ${defaultImports[0]!.name} from '${source}'`
       } else {
         // import { Named } from 'source'
         importStatement = `import { ${namedImports.map((c) => c.name).join(', ')} } from '${source}'`

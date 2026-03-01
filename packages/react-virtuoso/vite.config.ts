@@ -26,7 +26,7 @@ export default inLadle
         rollupOptions: {
           external: ['react', 'react-dom', 'react/jsx-runtime'],
         },
-        target: ['es2020', 'edge88', 'firefox78', 'chrome79', 'safari14'],
+        target: ['es2022', 'edge109', 'firefox115', 'chrome109', 'safari16'],
       },
       plugins: [react(), dts({ rollupTypes: true })],
       test: {

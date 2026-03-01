@@ -18,7 +18,7 @@ const ItemContainer = styled.div`
 const ListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-` as GridComponents['List']
+` as NonNullable<GridComponents['List']>
 
 export function Example() {
   return (

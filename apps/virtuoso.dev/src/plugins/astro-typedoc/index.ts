@@ -41,7 +41,7 @@ const getGroupFromComment = (comment: CommentType | undefined): string | undefin
 
   const groupTag = comment.blockTags.find((tag) => tag.tag === '@group')
   if (groupTag && groupTag.content.length > 0) {
-    return groupTag.content[0].text.trim()
+    return groupTag.content[0]!.text.trim()
   }
   return undefined
 }
@@ -169,8 +169,7 @@ const ITEM_SORT_ORDER: Record<string, string[]> = {
 
 // Get sort priority for an item within a group (lower = first)
 const getItemSortPriority = (group: string, title: string): number => {
-  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
-  const order = ITEM_SORT_ORDER[group] as string[] | undefined
+  const order = ITEM_SORT_ORDER[group]
   if (!order) {
     return Infinity
   }
@@ -243,7 +242,7 @@ const mergeHeadingsWithTypes = (content: string): string => {
   const result: string[] = []
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
+    const line = lines[i]!
     const nextLine = lines[i + 1]
     const lineAfterNext = lines[i + 2]
 
@@ -252,11 +251,12 @@ const mergeHeadingsWithTypes = (content: string): string => {
     if (
       /^#{3,6} \S+\?$/.test(line) &&
       nextLine === '' &&
-      lineAfterNext &&
+      lineAfterNext !== undefined &&
+      lineAfterNext !== '' &&
       !lineAfterNext.startsWith('>') &&
       !lineAfterNext.startsWith('#') &&
       !lineAfterNext.startsWith('***') &&
-      !lineAfterNext.startsWith('*The ') && // Skip italic notes like "*The property accepts pixel values*"
+      !lineAfterNext.startsWith('*The ') &&
       (lineAfterNext.includes('`') || lineAfterNext.includes('['))
     ) {
       // Merge heading with type
@@ -285,9 +285,9 @@ const fixCrossLinks = (content: string, fileToGroupMap: Map<string, string>): st
   return content.replace(/\[([^\]]+)\]\(([^)]+\.mdx?(?:#[^)]*)?)\)/g, (match, linkText: string, linkPath: string) => {
     // Extract the filename (without path and extension) and any anchor
     const pathParts = linkPath.split('/')
-    const fileWithAnchor = pathParts[pathParts.length - 1]
+    const fileWithAnchor = pathParts[pathParts.length - 1]!
     const [filename, existingAnchor] = fileWithAnchor.split('#')
-    const baseFilename = filename.replace(/\.mdx?$/, '')
+    const baseFilename = filename!.replace(/\.mdx?$/, '')
 
     // Look up the group for this file
     const group = fileToGroupMap.get(baseFilename)
@@ -298,7 +298,7 @@ const fixCrossLinks = (content: string, fileToGroupMap: Map<string, string>): st
       const groupFilename = toKebabCase(group)
 
       // Use existing anchor if present, otherwise create anchor from filename
-      const anchor = existingAnchor || titleToAnchor(baseFilename)
+      const anchor = existingAnchor !== undefined && existingAnchor !== '' ? existingAnchor : titleToAnchor(baseFilename)
 
       return `[${linkText}](../${groupFilename}/#${anchor})`
     }
@@ -330,7 +330,7 @@ const mergeFilesByGroup = async (dir: string): Promise<void> => {
 
     // Extract group from frontmatter (group: 'GroupName' or group: 'Multi Word'), default to 'Misc' if not found
     const groupMatch = /^group:\s*['"]([^'"]+)['"]\s*$/m.exec(content)
-    const group = groupMatch ? groupMatch[1] : 'Misc'
+    const group = groupMatch?.[1] ?? 'Misc'
 
     // Build mapping from filename (without extension) to group
     const baseFilename = file.name.replace(/\.mdx?$/, '')
@@ -468,7 +468,7 @@ export const initAstroTypedoc = async ({
     }
   }
 
-  const setupWatch = (watchFrontmatter?: FrontmatterObject, watchOutputFolder = 'src/pages/docs') => {
+  const setupWatch = (watchFrontmatter: FrontmatterObject = {}, watchOutputFolder = 'src/pages/docs') => {
     const watchers: ReturnType<typeof watch>[] = []
     let regenerateTimeout: NodeJS.Timeout | null = null
 

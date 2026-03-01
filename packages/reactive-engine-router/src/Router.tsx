@@ -120,6 +120,7 @@ function useBrowserHistory(routerEngine: ReturnType<typeof RouterEngine>, enable
         window.removeEventListener('popstate', handlePopState)
       }
     }
+    return undefined
   }, [publishUrl, basePath, enable])
 
   // Push route changes to browser history
@@ -134,5 +135,6 @@ function useBrowserHistory(routerEngine: ReturnType<typeof RouterEngine>, enable
         }
       })
     }
+    return undefined
   }, [engine, routerEngine, basePath, enable])
 }

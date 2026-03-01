@@ -113,11 +113,11 @@ export function Example() {
       itemContent={(index) => (
         <div>
           <div>
-            <strong>{users[index].name}</strong>
+            <strong>{users[index]!.name}</strong>
           </div>
           <div>
-            {users[index].description}
-            {users[index].description}
+            {users[index]!.description}
+            {users[index]!.description}
           </div>
         </div>
       )}

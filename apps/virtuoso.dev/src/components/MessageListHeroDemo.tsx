@@ -69,7 +69,7 @@ export default function MessageListHeroDemo() {
           `}
           computeItemKey={({ data: item }) => item.key}
           data={data}
-          ItemContent={ItemContent}
+          ItemContent={ItemContent!}
           ref={virtuoso}
         />
       </VirtuosoMessageListLicense>

@@ -72,7 +72,7 @@ function extractCallerLocation(stack: string): null | string {
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i]
 
-    if (!line) {
+    if (line === undefined || line === '') {
       continue
     }
 

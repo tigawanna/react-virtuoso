@@ -189,7 +189,7 @@ function createRouteSubscription({
             let rendered: React.ReactNode = React.createElement(SuspenceTrigger, { promise: result })
 
             for (let i = guardMatchingLayoutComponents.length - 1; i >= 0; i--) {
-              const LayoutComponent = guardMatchingLayoutComponents[i]
+              const LayoutComponent = guardMatchingLayoutComponents[i]!
               rendered = React.createElement(LayoutComponent, null, rendered)
             }
             eng.pub(component$, () => rendered)
@@ -240,7 +240,7 @@ function createRouteSubscription({
 
               // Wrap with layouts from innermost to outermost
               for (let i = matchingLayoutComponents.length - 1; i >= 0; i--) {
-                const LayoutComponent = matchingLayoutComponents[i]
+                const LayoutComponent = matchingLayoutComponents[i]!
                 rendered = React.createElement(LayoutComponent, null, rendered)
               }
 

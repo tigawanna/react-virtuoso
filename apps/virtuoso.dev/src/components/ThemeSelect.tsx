@@ -38,7 +38,7 @@ export function ThemeSelect() {
   }, [])
 
   const handleClick = () => {
-    const nextTheme = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]
+    const nextTheme = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]!
     setTheme(nextTheme)
     applyTheme(nextTheme)
     if (typeof localStorage !== 'undefined') {

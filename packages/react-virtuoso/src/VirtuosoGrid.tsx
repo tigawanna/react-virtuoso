@@ -349,6 +349,6 @@ function resolveGapValue(property: string, value: string | undefined, log: Log) 
  * @see {@link VirtuosoGridHandle} for imperative methods
  * @see {@link GridComponents} for customizing grid elements
  */
-export const VirtuosoGrid = Grid as <ItemData = any, Context = any>(
+export const VirtuosoGrid = Grid as unknown as <ItemData = any, Context = any>(
   props: VirtuosoGridProps<ItemData, Context> & { ref?: React.Ref<VirtuosoGridHandle> }
 ) => React.ReactElement

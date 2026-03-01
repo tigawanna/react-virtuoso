@@ -5,7 +5,8 @@ const entries = await getCollection('docs')
 const pages = Object.fromEntries(entries.map(({ data, id }) => [id, { data }]))
 
 export const { GET, getStaticPaths } = OGImageRoute({
-  getImageOptions: (_id, page: (typeof pages)[number]) => ({
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
+  getImageOptions: ((_id, page: (typeof pages)[number]) => ({
     bgGradient: [[255, 255, 255]], // white background
     border: {
       color: [59, 130, 246], // blue-500 accent
@@ -28,7 +29,7 @@ export const { GET, getStaticPaths } = OGImageRoute({
       size: [156, 27],
     },
     title: page.data.title,
-  }),
+  })) as Parameters<typeof OGImageRoute>[0]['getImageOptions'],
   pages,
   param: 'slug',
 })

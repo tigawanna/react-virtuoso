@@ -270,7 +270,7 @@ describe('components from system', () => {
 
     act(() => {
       expect(() => {
-        render(<Comp prop={undefined} />)
+        render(<Comp />)
       }).not.toThrow()
     })
   })

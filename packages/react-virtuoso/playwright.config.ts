@@ -8,9 +8,5 @@ const config: PlaywrightTestConfig = {
     timeout: 120 * 1000,
     reuseExistingServer: process.env.CI === undefined || process.env.CI === '',
   },
-
-  use: {
-    launchOptions: {},
-  },
 }
 export default config

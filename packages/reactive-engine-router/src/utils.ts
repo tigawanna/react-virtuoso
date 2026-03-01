@@ -185,9 +185,9 @@ function parsePathParams(urlPath: string, templatePath: string): null | Record<s
       const paramDef = templatePath.slice(i + 1, end)
       const isRest = paramDef.startsWith('*')
 
-      const paramName = isRest ? paramDef.slice(1) : paramDef.split(':')[0]
+      const paramName = isRest ? paramDef.slice(1) : paramDef.split(':')[0]!
 
-      const paramType = isRest ? 'string[]' : paramDef.includes(':') ? paramDef.split(':')[1] : 'string'
+      const paramType = isRest ? 'string[]' : paramDef.includes(':') ? paramDef.split(':')[1]! : 'string'
 
       paramNames.push({ isRest, name: paramName, type: paramType })
 
@@ -200,7 +200,7 @@ function parsePathParams(urlPath: string, templatePath: string): null | Record<s
       i = end + 1
     } else {
       const char = templatePath[i]
-      if (/[.*+?^${}()|[\]\\]/.test(char)) {
+      if (/[.*+?^${}()|[\]\\]/.test(char!)) {
         pattern += `\\${char}`
       } else {
         pattern += char
@@ -223,7 +223,7 @@ function parsePathParams(urlPath: string, templatePath: string): null | Record<s
   paramNames.forEach((paramInfo, index) => {
     const value = match[index + 1]
     if (paramInfo.isRest) {
-      params[paramInfo.name] = value.split('/')
+      params[paramInfo.name] = value!.split('/')
     } else if (paramInfo.type === 'number') {
       params[paramInfo.name] = Number(value)
     } else if (paramInfo.type === 'boolean') {
@@ -252,15 +252,15 @@ function parseQueryParams(urlQuery: string, templateQuery: string): Record<strin
     const placeholder = match[2]
 
     // Extract type info from placeholder
-    const typeMatch = /^(\w+)(\?)?(?::(.+))?$/.exec(placeholder)
+    const typeMatch = /^(\w+)(\?)?(?::(.+))?$/.exec(placeholder!)
     if (!typeMatch) {
       continue
     }
 
     const [, placeholderName, isOptional, typeInfo] = typeMatch as unknown as [unknown, string, string | undefined, string | undefined]
-    processedQueryKeys.add(queryParamName)
+    processedQueryKeys.add(queryParamName!)
 
-    const values = urlSearchParams.getAll(queryParamName)
+    const values = urlSearchParams.getAll(queryParamName!)
 
     if (values.length === 0) {
       if (isOptional === undefined) {

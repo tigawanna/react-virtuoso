@@ -95,7 +95,7 @@ export function Example() {
         <Virtuoso
           key={key}
           itemContent={(index) => <Item index={index} />}
-          minOverscanItemCount={useMinOverscan ? 5 : undefined}
+          {...(useMinOverscan ? { minOverscanItemCount: 5 } : {})}
           style={{ border: '2px solid #ccc', height: 500 }}
           totalCount={100}
         />

@@ -127,7 +127,7 @@ export function originalIndexFromItemIndex(itemIndex: number, sizes: SizeState) 
   }
 
   let groupOffset = 0
-  while (sizes.groupIndices[groupOffset] <= itemIndex + groupOffset) {
+  while (sizes.groupIndices[groupOffset]! <= itemIndex + groupOffset) {
     groupOffset++
   }
   // we find the real item index, offsetting it by the number of group items before it
@@ -137,7 +137,7 @@ export function originalIndexFromItemIndex(itemIndex: number, sizes: SizeState) 
 export function originalIndexFromLocation(location: FlatOrGroupedLocation, sizes: SizeState, lastIndex: number) {
   if (isGroupLocation(location)) {
     // return the index of the first item below the index
-    return sizes.groupIndices[location.groupIndex] + 1
+    return sizes.groupIndices[location.groupIndex]! + 1
   }
   const numericIndex = location.index === 'LAST' ? lastIndex : location.index
   let result = originalIndexFromItemIndex(numericIndex, sizes)
@@ -178,8 +178,8 @@ export function sizeStateReducer(state: SizeState, [ranges, groupIndices, log, g
   // which should always pass an item and a group
   // the results contain two ranges, which we consider to mean that groups and items have different size
   if (groupIndices.length > 0 && empty(sizeTree) && ranges.length === 2) {
-    const groupSize = ranges[0].size
-    const itemSize = ranges[1].size
+    const groupSize = ranges[0]!.size
+    const itemSize = ranges[1]!.size
     newSizeTree = groupIndices.reduce((tree, groupIndex) => {
       return insert(insert(tree, groupIndex, groupSize), groupIndex + 1, itemSize)
     }, newSizeTree)
@@ -219,7 +219,7 @@ function affectedGroupCount(offset: number, groupIndices: number[]) {
   let recognizedOffsetItems = 0
   let groupIndex = 0
   while (recognizedOffsetItems < offset) {
-    recognizedOffsetItems += groupIndices[groupIndex + 1] - groupIndices[groupIndex] - 1
+    recognizedOffsetItems += groupIndices[groupIndex + 1]! - groupIndices[groupIndex]! - 1
     groupIndex++
   }
   const offsetIsExact = recognizedOffsetItems === offset
@@ -237,13 +237,13 @@ function createOffsetTree(prevOffsetTree: OffsetPoint[], syncStart: number, size
 
   if (syncStart !== 0) {
     startIndex = arrayBinarySearch.findIndexOfClosestSmallerOrEqual(offsetTree, syncStart - 1, indexComparator)
-    const offsetInfo = offsetTree[startIndex]
+    const offsetInfo = offsetTree[startIndex]!
     prevOffset = offsetInfo.offset
     const kv = findMaxKeyValue(sizeTree, syncStart - 1)
     prevIndex = kv[0]
     prevSize = kv[1]!
 
-    if (offsetTree.length && offsetTree[startIndex].size === findMaxKeyValue(sizeTree, syncStart)[1]) {
+    if (offsetTree.length && offsetTree[startIndex]!.size === findMaxKeyValue(sizeTree, syncStart)[1]) {
       startIndex -= 1
     }
 
@@ -416,12 +416,12 @@ export const sizeSystem = u.system(
         }),
         u.map((estimates) => {
           const ranges: SizeRange[] = []
-          let currentSize = estimates![0]
+          let currentSize = estimates![0]!
           let startIndex = 0
 
           // Build contiguous ranges where items have the same estimated size
           for (let i = 1; i < estimates!.length; i++) {
-            const size = estimates![i]
+            const size = estimates![i]!
             if (size !== currentSize) {
               ranges.push({
                 endIndex: i - 1,
@@ -456,7 +456,7 @@ export const sizeSystem = u.system(
           // Build size ranges for all groups and items
           const ranges: SizeRange[] = []
           for (let i = 0; i < groupIndices.length; i++) {
-            const groupIndex = groupIndices[i]
+            const groupIndex = groupIndices[i]!
             const nextGroupIndex = groupIndices[i + 1]
             // Group header
             ranges.push({
@@ -551,9 +551,9 @@ export const sizeSystem = u.system(
             let groupIndex = 0
 
             while (prependedGroupItemsCount < unshiftWith) {
-              const theGroupIndex = sizes.groupIndices[groupIndex]
+              const theGroupIndex = sizes.groupIndices[groupIndex]!
               const groupItemCount =
-                sizes.groupIndices.length === groupIndex + 1 ? Infinity : sizes.groupIndices[groupIndex + 1] - theGroupIndex - 1
+                sizes.groupIndices.length === groupIndex + 1 ? Infinity : sizes.groupIndices[groupIndex + 1]! - theGroupIndex - 1
 
               initialRanges.push({
                 endIndex: theGroupIndex,
@@ -657,8 +657,8 @@ export const sizeSystem = u.system(
             let groupOffset = 0
 
             while (removedItemsCount < -shiftWith) {
-              groupOffset = prevGroupIndicesValue[groupIndex]
-              const groupItemCount = prevGroupIndicesValue[groupIndex + 1] - groupOffset - 1
+              groupOffset = prevGroupIndicesValue[groupIndex]!
+              const groupItemCount = prevGroupIndicesValue[groupIndex + 1]! - groupOffset - 1
               groupIndex++
               removedItemsCount += groupItemCount + 1
             }

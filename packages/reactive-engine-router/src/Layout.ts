@@ -30,7 +30,7 @@ export function findMatchingLayouts(currentPath: string, layouts?: symbol[]): Re
         return false
       }
       // Use shared prefix matching logic
-      return matchesPathPrefix(pathOnly, layoutPath)
+      return matchesPathPrefix(pathOnly!, layoutPath)
     })
     .sort((a, b) => {
       // Sort by path length: shortest first (outermost)

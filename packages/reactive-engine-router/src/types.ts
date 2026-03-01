@@ -34,13 +34,13 @@ export type ExtractQueryParams<Query extends string> = Query extends `${infer _P
   ? Merge<ExtractQueryParams<Rest> & ParseQueryParamType<Value>>
   : Query extends `&${infer RestQuery}`
     ? ExtractQueryParams<RestQuery>
-    : {}
+    : {} // oxlint-disable-line typescript/ban-types -- base case for recursive type extraction
 
 export type ExtractPathParams<Path extends string> = Path extends `${infer _Start}/{${infer Param}}${infer Rest}`
   ? Merge<ExtractPathParams<Rest> & ParseParamType<Param>>
   : Path extends `${infer _Start}{${infer Param}}${infer Rest}`
     ? Merge<ExtractPathParams<Rest> & ParseParamType<Param>>
-    : {}
+    : {} // oxlint-disable-line typescript/ban-types -- base case for recursive type extraction
 
 export type ParseQueryParamType<Value extends string> = Value extends `${infer Name}?:${infer Type}`
   ? Type extends 'number'

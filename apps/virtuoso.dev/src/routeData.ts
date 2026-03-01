@@ -19,7 +19,7 @@ function toTitleCase(str: string) {
 
 function getNumericPrefix(label: string): number {
   const match = leadingNumberAndDotRegEx.exec(label)
-  return match ? parseInt(match[1], 10) : 0
+  return match ? parseInt(match[1]!, 10) : 0
 }
 
 interface SidebarEntry {

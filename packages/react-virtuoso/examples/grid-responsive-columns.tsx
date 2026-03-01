@@ -27,7 +27,7 @@ const ListContainer = styled.div`
   grid-template-rows: repeat(auto-fill, 100px);
   justify-content: space-evenly;
   margin: 10px;
-` as GridComponents['List']
+` as NonNullable<GridComponents['List']>
 
 export function Example() {
   return (

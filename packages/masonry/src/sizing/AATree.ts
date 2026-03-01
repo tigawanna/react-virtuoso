@@ -261,12 +261,12 @@ export function arrayToRanges<T, V>(
     return []
   }
 
-  let { index: start, value } = parser(items[0])
+  let { index: start, value } = parser(items[0]!)
 
   const result = []
 
   for (let i = 1; i < length; i++) {
-    const { index: nextIndex, value: nextValue } = parser(items[i])
+    const { index: nextIndex, value: nextValue } = parser(items[i]!)
     result.push({ end: nextIndex - 1, start, value })
 
     start = nextIndex

@@ -663,7 +663,7 @@ describe('list engine', () => {
       // But we start at index 0, so we can only append after
       expect(state.items.length).toBeGreaterThanOrEqual(7)
       // Last item index should be at least 6 (0-6 = 7 items)
-      expect(state.items[state.items.length - 1].index).toBeGreaterThanOrEqual(6)
+      expect(state.items[state.items.length - 1]!.index).toBeGreaterThanOrEqual(6)
     })
 
     it('prepends extra items before the visible range when scrolled', () => {
@@ -680,7 +680,7 @@ describe('list engine', () => {
       const state = getValue(listState)
       // First item should be 3 items before the visible range
       // Visible range starts at 1000/50 = 20, so first item should be 17
-      expect(state.items[0].index).toBeLessThanOrEqual(17)
+      expect(state.items[0]!.index).toBeLessThanOrEqual(17)
     })
 
     it('handles asymmetric top/bottom configuration', () => {
@@ -699,11 +699,11 @@ describe('list engine', () => {
       const visibleEndIndex = 23 // (1000+200)/50 - 1
 
       // First item should be at most 2 before visible start
-      expect(state.items[0].index).toBeLessThanOrEqual(visibleStartIndex)
-      expect(state.items[0].index).toBeGreaterThanOrEqual(visibleStartIndex - 2)
+      expect(state.items[0]!.index).toBeLessThanOrEqual(visibleStartIndex)
+      expect(state.items[0]!.index).toBeGreaterThanOrEqual(visibleStartIndex - 2)
 
       // Last item should be at least 5 after visible end
-      expect(state.items[state.items.length - 1].index).toBeGreaterThanOrEqual(visibleEndIndex + 5)
+      expect(state.items[state.items.length - 1]!.index).toBeGreaterThanOrEqual(visibleEndIndex + 5)
     })
 
     it('does not prepend items beyond the start of the list', () => {
@@ -718,7 +718,7 @@ describe('list engine', () => {
 
       const state = getValue(listState)
       // Even with 10 overscan, first item should be 0 when at top
-      expect(state.items[0].index).toBe(0)
+      expect(state.items[0]!.index).toBe(0)
     })
 
     it('does not append items beyond the end of the list', () => {
@@ -734,7 +734,7 @@ describe('list engine', () => {
 
       const state = getValue(listState)
       // Last item should not exceed totalCount - 1
-      expect(state.items[state.items.length - 1].index).toBeLessThanOrEqual(9)
+      expect(state.items[state.items.length - 1]!.index).toBeLessThanOrEqual(9)
     })
 
     it('recalculates when minOverscanItemCount changes', () => {
