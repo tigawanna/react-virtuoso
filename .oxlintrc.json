@@ -73,7 +73,6 @@
     "import/exports-last": "off",
     "import/prefer-default-export": "off",
     "import/no-namespace": "off",
-    "import/no-nodejs-modules": "off",
     "import/default": "off",
     "max-depth": "off",
     "no-duplicate-imports": "off",
@@ -86,5 +85,13 @@
     "typescript/unified-signatures": "off",
     "typescript/no-this-alias": "off"
   },
+  "overrides": [
+    {
+      "files": ["**/vite.config.*", "**/playwright.config.*"],
+      "rules": {
+        "import/no-nodejs-modules": "off"
+      }
+    }
+  ],
   "ignorePatterns": ["node_modules/", "dist/", "test-results"]
 }

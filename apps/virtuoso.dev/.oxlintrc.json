@@ -17,7 +17,8 @@
     "typescript/no-unsafe-assignment": "off",
     "typescript/no-misused-promises": "off",
     "typescript/restrict-template-expressions": "off",
-    "typescript/no-implied-eval": "off"
+    "typescript/no-implied-eval": "off",
+    "import/no-nodejs-modules": "off"
   },
   "overrides": [
     {
