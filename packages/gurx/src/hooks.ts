@@ -166,5 +166,6 @@ export function usePublisher<T>(node: Inp<T>) {
  * @category Hooks
  */
 export function useCell<O, I = O>(cell: NodeRef<O> | PipeRef<I, O>): [O, (value: I) => void] {
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-argument)
   return [useCellValue<O>(cell), usePublisher<I>(cell as any)]
 }

@@ -1,3 +1,4 @@
+// oxlint-disable typescript-eslint(no-unsafe-argument)
 import { ReflectionKind } from 'typedoc'
 // @ts-nocheck - TypeDoc plugin integration with complex external types
 import { MarkdownTheme, MarkdownThemeContext } from 'typedoc-plugin-markdown'
