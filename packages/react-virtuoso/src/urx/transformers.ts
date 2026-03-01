@@ -107,7 +107,7 @@ export function combineLatest(...emitters: Emitter<any>[]): Emitter<any> {
     const bit = Math.pow(2, index)
     subscribe(source, (value) => {
       values[index] = value
-      called = called | bit
+      called |= bit
       if (called === allCalled) {
         publish(innerSubject, values)
       }

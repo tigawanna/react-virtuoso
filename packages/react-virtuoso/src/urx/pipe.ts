@@ -355,7 +355,7 @@ export function withLatestFrom(...sources: Emitter<any>[]): Operator<any, any> {
     const bit = Math.pow(2, index)
     subscribe(source, (value) => {
       const prevCalled = called
-      called = called | bit
+      called |= bit
       values[index] = value
       if (prevCalled !== allCalled && called === allCalled && pendingCall) {
         pendingCall()
