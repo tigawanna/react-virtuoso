@@ -13,7 +13,9 @@ export async function waitForMicrotask(): Promise<void> {
  * Wait for a specified timeout duration
  */
 export async function waitForTimeout(ms: number): Promise<void> {
-  await new Promise((resolve) => { setTimeout(resolve, ms) })
+  await new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
 }
 
 /**

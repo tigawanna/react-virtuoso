@@ -42,7 +42,6 @@
     "no-else-return": "off",
     "no-implicit-coercion": "error",
     "no-inline-comments": "off",
-    "no-lonely-if": "off",
     "no-magic-numbers": "off",
     "no-negated-condition": "off",
     "no-nested-ternary": "off",

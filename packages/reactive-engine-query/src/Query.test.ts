@@ -30,7 +30,9 @@ describe('Query', () => {
       type: 'pending',
     })
 
-    await new Promise((resolve) => { setTimeout(resolve, 100) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100)
+    })
 
     // After query completes, should be success
     expect(sub).toHaveBeenLastCalledWith(
@@ -63,7 +65,9 @@ describe('Query', () => {
     const sub = vi.fn()
     engine.sub(query.data$, sub)
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(sub).toHaveBeenLastCalledWith(
       expect.objectContaining({
@@ -91,14 +95,18 @@ describe('Query', () => {
     const sub = vi.fn()
     engine.sub(query.data$, sub)
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(queryFn).toHaveBeenCalledTimes(1)
 
     // Trigger refetch
     engine.pub(query.refetch$)
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(queryFn).toHaveBeenCalledTimes(2)
     expect(queryFn).toHaveBeenLastCalledWith({ count: 1 }, expect.any(AbortSignal))
@@ -118,7 +126,9 @@ describe('Query', () => {
     const sub = vi.fn()
     engine.sub(query.data$, sub)
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(queryFn).toHaveBeenCalledTimes(1)
     expect(queryFn).toHaveBeenCalledWith({ userId: 1 }, expect.any(AbortSignal))
@@ -126,7 +136,9 @@ describe('Query', () => {
     // Change params
     engine.pub(query.params$, { userId: 2 })
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(queryFn).toHaveBeenCalledTimes(2)
     expect(queryFn).toHaveBeenLastCalledWith({ userId: 2 }, expect.any(AbortSignal))
@@ -152,14 +164,18 @@ describe('Query', () => {
     const engine = new Engine()
     engine.sub(query.data$, vi.fn())
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(queryFn).not.toHaveBeenCalled()
 
     // Enable query
     engine.pub(query.enabled$, true)
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(queryFn).toHaveBeenCalledTimes(1)
   })
@@ -184,7 +200,9 @@ describe('Query', () => {
     // Disable immediately
     engine.pub(query.enabled$, false)
 
-    await new Promise((resolve) => { setTimeout(resolve, 150) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 150)
+    })
 
     // Query should still complete but we should be in pending state
     // because we disabled it
@@ -219,13 +237,19 @@ describe('Query', () => {
     engine.sub(query.data$, vi.fn())
 
     // Quickly change params to trigger abort
-    await new Promise((resolve) => { setTimeout(resolve, 20) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 20)
+    })
     engine.pub(query.params$, { id: 2 })
 
-    await new Promise((resolve) => { setTimeout(resolve, 20) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 20)
+    })
     engine.pub(query.params$, { id: 3 })
 
-    await new Promise((resolve) => { setTimeout(resolve, 150) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 150)
+    })
 
     expect(abortedCount).toBe(2)
     expect(engine.getValue(query.data$)).toMatchObject({
@@ -255,7 +279,9 @@ describe('Query', () => {
     const engine = new Engine()
     engine.sub(query.data$, vi.fn())
 
-    await new Promise((resolve) => { setTimeout(resolve, 100) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100)
+    })
 
     expect(queryFn).toHaveBeenCalledTimes(3)
     expect(engine.getValue(query.data$)).toMatchObject({
@@ -281,15 +307,21 @@ describe('Query', () => {
     engine.sub(query.data$, vi.fn())
 
     // Wait for initial query
-    await new Promise((resolve) => { setTimeout(resolve, 30) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 30)
+    })
     expect(queryFn).toHaveBeenCalledTimes(1)
 
     // Wait for first refetch
-    await new Promise((resolve) => { setTimeout(resolve, 60) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 60)
+    })
     expect(queryFn.mock.calls.length).toBeGreaterThanOrEqual(2)
 
     // Wait for second refetch
-    await new Promise((resolve) => { setTimeout(resolve, 60) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 60)
+    })
     expect(queryFn.mock.calls.length).toBeGreaterThanOrEqual(3)
   })
 
@@ -315,7 +347,9 @@ describe('Query', () => {
       type: 'success',
     })
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     // After query completes, should have fetched data
     expect(engine.getValue(query.data$)).toMatchObject({
@@ -342,7 +376,9 @@ describe('Query', () => {
     engine.sub(query.data$, sub)
 
     // Wait for initial query
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(engine.getValue(query.data$)).toMatchObject({
       data: 'Data 1',
@@ -361,7 +397,9 @@ describe('Query', () => {
       type: 'success',
     })
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     // Should have new data
     expect(engine.getValue(query.data$)).toMatchObject({
@@ -385,7 +423,9 @@ describe('Query', () => {
     const engine = new Engine()
     engine.sub(query.data$, vi.fn())
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     // Should only be called once (no retries)
     expect(queryFn).toHaveBeenCalledTimes(1)
@@ -408,7 +448,9 @@ describe('Query', () => {
     const engine = new Engine()
     engine.sub(query.data$, vi.fn())
 
-    await new Promise((resolve) => { setTimeout(resolve, 50) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     // Should only be called once (no retries)
     expect(queryFn).toHaveBeenCalledTimes(1)
@@ -431,7 +473,9 @@ describe('Query', () => {
     engine.sub(query.data$, vi.fn())
 
     // Wait for initial query + at least one refetch
-    await new Promise((resolve) => { setTimeout(resolve, 80) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 80)
+    })
     expect(queryFn.mock.calls.length).toBeGreaterThanOrEqual(1)
 
     // Disable
@@ -439,7 +483,9 @@ describe('Query', () => {
     const callCountAfterDisable = queryFn.mock.calls.length
 
     // Wait longer, should not poll anymore
-    await new Promise((resolve) => { setTimeout(resolve, 150) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 150)
+    })
     expect(queryFn.mock.calls.length).toBe(callCountAfterDisable)
   })
 
@@ -455,7 +501,9 @@ describe('Query', () => {
       const engine = new Engine()
       engine.sub(query.data$, vi.fn())
 
-      await new Promise((resolve) => { setTimeout(resolve, 50) })
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
 
       expect(engine.getValue(query.data$)).toMatchObject({
         data: 'User data',
@@ -490,7 +538,9 @@ describe('Query', () => {
       const engine = new Engine()
       engine.sub(query.data$, vi.fn())
 
-      await new Promise((resolve) => { setTimeout(resolve, 50) })
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
 
       expect(engine.getValue(query.data$)).toMatchObject({
         error: expect.any(Error) as Error,
@@ -543,7 +593,9 @@ describe('Query', () => {
       })
 
       // Query function aborted, shouldn't complete
-      await new Promise((resolve) => { setTimeout(resolve, 250) })
+      await new Promise((resolve) => {
+        setTimeout(resolve, 250)
+      })
       expect(engine.getValue(query.data$).type).toBe('pending')
     })
 
@@ -558,7 +610,9 @@ describe('Query', () => {
       const engine = new Engine()
       engine.sub(query.data$, vi.fn())
 
-      await new Promise((resolve) => { setTimeout(resolve, 50) })
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
 
       expect(engine.getValue(query.data$)).toMatchObject({
         data: 'User data',
@@ -576,7 +630,9 @@ describe('Query', () => {
       })
 
       // Unload doesn't trigger refetch
-      await new Promise((resolve) => { setTimeout(resolve, 50) })
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
       expect(engine.getValue(query.data$).type).toBe('pending')
       expect(queryFn).toHaveBeenCalledTimes(1)
     })

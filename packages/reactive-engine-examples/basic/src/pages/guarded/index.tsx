@@ -7,6 +7,8 @@ const GuardedPage = lazy(() => import('./GuardedPage').then((m) => ({ default: m
 export const guarded$ = Route('/guarded/{userId:number}', GuardedPage)
 
 export const theGuard$ = Guard('/guarded/', async (context) => {
-  await new Promise((resolve) => { setTimeout(resolve, 2000) })
+  await new Promise((resolve) => {
+    setTimeout(resolve, 2000)
+  })
   return context.redirect('')
 })

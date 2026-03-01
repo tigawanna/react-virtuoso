@@ -574,11 +574,15 @@ describe('singleton subscription', () => {
     )
 
     r.pub(s, 2)
-    await new Promise((resolve) => { setTimeout(resolve, 0) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 0)
+    })
     expect(r.getValue(a)).toEqual('loaded')
 
     r.pub(s, 3)
-    await new Promise((resolve) => { setTimeout(resolve, 0) })
+    await new Promise((resolve) => {
+      setTimeout(resolve, 0)
+    })
     expect(r.getValue(a)).toMatchObject(new Error('something went wrong'))
   })
 })

@@ -27,7 +27,8 @@
     "react/jsx-curly-brace-presence": "off",
     "react/no-array-index-key": "off",
     "no-shadow": "off",
-    "typescript/no-unsafe-type-assertion": "off"
+    "typescript/no-unsafe-type-assertion": "off",
+    "no-lonely-if": "off"
   },
   "overrides": [
     {
