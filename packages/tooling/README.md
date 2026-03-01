@@ -3,7 +3,7 @@
 This package contains shared tooling configuration for Virtuoso projects:
 
 - ESLint configuration
-- TypeScript configuration
+- Prettier configuration
 
 ## Usage
 
@@ -25,14 +25,11 @@ export default [...virtuosoEslintConfig]
 
 ### TypeScript
 
-Extend the shared TypeScript configuration in your project's `tsconfig.json`:
+The shared TypeScript base configuration lives at the repository root (`tsconfig.base.json`). Extend it in your project's `tsconfig.json`:
 
 ```json
 {
-  "extends": "@virtuoso.dev/tooling/tsconfig.json",
-  "compilerOptions": {
-    // Additional project-specific options
-  },
+  "extends": "../../tsconfig.base.json",
   "include": ["src/**/*"]
 }
 ```
