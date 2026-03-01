@@ -33,6 +33,32 @@ jobs:
       - name: Lint markdown
         run: pnpm lint:md
 
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.24.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build prerequisites
+        run: pnpm --filter '!@virtuoso.dev/virtuoso.dev' build
+
+      - name: Type check
+        run: pnpm typecheck
+
   lint:
     name: Lint Code
     runs-on: ubuntu-latest

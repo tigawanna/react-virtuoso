@@ -12,6 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "typecheck": "astro check",
     "lint": "oxlint --type-aware --type-check && astro check",
     "format": "oxfmt && prettier --write '**/*.astro'",
     "format:check": "oxfmt --check && prettier --check '**/*.astro'"

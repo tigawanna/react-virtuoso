@@ -30,6 +30,7 @@
     "build": "tsc && vite build",
     "test": "vitest --run --passWithNoTests",
     "lint": "oxlint --type-aware --type-check",
+    "typecheck": "tsgo --noEmit",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
   },

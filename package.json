@@ -2,8 +2,9 @@
   "name": "@virtuoso.dev/monorepo",
   "private": true,
   "scripts": {
-    "ci": "pnpm ci-setup && pnpm build && pnpm lint && pnpm lint:md && pnpm test && pnpm e2e",
+    "ci": "pnpm ci-setup && pnpm build && pnpm typecheck && pnpm lint && pnpm lint:md && pnpm test && pnpm e2e",
     "ci-setup": "pnpm run --if-present --parallel --no-bail ci-setup",
+    "typecheck": "pnpm run --if-present --parallel typecheck",
     "lint": "pnpm run --if-present --parallel --no-bail lint",
     "lint:md": "markdownlint '**/*.md' --ignore-path .markdownlintignore",
     "lint:md:fix": "markdownlint '**/*.md' --ignore-path .markdownlintignore --fix",
