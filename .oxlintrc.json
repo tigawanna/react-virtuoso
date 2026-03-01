@@ -47,7 +47,7 @@
     "no-negated-condition": "off",
     "no-nested-ternary": "off",
     "no-ternary": "off",
-    "no-useless-return": "off",
+    "no-useless-return": "error",
     "operator-assignment": "off",
     "prefer-destructuring": "off",
     "prefer-enum-initializers": "off",
@@ -59,7 +59,6 @@
 
     "typescript/restrict-template-expressions": ["error", { "allowNumber": true }],
     "typescript/no-unsafe-type-assertion": "off",
-    "typescript/no-unsafe-argument": "off",
     "typescript/ban-types": "off",
 
     "import/no-named-export": "off",
@@ -70,7 +69,6 @@
     "import/default": "off",
     "max-depth": "off",
     "no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
-    "no-await-in-loop": "error",
     "default-param-last": "off",
     "no-inner-declarations": "off",
     "prefer-promise-reject-errors": "off"

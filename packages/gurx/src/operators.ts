@@ -266,7 +266,6 @@ export function handlePromise<I, OutSuccess, OnLoad, OutError>(
         value
           .then((resolved) => {
             r.pub(sink, onSuccess(resolved))
-            return
           })
           .catch((error: unknown) => {
             r.pub(sink, onError(error))

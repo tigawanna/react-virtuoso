@@ -79,7 +79,7 @@ export function eventHandler<T>(emitter: Emitter<T>) {
       case RESET:
         cleanup()
         currentSubscription = null
-        return
+        return undefined
     }
   } as Emitter<T>
 }

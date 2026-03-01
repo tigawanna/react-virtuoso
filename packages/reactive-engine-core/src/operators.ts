@@ -314,7 +314,6 @@ export function handlePromise<I, OutSuccess, OnLoad, OutError>(
         value
           .then((resolved) => {
             eng.pub(sink, onSuccess(resolved))
-            return
           })
           .catch((error: unknown) => {
             eng.pub(sink, onError(error))
