@@ -316,37 +316,35 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
       }
 
   return (
-    <>
-      <div
-        {...htmlProps}
-        data-testid="virtuoso-scroller"
-        ref={scrollerCallbackRef}
-        style={{
-          ...builtInStyle,
-          ...passedStyle,
-        }}
-      >
-        {itemsState.columns.map((columnState, index) => (
-          <div
-            data-testid="virtuoso-list"
-            // oxlint-disable-next-line no-array-index-key -- stable column layout
-            key={`column-${index}`}
-            ref={listCallbackRef(index)}
-            style={{
-              boxSizing: 'content-box',
-              flexGrow: 1,
-              height: columnState.totalHeight,
-              overflowAnchor: 'none',
-              position: 'relative',
-            }}
-          >
-            {columnState.items.map((item) => {
-              return <MasonryListItem item={item} ItemContent={ItemContent} key={item.index} mount={observe} unmount={unobserve} />
-            })}
-          </div>
-        ))}
-      </div>
-    </>
+    <div
+      {...htmlProps}
+      data-testid="virtuoso-scroller"
+      ref={scrollerCallbackRef}
+      style={{
+        ...builtInStyle,
+        ...passedStyle,
+      }}
+    >
+      {itemsState.columns.map((columnState, index) => (
+        <div
+          data-testid="virtuoso-list"
+          // oxlint-disable-next-line no-array-index-key -- stable column layout
+          key={`column-${index}`}
+          ref={listCallbackRef(index)}
+          style={{
+            boxSizing: 'content-box',
+            flexGrow: 1,
+            height: columnState.totalHeight,
+            overflowAnchor: 'none',
+            position: 'relative',
+          }}
+        >
+          {columnState.items.map((item) => {
+            return <MasonryListItem item={item} ItemContent={ItemContent} key={item.index} mount={observe} unmount={unobserve} />
+          })}
+        </div>
+      ))}
+    </div>
   )
 }
 

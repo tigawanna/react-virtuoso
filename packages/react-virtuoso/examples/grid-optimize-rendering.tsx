@@ -74,17 +74,15 @@ export function Example() {
   )
 
   return (
-    <>
-      <VirtuosoGrid
-        components={{
-          Item: ItemContainer,
-          List: ListContainer,
-        }}
-        itemContent={itemContent}
-        ref={ref}
-        style={{ height: 300, width: 1200 }}
-        totalCount={items.length}
-      />
-    </>
+    <VirtuosoGrid
+      components={{
+        Item: ItemContainer,
+        List: ListContainer,
+      }}
+      itemContent={itemContent}
+      ref={ref}
+      style={{ height: 300, width: 1200 }}
+      totalCount={items.length}
+    />
   )
 }

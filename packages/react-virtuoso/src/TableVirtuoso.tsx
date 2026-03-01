@@ -179,7 +179,7 @@ const Items = /*#__PURE__*/ React.memo(function VirtuosoItems({ showTopList = fa
     )
   })
 
-  return <>{items}</>
+  return items
 })
 
 const TableBody = /*#__PURE__*/ React.memo(function TableVirtuosoBody() {
