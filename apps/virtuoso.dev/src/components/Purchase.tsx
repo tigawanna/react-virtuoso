@@ -52,7 +52,6 @@ export default function Purchase(): JSX.Element {
           </div>
         </CardContent>
         <CardFooter>
-          {/* eslint-disable-next-line better-tailwindcss/enforce-consistent-line-wrapping */}
           <code className={`w-full rounded bg-muted px-3 py-2 text-center text-sm`}>npm i react-virtuoso</code>
         </CardFooter>
       </Card>

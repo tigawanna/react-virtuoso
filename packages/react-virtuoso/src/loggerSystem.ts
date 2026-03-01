@@ -1,12 +1,12 @@
 import * as u from './urx'
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace globalThis {
+  // oxlint-disable-next-line no-unused-vars
   let VIRTUOSO_LOG_LEVEL: LogLevel | undefined
 }
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace window {
+  // oxlint-disable-next-line no-unused-vars
   let VIRTUOSO_LOG_LEVEL: LogLevel | undefined
 }
 
@@ -54,7 +54,6 @@ export const loggerSystem = u.system(
     const log = u.statefulStream<Log>((label: string, message: any, level: LogLevel = LogLevel.INFO) => {
       const currentLevel = getGlobalThis().VIRTUOSO_LOG_LEVEL ?? u.getValue(logLevel)
       if (level >= currentLevel) {
-        // eslint-disable-next-line no-console
         console[CONSOLE_METHOD_MAP[level]](
           '%creact-virtuoso: %c%s %o',
           'color: #0253b3; font-weight: bold',

@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/style/noNonNullAssertion: tests */
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { e, Engine, Stream } from '../index'

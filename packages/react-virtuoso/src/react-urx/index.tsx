@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /**
  * `@virtuoso.dev/react-urx` exports the [[systemToComponent]] function.
  * It wraps urx systems in to UI **logic provider components**,

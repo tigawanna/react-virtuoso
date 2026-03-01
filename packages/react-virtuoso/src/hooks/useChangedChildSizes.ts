@@ -23,7 +23,6 @@ export default function useChangedListContentsSizes(
         scrollableElement = scrollableElement.parentElement!
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-confusing-non-null-assertion
       const windowScrolling = (scrollableElement.lastElementChild! as HTMLDivElement).dataset.viewportType! === 'window'
       let theWindow!: Window
       if (windowScrolling) {

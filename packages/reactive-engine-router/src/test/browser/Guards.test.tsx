@@ -593,7 +593,6 @@ describe('Guards', () => {
     })
 
     const engineGuard = Guard('/admin', ({ engine }) => {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       hasEngine = engine !== null && engine !== undefined
     })
 

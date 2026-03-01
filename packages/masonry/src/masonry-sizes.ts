@@ -21,9 +21,7 @@ export const knownSizes$ = Cell<number[]>([], () => {
       result[Number.parseInt(index, 10)] = size
     }
     // - this is intentional. the array might have holes
-    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < result.length; i++) {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (result[i] === undefined) {
         return knownSizes
       }
@@ -47,7 +45,6 @@ const sizeTreesState$ = Cell<SizeTreeState[]>([], () => {
           const columnHeights = Array.from({ length: columnCount }, () => 0)
           const columnCounts = Array.from({ length: columnCount }, () => 0)
 
-          // eslint-disable-next-line @typescript-eslint/prefer-for-of
           for (let i = 0; i < knownSizes.length; i++) {
             const size = knownSizes[i]
 

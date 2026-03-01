@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 /**
  * Transformers change and combine streams, similar to operators.
  * urx comes with two combinators - [[combineLatest]] and [[merge]], and one convenience filter - [[duc]].
@@ -170,7 +167,6 @@ export function merge<T>(...sources: Emitter<T>[]): Emitter<T> {
         // do nothing, we are stateless
         return
       case SUBSCRIBE:
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return joinProc(...sources.map((source) => subscribe(source, subscription!)))
     }
   } as Emitter<T>

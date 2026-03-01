@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-// biome-ignore-all lint/complexity/noBannedTypes: this is ok here.
-
 import type * as React from 'react'
 
 import type { NodeRef } from '@virtuoso.dev/reactive-engine-core'

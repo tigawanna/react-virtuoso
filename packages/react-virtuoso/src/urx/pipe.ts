@@ -213,7 +213,6 @@ export function pipe<T, O1, O2, O3, O4, O5, O6, O7>(
 export function pipe<T>(source: Emitter<T>, ...operators: O<any, any>[]): Emitter<any> {
   // prettier-ignore
   const project = combineOperators(...operators)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return ((action: RESET | SUBSCRIBE, subscription: Subscription<any>) => {
     switch (action) {
       case RESET:
@@ -355,7 +354,6 @@ export function withLatestFrom(...sources: Emitter<any>[]): Operator<any, any> {
     subscribe(source, (value) => {
       const prevCalled = called
       called = called | bit
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       values[index] = value
       if (prevCalled !== allCalled && called === allCalled && pendingCall) {
         pendingCall()

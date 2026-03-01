@@ -27,8 +27,7 @@
     "test:browser": "vitest run --project=browser",
     "test:node": "vitest run --project=node",
     "test:watch": "vitest",
-    "ci-lint": "eslint",
-    "lint": "eslint",
+    "lint": "oxlint --type-aware",
     "typecheck": "tsgo --noEmit",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
@@ -42,7 +41,6 @@
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser": "catalog:",
     "@vitest/browser-playwright": "catalog:",
-    "eslint": "catalog:",
     "playwright": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

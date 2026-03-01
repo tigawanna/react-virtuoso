@@ -549,8 +549,6 @@ export function subMultiple(nodes: Out[], subscription: Subscription<unknown>): 
  *
  * @category Combinators
  */
-//biome-ignore lint/suspicious/noExplicitAny: this is ok
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function subMultiple(nodes: Out[], subscription: Subscription<any>): void {
   if (nodes.length > 0) {
     addNodeInit(

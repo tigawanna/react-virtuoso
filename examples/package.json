@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ladle dev",
-    "lint": "eslint",
+    "lint": "oxlint --type-aware",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
   },
@@ -22,7 +22,6 @@
     "@virtuoso.dev/reactive-engine-core": "workspace:*",
     "@virtuoso.dev/reactive-engine-react": "workspace:*",
     "@virtuoso.dev/tooling": "workspace:*",
-    "eslint": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-virtuoso": "workspace:*",

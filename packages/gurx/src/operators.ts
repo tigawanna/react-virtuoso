@@ -145,8 +145,6 @@ export function scan<I, O>(accumulator: (current: O, value: I) => O, seed: O): O
     const sink = r.signalInstance<O>()
     r.connect({
       map: (done) => (value) => {
-        // biome-ignore lint/style/noParameterAssign: this saves space
-        // biome-ignore lint/suspicious/noAssignInExpressions: this saves space
         done((seed = accumulator(seed, value as I)))
       },
       sink,

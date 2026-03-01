@@ -17,7 +17,6 @@ e.link(
     tasks$,
     e.filter((state) => state !== null),
     e.map((params) => {
-      // biome-ignore lint/style/noNonNullAssertion: for now :(
       const pathParams = Array.isArray(params) ? params[0] : params!
       return { listId: pathParams.id }
     })

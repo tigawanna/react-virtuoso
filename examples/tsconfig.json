@@ -1,12 +1,8 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "noUncheckedIndexedAccess": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "noUncheckedIndexedAccess": true
   },
-  "include": ["**/*", ".ladle/**/*", "eslint.config.mjs", "prettier.config.mjs"],
+  "include": ["**/*", ".ladle/**/*"],
   "exclude": ["dist"]
 }

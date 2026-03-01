@@ -100,7 +100,6 @@ function insertRanges(sizeTree: AANode<number>, ranges: SizeRange[]) {
 }
 
 function isGroupLocation(location: FlatOrGroupedLocation): location is { groupIndex: number } {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   return typeof (location as any).groupIndex !== 'undefined'
 }
 

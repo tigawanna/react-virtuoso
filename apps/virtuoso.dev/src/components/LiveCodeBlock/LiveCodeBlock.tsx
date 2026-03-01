@@ -2,7 +2,6 @@ import React, { type ComponentProps, type ReactNode, useEffect, useRef, useState
 import { createPortal } from 'react-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 
-/* eslint-disable no-console */
 import { CheckIcon, ClipboardCopyIcon, CubeIcon, ReloadIcon, ResetIcon } from '@radix-ui/react-icons'
 import { shikiToMonaco } from '@shikijs/monaco'
 import copy from 'copy-text-to-clipboard'
@@ -270,7 +269,7 @@ export default function LiveCodeBlock({ code, disableSandbox = false }: { code: 
       editor.dispose()
       editorRef.current = null
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- theme is handled by separate useEffect to avoid editor recreation
+    // oxlint-disable-next-line exhaustive-deps
   }, [monacoReady, code, randomTypeScriptFileName])
 
   // Update Monaco theme when Starlight theme changes
@@ -287,7 +286,6 @@ export default function LiveCodeBlock({ code, disableSandbox = false }: { code: 
       .then((result) => {
         if (result.type === 'success') {
           try {
-            // eslint-disable-next-line @typescript-eslint/no-implied-eval, @typescript-eslint/no-unsafe-call
             const NewComp = new Function(result.code ?? '')(importMap) as React.FC
             setComp(() => NewComp)
             setUsedPackages(result.packages ?? [])

@@ -39,7 +39,7 @@ export default function useWindowViewportRectRef(
 
       callback(viewportInfo.current)
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line exhaustive-deps
     [callback, customScrollParent]
   )
 

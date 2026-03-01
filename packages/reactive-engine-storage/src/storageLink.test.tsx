@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: tests */
-
 import { act, renderHook } from '@testing-library/react'
 import { Cell } from '@virtuoso.dev/reactive-engine-core'
 import { EngineProvider, useCellValue, usePublisher } from '@virtuoso.dev/reactive-engine-react'

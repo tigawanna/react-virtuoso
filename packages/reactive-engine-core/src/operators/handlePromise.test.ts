@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/prefer-promise-reject-errors */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* oxlint-disable typescript-eslint/prefer-promise-reject-errors */
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { e, Engine, Stream } from '../index'
@@ -214,7 +213,7 @@ describe('handlePromise operator', () => {
         () => 'loading',
         (value) => value,
         (error) => {
-          return `error: ${error}`
+          return `error: ${String(error)}`
         }
       )
     )

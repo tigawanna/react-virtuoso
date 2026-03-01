@@ -67,7 +67,6 @@ export function autoImports(options: AutoImportsOptions) {
     const needed: { config: ComponentImport; name: string }[] = []
     for (const component of usedComponents) {
       const importConfig = imports[component]
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- importConfig can be undefined at runtime
       if (!existingImports.has(component) && importConfig) {
         needed.push({ config: importConfig, name: component })
       }

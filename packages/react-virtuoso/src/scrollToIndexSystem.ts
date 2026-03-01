@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { findMaxKeyValue } from './AATree'
 import { domIOSystem } from './domIOSystem'
 import { IndexLocationWithAlign } from './interfaces'

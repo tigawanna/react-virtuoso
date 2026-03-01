@@ -18,7 +18,6 @@ import {
 } from '../../'
 
 const cell$ = Cell('hello')
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {}
 
 describe('Reactive Engine in React', () => {

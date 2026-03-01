@@ -60,7 +60,6 @@ export default function useScrollTop(
           viewportHeight,
         })
       }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if ((ev as any).suppressFlushSync) {
         call()
       } else {

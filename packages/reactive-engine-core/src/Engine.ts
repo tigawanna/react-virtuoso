@@ -320,7 +320,6 @@ export class Engine {
    * r.pub(foo$, 'bar')
    * ```
    */
-  // eslint-disable-next-line @typescript-eslint/unified-signatures
   pub<T>(node: Inp<T>, value: T): void
   pub<T>(node: Inp<T>, value?: T) {
     this.pubIn({ [node]: value })
@@ -416,14 +415,13 @@ export class Engine {
         })
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (resolved) {
         const value = transientState.get(id)
 
         const debugLabel = nodeDebugLabels$$.get(id)
         if (debugLabel) {
           const displayValue = value === undefined ? '[triggered]' : value
-          // eslint-disable-next-line no-console
+          // oxlint-disable-next-line no-console
           console.log(`[reactive-engine] ${debugLabel}:`, displayValue)
         }
 
@@ -548,8 +546,6 @@ export class Engine {
     return () => nodeSubscriptions.delete(subscription as Subscription<unknown>)
   }
 
-  // biome-ignore lint/suspicious/noExplicitAny: any is god
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   subMultiple(nodes: Out[], subscription: Subscription<any>): UnsubscribeHandle {
     const sink = this.streamInstance()
     this.connect({

@@ -210,7 +210,7 @@ After making code changes, run these commands to verify quality:
 ### Required (always run)
 
 - `pnpm typecheck` - Verify TypeScript types pass
-- `pnpm lint` - Check code style (ESLint)
+- `pnpm lint` - Check code style (oxlint)
 - `pnpm format` - Format code with oxfmt
 - `pnpm test` - Run unit tests (vitest)
 
@@ -228,10 +228,10 @@ After making code changes, run these commands to verify quality:
 
 ### Fixing Issues
 
-Format issues are auto-fixed by `pnpm format`. ESLint issues must be fixed manually. Configure your editor to:
+Format issues are auto-fixed by `pnpm format`. oxlint issues must be fixed manually. Configure your editor to:
 
 - Format on save using oxfmt (140 char width, single quotes, no semicolons)
-- Show ESLint warnings/errors
+- Show oxlint warnings/errors
 
 Pre-commit hooks will block commits if typecheck or lint fails.
 
@@ -252,7 +252,7 @@ This project uses [lefthook](https://github.com/evilmartians/lefthook) for git h
 On every commit, the following checks run automatically on staged files:
 
 - **Markdown linting**: Validates .md files with markdownlint
-- **Code linting**: Validates code files with ESLint
+- **Code linting**: Validates code files with oxlint
 - **Type checking**: Runs TypeScript compiler on affected packages
 
 ### Skipping Hooks

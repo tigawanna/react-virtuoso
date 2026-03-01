@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { AANode, walk } from '../src/AATree'

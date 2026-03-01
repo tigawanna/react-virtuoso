@@ -8,7 +8,7 @@
         "stage_fixed": true,
         "skip": ["merge", "rebase"]
       },
-      "eslint": {
+      "oxlint": {
         "glob": "*.{js,mjs,cjs,ts,jsx,tsx}",
         "run": "pnpm lint",
         "skip": ["merge", "rebase"]

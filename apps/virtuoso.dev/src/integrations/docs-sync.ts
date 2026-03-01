@@ -3,7 +3,6 @@ import { mkdir, readdir, readFile, rm, stat, unlink, writeFile } from 'node:fs/p
 import { basename, dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import type { AstroIntegration } from 'astro'
 
 export interface DocsSyncSource {
@@ -134,7 +133,6 @@ async function syncFile(
     await writeFile(finalDestPath, content, 'utf-8')
     return finalDestPath
   } catch (error) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     console.error(`Failed to sync ${sourcePath}: ${error}`)
     return null
   }
@@ -285,7 +283,6 @@ export function docsSync(options: DocsSyncOptions): AstroIntegration {
               watchers.push(watcher)
               watchCount++
             } catch (error) {
-              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
               logger.warn(`Could not watch ${sourcePath}: ${error}`)
             }
           } else if (source.path) {
@@ -320,7 +317,6 @@ export function docsSync(options: DocsSyncOptions): AstroIntegration {
               watchers.push(watcher)
               watchCount++
             } catch (error) {
-              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
               logger.warn(`Could not watch ${sourcePath}: ${error}`)
             }
           }

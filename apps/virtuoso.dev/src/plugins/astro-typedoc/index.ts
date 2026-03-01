@@ -3,7 +3,6 @@ import { readdir, readFile, rename, rmdir, unlink, writeFile } from 'node:fs/pro
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-/* eslint-disable no-console */
 import type { AstroIntegration } from 'astro'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -468,7 +467,6 @@ export const initAstroTypedoc = async ({
         clearTimeout(regenerateTimeout)
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       regenerateTimeout = setTimeout(async () => {
         console.log('[TypeDoc] Regenerating documentation...')
         try {

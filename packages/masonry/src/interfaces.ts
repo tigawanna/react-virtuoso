@@ -27,7 +27,6 @@ export type ScrollerProps = Omit<React.HTMLProps<HTMLDivElement>, 'data' | 'onSc
  * @typeParam Context - Optional contextual data passed from the parent component.
  * @group VirtuosoMasonry
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ItemContent<Data = any, Context = any> = React.ComponentType<{
   /**
    * The value of the `context` prop passed to the masonry.

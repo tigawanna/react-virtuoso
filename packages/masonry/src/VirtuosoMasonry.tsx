@@ -99,7 +99,7 @@ export const VirtuosoMasonry = forwardRef<Record<string, never>, VirtuosoMasonry
       })
 
       return r
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // oxlint-disable-next-line exhaustive-deps
     }, [])
 
     useImperativeHandle(ref, () => ({}), [])
@@ -124,9 +124,7 @@ export const VirtuosoMasonry = forwardRef<Record<string, never>, VirtuosoMasonry
 VirtuosoMasonry.displayName = 'VirtuosoMasonry'
 
 const SSRObserverShim = {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   observe: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   unobserve: () => {},
 }
 

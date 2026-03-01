@@ -123,7 +123,7 @@ export function useCellValues(...cells: Out[]): unknown[] {
   const combinedCell = React.useMemo(() => {
     // @ts-expect-error Cannot use a rest parameter as an argument.
     return realm.combineCells(...(cells as unknown[]))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line exhaustive-deps
   }, [realm, ...cells])
 
   return useCellValue(combinedCell)
@@ -166,6 +166,5 @@ export function usePublisher<T>(node: Inp<T>) {
  * @category Hooks
  */
 export function useCell<O, I = O>(cell: NodeRef<O> | PipeRef<I, O>): [O, (value: I) => void] {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
   return [useCellValue<O>(cell), usePublisher<I>(cell as any)]
 }

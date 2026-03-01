@@ -41,7 +41,7 @@ const ListContainer = styled.div`
 ` as GridComponents['List']
 
 export function Example() {
-  const [customScrollParent, setCustomScrollParent] = React.useState<HTMLDivElement | null>(null)
+  const [customScrollParent, setCustomScrollParent] = React.useState<HTMLElement | null>(null)
   const [height, setHeight] = React.useState('25vh')
   const toggleHeight = () => {
     setHeight(height === '50vh' ? '25vh' : '50vh')
@@ -81,7 +81,7 @@ export function Example() {
                 </ItemContainer>
               ),
             }}
-            customScrollParent={customScrollParent}
+            customScrollParent={customScrollParent ?? undefined}
             itemContent={(index) => <ItemWrapper>Item {index}</ItemWrapper>}
             totalCount={1000}
           />

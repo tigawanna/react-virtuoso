@@ -23,7 +23,7 @@
   "scripts": {
     "build": "tsc && vite build",
     "test": "vitest --run --passWithNoTests",
-    "lint": "eslint",
+    "lint": "oxlint --type-aware",
     "typecheck": "tsgo --noEmit",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
@@ -40,7 +40,6 @@
     "@virtuoso.dev/reactive-engine-react": "workspace:*",
     "@virtuoso.dev/tooling": "workspace:*",
     "@vitejs/plugin-react": "catalog:",
-    "eslint": "catalog:",
     "jsdom": "^27.4.0",
     "react": "catalog:",
     "react-dom": "catalog:",

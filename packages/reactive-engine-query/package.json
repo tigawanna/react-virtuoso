@@ -23,7 +23,7 @@
   "scripts": {
     "build": "tsc && vite build",
     "test": "vitest --run --passWithNoTests",
-    "lint": "eslint",
+    "lint": "oxlint --type-aware",
     "typecheck": "tsgo --noEmit",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
@@ -32,7 +32,6 @@
     "@types/node": "catalog:",
     "@virtuoso.dev/reactive-engine-core": "workspace:*",
     "@virtuoso.dev/tooling": "workspace:*",
-    "eslint": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plugin-dts": "catalog:",

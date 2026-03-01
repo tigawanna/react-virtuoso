@@ -282,7 +282,7 @@ export function useCellValues(...cells: Out[]): unknown[] {
 
   const combinedCell = React.useMemo(() => {
     return engine.combineCells(cells)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line exhaustive-deps
   }, [engine, ...cells])
 
   return useCellValue(combinedCell)
@@ -558,7 +558,7 @@ export function useRemoteCellValues(options: RemoteCellValuesOptions<unknown[]>)
 
   const combinedCell = React.useMemo(() => {
     return engine ? engine.combineCells(cells) : null
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line exhaustive-deps
   }, [engine, ...cells])
 
   const [values, setValues] = React.useState<undefined | unknown[]>(() =>

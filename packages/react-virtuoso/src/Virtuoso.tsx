@@ -248,7 +248,6 @@ export function itemPropIfNotDomElement(element: unknown, item: unknown) {
 const Header: React.FC = /*#__PURE__*/ React.memo(function VirtuosoHeader() {
   const Header = useEmitterValue('HeaderComponent')
   const headerHeight = usePublisher('headerHeight')
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-unsafe-assignment
   const HeaderFooterTag = useEmitterValue('HeaderFooterTag') as any
   const ref = useSize(
     React.useMemo(
@@ -271,7 +270,6 @@ const Header: React.FC = /*#__PURE__*/ React.memo(function VirtuosoHeader() {
 const Footer: React.FC = /*#__PURE__*/ React.memo(function VirtuosoFooter() {
   const Footer = useEmitterValue('FooterComponent')
   const footerHeight = usePublisher('footerHeight')
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-unsafe-assignment
   const HeaderFooterTag = useEmitterValue('HeaderFooterTag') as any
   const ref = useSize(
     React.useMemo(

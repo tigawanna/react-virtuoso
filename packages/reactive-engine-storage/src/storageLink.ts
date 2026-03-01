@@ -266,7 +266,6 @@ function writeCookie<T>(key: string, value: string, options: StorageLinkOptions<
     }
   }
 
-  // biome-ignore lint/suspicious/noDocumentCookie: necessary for cookie manipulation
   document.cookie = cookieString
 }
 

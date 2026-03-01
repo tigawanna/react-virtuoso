@@ -100,7 +100,6 @@ interface PipeDefinition<I, O> {
   type: typeof PIPE_TYPE
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const nodeDefs$$ = new Map<symbol, CellDefinition<any> | PipeDefinition<any, any> | SignalDefinition<any>>()
 
 let currentRealm$$: Realm | undefined = undefined
@@ -663,7 +662,6 @@ export class Realm {
   }
   inContext<T>(fn: () => T): T {
     const prevRealm = currentRealm$$
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     currentRealm$$ = this
     const result = fn()
     currentRealm$$ = prevRealm
@@ -736,7 +734,6 @@ export class Realm {
    * const r = new Realm()
    * r.pub(foo$, 'bar')
    */
-  // eslint-disable-next-line @typescript-eslint/unified-signatures
   pub<T>(node: Inp<T>, value: T): void
   pub<T>(node: Inp<T>, value?: T) {
     this.pubIn({ [node]: value })
@@ -786,7 +783,6 @@ export class Realm {
       })
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     while (true) {
       const nextId = participatingNodeKeys.shift()
       if (nextId === undefined) {
@@ -817,7 +813,6 @@ export class Realm {
         })
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (resolved) {
         const value = transientState.get(id)
         this.inContext(() => {
@@ -980,9 +975,7 @@ export class Realm {
     nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>],
     subscription: Subscription<[T1, T2, T3, T4, T5, T6, T7, T8]>
   ): UnsubscribeHandle // prettier-ignore
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   subMultiple(nodes: Out[], subscription: Subscription<any>): UnsubscribeHandle
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   subMultiple(nodes: Out[], subscription: Subscription<any>): UnsubscribeHandle {
     const sink = this.signalInstance()
     this.connect({
@@ -1051,7 +1044,6 @@ export class Realm {
       this.register(node as NodeRef)
 
       pendingPulls.use(node, (pulls) => {
-        // biome-ignore lint/style/noParameterAssign: this saves space
         insertIndex = Math.max(...Array.from(pulls).map((key) => participatingNodes.indexOf(key))) + 1
       })
 
@@ -1091,7 +1083,6 @@ export class Realm {
   private combineOperators<T>(...o: O<unknown, unknown>[]): (s: Out<T>) => NodeRef {
     return (source: Out) => {
       for (const op of o) {
-        // biome-ignore lint/style/noParameterAssign: this saves space
         source = op(source, this)
       }
       return source as NodeRef

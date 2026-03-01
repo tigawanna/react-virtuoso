@@ -1,5 +1,4 @@
 import { ReflectionKind } from 'typedoc'
-/* eslint-disable */
 // @ts-nocheck - TypeDoc plugin integration with complex external types
 import { MarkdownTheme, MarkdownThemeContext } from 'typedoc-plugin-markdown'
 

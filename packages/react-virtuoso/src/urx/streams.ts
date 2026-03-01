@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-
 /**
  * Streams are the basic building blocks of a reactive system. Think of them as the system permanent "data tubes".
  *
@@ -111,7 +109,6 @@ export function statefulStream<T>(initial: T): StatefulStream<T> {
       case VALUE:
         return value
     }
-    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
     return innerSubject(action as any, arg)
   }) as StatefulStream<T>
 }

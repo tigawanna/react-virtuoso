@@ -46,7 +46,7 @@
     "test:node": "vitest run --project=\"node env\"",
     "test:watch": "vitest",
     "typecheck": "tsgo --noEmit",
-    "lint": "eslint",
+    "lint": "oxlint --type-aware",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "knip": "knip"
@@ -64,7 +64,6 @@
     "@vitejs/plugin-react": "catalog:",
     "@vitest/browser": "catalog:",
     "@vitest/browser-playwright": "catalog:",
-    "eslint": "catalog:",
     "jsdom": "^27.4.0",
     "knip": "^5.38.3",
     "node-html-parser": "^6.1.13",

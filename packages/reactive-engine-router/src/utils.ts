@@ -40,7 +40,6 @@ export function interpolateRoute(route: string, params: NonNullable<RouteRefValu
             searchParams.append(name, String(v))
           })
         } else {
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string
           searchParams.set(name, String(value))
         }
       }
@@ -217,8 +216,6 @@ function parsePathParams(urlPath: string, templatePath: string): null | Record<s
 
   // Extract and type-cast parameters
   paramNames.forEach((paramInfo, index) => {
-    // biome-ignore lint/style/noNonNullAssertion: ok
-
     const value = match[index + 1]
     if (paramInfo.isRest) {
       params[paramInfo.name] = value.split('/')
@@ -245,10 +242,7 @@ function parseQueryParams(urlQuery: string, templateQuery: string): Record<strin
   const processedQueryKeys = new Set<string>()
 
   for (const match of matches) {
-    // biome-ignore lint/style/noNonNullAssertion: ok
-
     const queryParamName = match[1]
-    // biome-ignore lint/style/noNonNullAssertion: ok
 
     const placeholder = match[2]
 

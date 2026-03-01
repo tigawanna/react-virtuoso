@@ -3,25 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "files": [
-    "eslint.config.mjs",
-    "eslint-base.config.mjs",
     "tsconfig.json"
   ],
   "type": "module",
-  "exports": {
-    "./eslint.config": "./eslint.config.mjs",
-    "./eslint-base.config": "./eslint-base.config.mjs"
-  },
-  "dependencies": {
-    "@eslint/js": "^9.23.0",
-    "eslint-plugin-perfectionist": "^4.7.0",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "globals": "^14.0.0",
-    "typescript-eslint": "^8.22.0"
-  },
   "peerDependencies": {
-    "eslint": ">=9.0.0",
     "typescript": ">=5.9.3"
   }
 }

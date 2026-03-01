@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { contextSystem } from './contextSystem'
 import { domIOSystem } from './domIOSystem'
 import { initialTopMostItemIndexSystem } from './initialTopMostItemIndexSystem'
