@@ -10,9 +10,9 @@ type Highlighter = HighlighterCore
 let highlighterInstance: Highlighter | null = null
 let highlighterPromise: null | Promise<Highlighter> = null
 
-export async function getShikiHighlighter(): Promise<Highlighter> {
+export function getShikiHighlighter(): Promise<Highlighter> {
   if (highlighterInstance) {
-    return highlighterInstance
+    return Promise.resolve(highlighterInstance)
   }
 
   highlighterPromise ??= createHighlighterCore({

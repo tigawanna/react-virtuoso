@@ -26,7 +26,7 @@ describe('Mutation', () => {
   })
 
   it('should execute successful mutation', async () => {
-    const mutationFn = vi.fn(async (params: { name: string }) => {
+    const mutationFn = vi.fn((params: { name: string }) => {
       return new Promise<string>((resolve) => {
         setTimeout(() => {
           resolve(`Hello ${params.name}`)
@@ -54,7 +54,9 @@ describe('Mutation', () => {
       engine
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100)
+    })
 
     // Should be success
     expect(sub).toHaveBeenLastCalledWith(
@@ -88,7 +90,9 @@ describe('Mutation', () => {
     // Trigger mutation
     engine.pub(mutation.mutate$, {})
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(sub).toHaveBeenLastCalledWith(
       expect.objectContaining({
@@ -114,7 +118,9 @@ describe('Mutation', () => {
     // Execute mutation
     engine.pub(mutation.mutate$, { value: 5 })
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(engine.getValue(mutation.data$)).toMatchObject({
       data: 10,
@@ -154,7 +160,9 @@ describe('Mutation', () => {
     // Trigger mutation
     engine.pub(mutation.mutate$, {})
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 100)
+    })
 
     expect(mutationFn).toHaveBeenCalledTimes(3)
     expect(engine.getValue(mutation.data$)).toMatchObject({
@@ -178,7 +186,9 @@ describe('Mutation', () => {
     // Trigger mutation
     engine.pub(mutation.mutate$, { value: 5 })
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(onSuccess).toHaveBeenCalledTimes(1)
     expect(onSuccess).toHaveBeenCalledWith(10)
@@ -202,7 +212,9 @@ describe('Mutation', () => {
     // Trigger mutation
     engine.pub(mutation.mutate$, {})
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(onError).toHaveBeenCalledTimes(1)
     expect(onError).toHaveBeenCalledWith(expect.any(Error))
@@ -224,7 +236,9 @@ describe('Mutation', () => {
     // Trigger mutation
     engine.pub(mutation.mutate$, {})
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     // Should only be called once (no retries)
     expect(mutationFn).toHaveBeenCalledTimes(1)
@@ -249,7 +263,9 @@ describe('Mutation', () => {
     // Trigger mutation
     engine.pub(mutation.mutate$, {})
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     // Should only be called once (no retries)
     expect(mutationFn).toHaveBeenCalledTimes(1)
@@ -271,7 +287,9 @@ describe('Mutation', () => {
 
     // First mutation
     engine.pub(mutation.mutate$, { value: 1 })
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(engine.getValue(mutation.data$)).toMatchObject({
       data: 'Call 1: 1',
@@ -280,7 +298,9 @@ describe('Mutation', () => {
 
     // Second mutation
     engine.pub(mutation.mutate$, { value: 2 })
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     expect(engine.getValue(mutation.data$)).toMatchObject({
       data: 'Call 2: 2',
@@ -309,7 +329,9 @@ describe('Mutation', () => {
 
     engine.pub(mutation.mutate$, {})
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     // Mutation should still succeed
     expect(engine.getValue(mutation.data$)).toMatchObject({
@@ -345,7 +367,9 @@ describe('Mutation', () => {
 
     engine.pub(mutation.mutate$, {})
 
-    await new Promise((resolve) => setTimeout(resolve, 50))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 50)
+    })
 
     // Mutation should still be in error state
     expect(engine.getValue(mutation.data$)).toMatchObject({

@@ -13,7 +13,7 @@ export async function waitForMicrotask(): Promise<void> {
  * Wait for a specified timeout duration
  */
 export async function waitForTimeout(ms: number): Promise<void> {
-  await new Promise((resolve) => setTimeout(resolve, ms))
+  await new Promise((resolve) => { setTimeout(resolve, ms) })
 }
 
 /**
@@ -61,16 +61,16 @@ export function generateComplexObject() {
  */
 export function generatePromiseScenarios() {
   return {
-    delayedReject: new Promise((_, reject) =>
+    delayedReject: new Promise((_, reject) => {
       setTimeout(() => {
         reject(new Error('delayed error'))
       }, 10)
-    ),
-    delayedResolve: new Promise((resolve) =>
+    }),
+    delayedResolve: new Promise((resolve) => {
       setTimeout(() => {
         resolve('delayed')
       }, 10)
-    ),
+    }),
     immediateReject: Promise.reject(new Error('immediate error')),
     immediateResolve: Promise.resolve('immediate'),
     neverResolve: new Promise(() => {
