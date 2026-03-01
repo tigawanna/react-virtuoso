@@ -61,7 +61,9 @@ export function interpolateRoute(route: string, params: NonNullable<RouteRefValu
 
         // Extract placeholder name from {name}, {name?}, {name:type}, or {name?:type}
         const placeholderMatch = /^(\w+)/.exec(placeholder)
-        if (!placeholderMatch) {continue}
+        if (!placeholderMatch) {
+          continue
+        }
 
         const placeholderName = placeholderMatch[1]
         invariant(placeholderName !== undefined, 'Placeholder name should exist in regex match')
@@ -176,7 +178,9 @@ function parsePathParams(urlPath: string, templatePath: string): null | Record<s
   while (i < templatePath.length) {
     if (templatePath[i] === '{') {
       const end = templatePath.indexOf('}', i)
-      if (end === -1) {break}
+      if (end === -1) {
+        break
+      }
 
       const paramDef = templatePath.slice(i + 1, end)
       const isRest = paramDef.startsWith('*')
@@ -249,7 +253,9 @@ function parseQueryParams(urlQuery: string, templateQuery: string): Record<strin
 
     // Extract type info from placeholder
     const typeMatch = /^(\w+)(\?)?(?::(.+))?$/.exec(placeholder)
-    if (!typeMatch) {continue}
+    if (!typeMatch) {
+      continue
+    }
 
     const [, placeholderName, isOptional, typeInfo] = typeMatch as unknown as [unknown, string, string | undefined, string | undefined]
     processedQueryKeys.add(queryParamName)
@@ -270,8 +276,12 @@ function parseQueryParams(urlQuery: string, templateQuery: string): Record<strin
     if (isArray) {
       // Array parameter
       params[placeholderName] = values.map((v) => {
-        if (baseType === 'number') {return Number(v)}
-        if (baseType === 'boolean') {return v === 'true'}
+        if (baseType === 'number') {
+          return Number(v)
+        }
+        if (baseType === 'boolean') {
+          return v === 'true'
+        }
         return v
       })
     } else {
@@ -317,13 +327,17 @@ function parseQueryParams(urlQuery: string, templateQuery: string): Record<strin
  */
 export function matchesPathPrefix(actualPath: string, patternPath: string): boolean {
   // Root path matches everything
-  if (patternPath === '/') {return true}
+  if (patternPath === '/') {
+    return true
+  }
 
   // Normalize pattern by removing trailing slash (except for root)
   const normalizedPattern = patternPath.endsWith('/') && patternPath !== '/' ? patternPath.slice(0, -1) : patternPath
 
   // Exact match
-  if (actualPath === normalizedPattern) {return true}
+  if (actualPath === normalizedPattern) {
+    return true
+  }
   // Prefix match (must be followed by /)
   return actualPath.startsWith(`${normalizedPattern}/`)
 }

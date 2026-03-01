@@ -55,8 +55,8 @@ export class Engine {
    */
   constructor(initialValues: Record<symbol, unknown> = {}, id?: string, parentEngine?: Engine) {
     this.id = id
-    for (const id of Object.getOwnPropertySymbols(initialValues)) {
-      this.state.set(id, initialValues[id])
+    for (const sym of Object.getOwnPropertySymbols(initialValues)) {
+      this.state.set(sym, initialValues[sym])
     }
     this.parentEngine = parentEngine
     parentEngine?.childEngines.push(this)
@@ -409,7 +409,7 @@ export class Engine {
         inEngineContext(this, () => {
           map.projections.use(id, (nodeProjections) => {
             for (const projection of nodeProjections) {
-              const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map((id) => transientState.get(id))
+              const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map((nodeId) => transientState.get(nodeId))
               projection.map(done)(...args)
             }
           })
@@ -638,8 +638,8 @@ export class Engine {
         return existingMap
       }
     } else {
-      for (const [key, existingMap] of this.executionMaps.entries()) {
-        if (Array.isArray(key) && key.length === nodes.length && key.every((id) => nodes.includes(id))) {
+      for (const [existingKey, existingMap] of this.executionMaps.entries()) {
+        if (Array.isArray(existingKey) && existingKey.length === nodes.length && existingKey.every((id) => nodes.includes(id))) {
           return existingMap
         }
       }

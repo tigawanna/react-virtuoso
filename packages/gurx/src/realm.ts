@@ -21,7 +21,7 @@ export type NodeRef<T = unknown> = symbol & { valType: T }
  */
 export type Subscription<T> = (value: T) => unknown
 
-export type PipeRef<I = unknown, O = unknown> = symbol & { inputType: I; outputType: O }
+export type PipeRef<I = unknown, R = unknown> = symbol & { inputType: I; outputType: R }
 
 export type Inp<T = unknown> = NodeRef<T> | PipeRef<T>
 export type Out<T = unknown> = NodeRef<T> | PipeRef<unknown, T>
@@ -78,7 +78,7 @@ export type Distinct<T> = boolean | Comparator<T>
  */
 export type NodeInit<T> = (r: Realm, node$: NodeRef<T>) => void
 
-export type PipeInit<I, O> = (r: Realm, inputRef$: NodeRef<I>, outputRef$: NodeRef<O>) => void
+export type PipeInit<I, R> = (r: Realm, inputRef$: NodeRef<I>, outputRef$: NodeRef<R>) => void
 
 interface CellDefinition<T> {
   distinct: Distinct<T>
@@ -93,10 +93,10 @@ interface SignalDefinition<T> {
   type: typeof SIGNAL_TYPE
 }
 
-interface PipeDefinition<I, O> {
+interface PipeDefinition<I, R> {
   distinct: Distinct<I>
-  init: PipeInit<I, O>
-  initial: O
+  init: PipeInit<I, R>
+  initial: R
   type: typeof PIPE_TYPE
 }
 
@@ -814,7 +814,7 @@ export class Realm {
       } else {
         map.projections.use(id, (nodeProjections) => {
           for (const projection of nodeProjections) {
-            const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map((id) => transientState.get(id))
+            const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map((nodeId) => transientState.get(nodeId))
             projection.map(done)(...args)
           }
         })
@@ -850,16 +850,16 @@ export class Realm {
     if (!this.definitionRegistry.has(node$)) {
       this.definitionRegistry.add(node$)
       if (definition.type === CELL_TYPE) {
-        return tap(this.cellInstance(definition.initial, definition.distinct, node$), (node$) => {
+        return tap(this.cellInstance(definition.initial, definition.distinct, node$), (ref) => {
           this.inContext(() => {
-            definition.init(this, node$)
+            definition.init(this, ref)
           })
         })
       }
       if (definition.type === SIGNAL_TYPE) {
-        return tap(this.signalInstance(definition.distinct, node$), (node$) => {
+        return tap(this.signalInstance(definition.distinct, node$), (ref) => {
           this.inContext(() => {
-            definition.init(this, node$)
+            definition.init(this, ref)
           })
         })
       }
@@ -1016,17 +1016,17 @@ export class Realm {
    * ```
    */
   transformer<In>(...o: []): (s: Inp<In>) => Inp<In> // prettier-ignore
-  transformer<In, Out>(...o: [O<In, Out>]): (s: Inp<Out>) => Inp<In> // prettier-ignore
-  transformer<In, Out, O1>(...o: [O<In, O1>, O<O1, Out>]): (s: Inp<Out>) => Inp<In> // prettier-ignore
-  transformer<In, Out, O1, O2>(...o: [O<In, O1>, O<O1, O2>, O<O2, Out>]): (s: Inp<Out>) => Inp<In> // prettier-ignore
-  transformer<In, Out, O1, O2, O3>(...o: [O<In, O1>, O<O1, O2>, O<O2, O3>, O<O3, Out>]): (s: Inp<Out>) => Inp<In> // prettier-ignore
-  transformer<In, Out, O1, O2, O3, O4>(...o: [O<In, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, Out>]): (s: Inp<Out>) => Inp<In> // prettier-ignore
-  transformer<In, Out, O1, O2, O3, O4, O5>(
-    ...o: [O<In, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, Out>]
-  ): (s: Inp<Out>) => Inp<In> // prettier-ignore
-  transformer<In, Out>(...operators: O<unknown, unknown>[]): (s: Inp<Out>) => Inp<In>
-  transformer<In, Out>(...operators: O<unknown, unknown>[]): (s: Inp<Out>) => Inp<In> {
-    return (sink: Inp<Out>) => {
+  transformer<In, Result>(...o: [O<In, Result>]): (s: Inp<Result>) => Inp<In> // prettier-ignore
+  transformer<In, Result, O1>(...o: [O<In, O1>, O<O1, Result>]): (s: Inp<Result>) => Inp<In> // prettier-ignore
+  transformer<In, Result, O1, O2>(...o: [O<In, O1>, O<O1, O2>, O<O2, Result>]): (s: Inp<Result>) => Inp<In> // prettier-ignore
+  transformer<In, Result, O1, O2, O3>(...o: [O<In, O1>, O<O1, O2>, O<O2, O3>, O<O3, Result>]): (s: Inp<Result>) => Inp<In> // prettier-ignore
+  transformer<In, Result, O1, O2, O3, O4>(...o: [O<In, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, Result>]): (s: Inp<Result>) => Inp<In> // prettier-ignore
+  transformer<In, Result, O1, O2, O3, O4, O5>(
+    ...o: [O<In, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, Result>]
+  ): (s: Inp<Result>) => Inp<In> // prettier-ignore
+  transformer<In, Result>(...operators: O<unknown, unknown>[]): (s: Inp<Result>) => Inp<In>
+  transformer<In, Result>(...operators: O<unknown, unknown>[]): (s: Inp<Result>) => Inp<In> {
+    return (sink: Inp<Result>) => {
       return tap(this.signalInstance<In>(), (source) => {
         this.link(this.pipe(source, ...operators), sink)
         return source
@@ -1104,8 +1104,8 @@ export class Realm {
         return existingMap
       }
     } else {
-      for (const [key, existingMap] of this.executionMaps.entries()) {
-        if (Array.isArray(key) && key.length === nodes.length && key.every((id) => nodes.includes(id))) {
+      for (const [entryKey, existingMap] of this.executionMaps.entries()) {
+        if (Array.isArray(entryKey) && entryKey.length === nodes.length && entryKey.every((id) => nodes.includes(id))) {
           return existingMap
         }
       }
@@ -1141,14 +1141,14 @@ export function Cell<T>(value: T, init: (r: Realm) => void = noop, distinct: Dis
   }) as NodeRef<T>
 }
 
-export function Pipe<I, O>(
-  value: O,
-  init: (r: Realm, input$: Out<I>, output$: Out<O>) => void,
+export function Pipe<I, Result>(
+  value: Result,
+  init: (r: Realm, input$: Out<I>, output$: Out<Result>) => void,
   distinct: Distinct<I> = true
-): PipeRef<I, O> {
+): PipeRef<I, Result> {
   return tap(Symbol(), (id) => {
     nodeDefs$$.set(id, { distinct, init, initial: value, type: PIPE_TYPE })
-  }) as PipeRef<I, O>
+  }) as PipeRef<I, Result>
 }
 
 /**

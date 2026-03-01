@@ -170,7 +170,9 @@ function transposeItems(items: Item<any>[], sizes: SizeState, firstItemIndex: nu
 }
 
 function getMinOverscanItemCount(value: MinOverscanItemCount | undefined, end: typeof TOP | typeof BOTTOM) {
-  if (value === undefined) {return 0}
+  if (value === undefined) {
+    return 0
+  }
   return typeof value === 'number' ? value : (value[end] ?? 0)
 }
 

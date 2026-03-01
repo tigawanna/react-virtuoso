@@ -23,11 +23,11 @@ export type ScrollerProps = Omit<React.HTMLProps<HTMLDivElement>, 'data' | 'onSc
 
 /**
  * A React component that's used to render the individual masonry item.
- * @typeParam Data - The type of items in the data array.
+ * @typeParam Item - The type of items in the data array.
  * @typeParam Context - Optional contextual data passed from the parent component.
  * @group VirtuosoMasonry
  */
-export type ItemContent<Data = any, Context = any> = React.ComponentType<{
+export type ItemContent<Item = any, Context = any> = React.ComponentType<{
   /**
    * The value of the `context` prop passed to the masonry.
    */
@@ -35,7 +35,7 @@ export type ItemContent<Data = any, Context = any> = React.ComponentType<{
   /**
    * The data item to render.
    */
-  data: Data
+  data: Item
   /**
    * The index of the item in the data array.
    */

@@ -41,9 +41,8 @@ export default function useScrollTop(
         const theWindow = isWindow(el) ? el : (el as unknown as Document).defaultView!
         scrollTop = horizontalDirection === true ? theWindow.scrollX : theWindow.scrollY
 
-        scrollHeight = horizontalDirection === true
-          ? theWindow.document.documentElement.scrollWidth
-          : theWindow.document.documentElement.scrollHeight
+        scrollHeight =
+          horizontalDirection === true ? theWindow.document.documentElement.scrollWidth : theWindow.document.documentElement.scrollHeight
 
         viewportHeight = horizontalDirection === true ? theWindow.innerWidth : theWindow.innerHeight
       } else {
@@ -115,7 +114,9 @@ export default function useScrollTop(
       // this is not a mistake
       scrollHeight = Math.max(
         correctItemSize(scrollerElement.document.documentElement, horizontalDirection === true ? 'width' : 'height'),
-        horizontalDirection === true ? scrollerElement.document.documentElement.scrollWidth : scrollerElement.document.documentElement.scrollHeight
+        horizontalDirection === true
+          ? scrollerElement.document.documentElement.scrollWidth
+          : scrollerElement.document.documentElement.scrollHeight
       )
       offsetHeight = horizontalDirection === true ? scrollerElement.innerWidth : scrollerElement.innerHeight
       scrollTop = horizontalDirection === true ? window.scrollX : window.scrollY

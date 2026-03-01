@@ -35,7 +35,9 @@ describe('filter operator', () => {
     const filtered = e.pipe(
       source,
       e.filter((x: number) => {
-        if (x === 999) {throw testErrors.simple}
+        if (x === 999) {
+          throw testErrors.simple
+        }
         return x > 5
       })
     )
@@ -59,7 +61,9 @@ describe('filter operator', () => {
     const filtered = e.pipe(
       source,
       e.filter((x: number) => {
-        if (x === 0) {throw testErrors.simple}
+        if (x === 0) {
+          throw testErrors.simple
+        }
         return true
       })
     )

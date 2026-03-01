@@ -43,7 +43,7 @@ export function RouterEngine(eng: Engine, routes: RouteRef[], layouts?: symbol[]
 
   // Subscribe to goToUrl$ to parse URLs and activate matching routes
   unsubscriptions.push(
-    eng.sub(goToUrl$, (urlOrRef, eng) => {
+    eng.sub(goToUrl$, (urlOrRef, engine) => {
       // Convert RouteReference to URL string if needed
       const url = typeof urlOrRef === 'string' ? urlOrRef : getUrl(urlOrRef)
 
@@ -54,7 +54,7 @@ export function RouterEngine(eng: Engine, routes: RouteRef[], layouts?: symbol[]
           const parsed = parseUrl(url, routeDef)
           if (parsed !== null) {
             // Found a match! Publish to this route
-            eng.pub(route$, parsed)
+            engine.pub(route$, parsed)
             return
           }
         }
@@ -102,10 +102,14 @@ function createRouteSubscription({
         const matchedGuards = guards
           .map((guardSymbol) => {
             const def = guardDefinitions$$.get(guardSymbol)
-            if (!def) {return null}
+            if (!def) {
+              return null
+            }
 
             const parsed = matchGuardPattern(interpolated, def.pattern)
-            if (parsed === null) {return null}
+            if (parsed === null) {
+              return null
+            }
 
             return { def, parsed }
           })
@@ -138,11 +142,11 @@ function createRouteSubscription({
               pathname: targetUrl.split('?')[0] ?? '',
               search: targetUrl.includes('?') ? (targetUrl.split('?')[1] ?? '') : '',
             },
-            navigate: (route: string | symbol, params?: Record<string, unknown>) => {
+            navigate: (route: string | symbol, routeParams?: Record<string, unknown>) => {
               let url: string
 
               if (typeof route === 'symbol') {
-                url = getUrl(route as RouteReference, params)
+                url = getUrl(route as RouteReference, routeParams)
               } else {
                 // It's a string URL
                 url = route
@@ -191,9 +195,12 @@ function createRouteSubscription({
             eng.pub(component$, () => rendered)
           }
 
+          // oxlint-disable-next-line no-await-in-loop
           const awaitedResult = result instanceof Promise ? await result : result
 
-          if (!awaitedResult) {continue}
+          if (!awaitedResult) {
+            continue
+          }
 
           if ('type' in awaitedResult) {
             if (awaitedResult.type === REDIRECT_RESULT) {

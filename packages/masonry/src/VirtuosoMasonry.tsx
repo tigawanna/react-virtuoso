@@ -282,7 +282,7 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
   useEffect(() => {
     if (useWindowScroll) {
       const theWin = scrollerRef.current?.ownerDocument.defaultView as Window
-      const onScroll = () => {
+      const handleWindowScroll = () => {
         realm.pubIn({
           [listOffset$]: scrollerRef.current?.getBoundingClientRect().top ?? 0,
           [scrollHeight$]: theWin.document.documentElement.scrollHeight,
@@ -290,10 +290,10 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
           [viewportHeight$]: theWin.innerHeight,
         })
       }
-      theWin.addEventListener('scroll', onScroll)
-      onScroll()
+      theWin.addEventListener('scroll', handleWindowScroll)
+      handleWindowScroll()
       return () => {
-        theWin.removeEventListener('scroll', onScroll)
+        theWin.removeEventListener('scroll', handleWindowScroll)
       }
     }
   }, [useWindowScroll, realm])

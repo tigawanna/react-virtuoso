@@ -67,7 +67,7 @@ export default function MessageListHeroDemo() {
             flex-1 border border-gray-300 bg-gray-50
             dark:border-gray-700 dark:bg-gray-900
           `}
-          computeItemKey={({ data }) => data.key}
+          computeItemKey={({ data: item }) => item.key}
           data={data}
           ItemContent={ItemContent}
           ref={virtuoso}

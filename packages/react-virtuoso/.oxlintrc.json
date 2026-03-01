@@ -24,7 +24,8 @@
     "no-shadow-restricted-names": "off",
     "react/jsx-no-constructed-context-values": "off",
     "react/jsx-curly-brace-presence": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "no-shadow": "off"
   },
   "overrides": [
     {

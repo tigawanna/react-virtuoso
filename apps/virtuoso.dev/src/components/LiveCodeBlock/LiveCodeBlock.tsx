@@ -24,7 +24,9 @@ let shikiInitialized = false
 
 // Configure Monaco workers for Vite
 function configureMonacoWorkers() {
-  if (typeof self === 'undefined') {return}
+  if (typeof self === 'undefined') {
+    return
+  }
 
   self.MonacoEnvironment = {
     getWorker: function (_workerId: string, label: string) {
@@ -147,7 +149,9 @@ const ErrorMessage: React.FC<{ message: string; retry: () => void }> = ({ messag
 }
 
 async function initializeMonacoWithShiki(m: typeof MonacoEditor) {
-  if (shikiInitialized) {return}
+  if (shikiInitialized) {
+    return
+  }
 
   try {
     const highlighter = await getShikiHighlighter()
@@ -220,7 +224,9 @@ export default function LiveCodeBlock({ code, disableSandbox = false }: { code: 
   // Create the Monaco editor
   useEffect(() => {
     const m = monacoRef.current
-    if (!monacoReady || !m || !editorContainerRef.current || editorRef.current) {return}
+    if (!monacoReady || !m || !editorContainerRef.current || editorRef.current) {
+      return
+    }
 
     const typography = getCodeTypographyFromCSS()
 

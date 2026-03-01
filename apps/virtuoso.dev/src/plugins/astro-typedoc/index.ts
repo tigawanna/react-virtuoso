@@ -1,3 +1,4 @@
+// oxlint-disable no-await-in-loop
 import { watch } from 'node:fs'
 import { readdir, readFile, rename, rmdir, unlink, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
@@ -34,7 +35,9 @@ interface CommentType {
 
 // Extract @group tag from a comment
 const getGroupFromComment = (comment: CommentType | undefined): string | undefined => {
-  if (!comment?.blockTags) {return undefined}
+  if (!comment?.blockTags) {
+    return undefined
+  }
 
   const groupTag = comment.blockTags.find((tag) => tag.tag === '@group')
   if (groupTag && groupTag.content.length > 0) {
@@ -48,13 +51,17 @@ const getGroupFromComment = (comment: CommentType | undefined): string | undefin
 const getGroupFromReflection = (reflection: DeclarationReflection): string | undefined => {
   // Check direct comment first
   const directGroup = getGroupFromComment(reflection.comment as CommentType)
-  if (directGroup !== undefined) {return directGroup}
+  if (directGroup !== undefined) {
+    return directGroup
+  }
 
   // For functions, check signatures
   if (reflection.signatures && reflection.signatures.length > 0) {
     for (const sig of reflection.signatures) {
       const sigGroup = getGroupFromComment(sig.comment as CommentType)
-      if (sigGroup !== undefined) {return sigGroup}
+      if (sigGroup !== undefined) {
+        return sigGroup
+      }
     }
   }
 
@@ -353,7 +360,9 @@ const mergeFilesByGroup = async (dir: string): Promise<void> => {
     groupFiles.sort((a, b) => {
       const priorityA = getItemSortPriority(group, a.title)
       const priorityB = getItemSortPriority(group, b.title)
-      if (priorityA !== priorityB) {return priorityA - priorityB}
+      if (priorityA !== priorityB) {
+        return priorityA - priorityB
+      }
       return a.title.localeCompare(b.title)
     })
 
@@ -417,41 +426,45 @@ export const initAstroTypedoc = async ({
   let currentPageEndHandler: ((event: PageEvent) => void) | null = null
 
   const getReflections = (): Promise<ProjectReflection | undefined> => app.convert()
-  const generateDocs = async ({ frontmatter, outputFolder = 'src/pages/docs', project }: GenerateDocsOptions): Promise<void> => {
+  const generateDocs = async ({
+    frontmatter: docFrontmatter,
+    outputFolder: docOutputFolder = 'src/pages/docs',
+    project,
+  }: GenerateDocsOptions): Promise<void> => {
     // Remove the previous handler if it exists
     if (currentPageEndHandler) {
       app.renderer.off(PageEvent.END, currentPageEndHandler)
     }
 
     // Create and register the new frontmatter handler
-    currentPageEndHandler = onRendererPageEnd(frontmatter)
+    currentPageEndHandler = onRendererPageEnd(docFrontmatter)
     app.renderer.on(PageEvent.END, currentPageEndHandler)
 
     // Configure outputs dynamically to ensure markdown generation
     app.options.setValue('outputs', [
       {
         name: 'markdown',
-        path: outputFolder,
+        path: docOutputFolder,
       },
     ])
 
     await app.generateOutputs(project)
 
     // Remove redundant prefixes from generated files
-    await removePrefixesFromFiles(outputFolder)
+    await removePrefixesFromFiles(docOutputFolder)
 
     // Merge files by @group tag into single pages per group
-    await mergeFilesByGroup(outputFolder)
+    await mergeFilesByGroup(docOutputFolder)
 
     // Remove README.md if it exists
     try {
-      await unlink(join(outputFolder, 'README.md'))
+      await unlink(join(docOutputFolder, 'README.md'))
     } catch {
       // Ignore if file doesn't exist
     }
   }
 
-  const setupWatch = (frontmatter?: FrontmatterObject, outputFolder = 'src/pages/docs') => {
+  const setupWatch = (watchFrontmatter?: FrontmatterObject, watchOutputFolder = 'src/pages/docs') => {
     const watchers: ReturnType<typeof watch>[] = []
     let regenerateTimeout: NodeJS.Timeout | null = null
 
@@ -466,7 +479,7 @@ export const initAstroTypedoc = async ({
         try {
           const project = await getReflections()
           if (project) {
-            await generateDocs({ frontmatter, outputFolder, project })
+            await generateDocs({ frontmatter: watchFrontmatter, outputFolder: watchOutputFolder, project })
             console.log('[TypeDoc] Documentation regenerated successfully')
           }
         } catch (error) {

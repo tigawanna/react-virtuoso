@@ -27,9 +27,9 @@ function shuffle(array: number[]) {
 
 function partition(array: number[], predicate: (input: number) => boolean) {
   const result: [number[], number[]] = [[], []]
-  return array.reduce((result, value) => {
-    result[predicate(value) ? 0 : 1].push(value)
-    return result
+  return array.reduce((acc, value) => {
+    acc[predicate(value) ? 0 : 1].push(value)
+    return acc
   }, result)
 }
 
@@ -104,14 +104,14 @@ describe('AATree', () => {
     const tree = numbersToAATree(shuffle(numbers))
     const [evens, odds] = partition(numbers, (x) => x % 2 === 0)
 
-    const trimmedAATree = odds.reduce((tree, n) => {
-      return AA.remove(tree, n)
+    const trimmedAATree = odds.reduce((acc, n) => {
+      return AA.remove(acc, n)
     }, tree)
     expect(AA.keys(trimmedAATree)).toEqual(evens)
     expect(isInvariant(trimmedAATree)).toStrictEqual(true)
 
-    const emptyAATree = evens.reduce((tree, n) => {
-      return AA.remove(tree, n)
+    const emptyAATree = evens.reduce((acc, n) => {
+      return AA.remove(acc, n)
     }, trimmedAATree)
 
     expect(isInvariant(emptyAATree)).toStrictEqual(true)

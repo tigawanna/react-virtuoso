@@ -150,8 +150,8 @@ describe('engine features', () => {
     })
 
     eng.connect<[number, number]>({
-      map: (done) => (b, c) => {
-        done(b + c)
+      map: (done) => (bVal, cVal) => {
+        done(bVal + cVal)
       },
       sink: d,
       sources: [b, c],
@@ -228,7 +228,7 @@ describe('engine features', () => {
     const b = Stream<number>()
     const c = Stream<number>()
     const d = Stream<number>()
-    const e = Stream<number>()
+    const e2 = Stream<number>()
     const f = Stream<number>()
     const g = Stream<number>()
     const h = Stream<number>()
@@ -261,15 +261,15 @@ describe('engine features', () => {
       map: (done) => (value) => {
         done(value + 1)
       },
-      sink: e,
+      sink: e2,
       sources: [d],
     })
 
     eng.connect<[number, number]>({
-      map: (done) => (a, e) => {
-        done(a + e + 1)
+      map: (done) => (aVal, eVal) => {
+        done(aVal + eVal + 1)
       },
-      pulls: [e],
+      pulls: [e2],
       sink: f,
       sources: [a],
     })
@@ -377,8 +377,8 @@ describe('engine features', () => {
     const c = Stream<number>()
 
     eng.connect<[number, number]>({
-      map: (done) => (a, b) => {
-        done(a + b)
+      map: (done) => (aVal, bVal) => {
+        done(aVal + bVal)
       },
       sink: c,
       sources: [a, b],
@@ -398,8 +398,8 @@ describe('engine features', () => {
     const c = Stream()
 
     eng.connect<[number, number]>({
-      map: (done) => (b, a) => {
-        done(a + b)
+      map: (done) => (bVal, aVal) => {
+        done(aVal + bVal)
       },
       pulls: [a],
       sink: c,
@@ -495,26 +495,26 @@ describe('instance subscriptions', () => {
   })
 
   it('replaces the subscription', () => {
-    const eng = new Engine()
+    const engine = new Engine()
     const a = Stream<number>()
     const spy1 = vi.fn()
     const spy2 = vi.fn()
-    eng.singletonSub(a, spy1)
-    eng.pub(a, 2)
-    eng.singletonSub(a, spy2)
-    eng.pub(a, 3)
+    engine.singletonSub(a, spy1)
+    engine.pub(a, 2)
+    engine.singletonSub(a, spy2)
+    engine.pub(a, 3)
     expect(spy1).toHaveBeenCalledTimes(1)
     expect(spy2).toHaveBeenCalledTimes(1)
   })
 
   it('returns an unsubscribe handler', () => {
-    const eng = new Engine()
+    const engine = new Engine()
     const a = Stream<number>()
     const spy1 = vi.fn()
-    const unsub = eng.singletonSub(a, spy1)
-    eng.pub(a, 2)
+    const unsub = engine.singletonSub(a, spy1)
+    engine.pub(a, 2)
     unsub()
-    eng.pub(a, 3)
+    engine.pub(a, 3)
     expect(spy1).toHaveBeenCalledTimes(1)
   })
 
@@ -522,7 +522,7 @@ describe('instance subscriptions', () => {
     const a = Cell(1)
     const b = Stream<number>(false)
 
-    e.changeWith(a, b, (a, b) => a + b)
+    e.changeWith(a, b, (aVal, bVal) => aVal + bVal)
 
     eng.pub(b, 2)
     expect(eng.getValue(a)).toEqual(3)
@@ -539,9 +539,9 @@ describe('instance subscriptions', () => {
 
     e.link(o$, a$)
 
-    const eng = new Engine()
-    eng.pub(i$, 2)
-    expect(eng.getValue(a$)).toEqual('foo3')
+    const engine = new Engine()
+    engine.pub(i$, 2)
+    expect(engine.getValue(a$)).toEqual('foo3')
   })
 })
 
@@ -689,8 +689,8 @@ describe('multi-node addNodeInit', () => {
   it('supports single node (backward compatibility)', () => {
     const a$ = Cell(0)
     const result$ = Cell(0)
-    const initFn = vi.fn((e: Engine) => {
-      e.pub(result$, 42)
+    const initFn = vi.fn((engine: Engine) => {
+      engine.pub(result$, 42)
     })
 
     e.addNodeInit(initFn, a$)
@@ -802,12 +802,12 @@ describe('multi-node addNodeInit', () => {
     const result1$ = Cell(0)
     const result2$ = Cell(0)
 
-    const init1 = vi.fn((e: Engine) => {
-      e.pub(result1$, 10)
+    const init1 = vi.fn((engine: Engine) => {
+      engine.pub(result1$, 10)
     })
 
-    const init2 = vi.fn((e: Engine) => {
-      e.pub(result2$, 20)
+    const init2 = vi.fn((engine: Engine) => {
+      engine.pub(result2$, 20)
     })
 
     e.addNodeInit(init1, a$, b$)
@@ -826,12 +826,12 @@ describe('multi-node addNodeInit', () => {
     const b$ = Cell(0)
     const counter$ = Cell(0)
 
-    const init1 = vi.fn((e: Engine) => {
-      e.pub(counter$, e.getValue(counter$) + 1)
+    const init1 = vi.fn((engine: Engine) => {
+      engine.pub(counter$, engine.getValue(counter$) + 1)
     })
 
-    const init2 = vi.fn((e: Engine) => {
-      e.pub(counter$, e.getValue(counter$) + 10)
+    const init2 = vi.fn((engine: Engine) => {
+      engine.pub(counter$, engine.getValue(counter$) + 10)
     })
 
     e.addNodeInit(init1, a$, b$)
@@ -856,8 +856,8 @@ describe('multi-node addNodeInit', () => {
     const a$ = Cell(0)
     const b$ = Cell(0)
     const result$ = Cell(0)
-    const initFn = vi.fn((e: Engine) => {
-      e.pub(result$, e.getValue(result$) + 1)
+    const initFn = vi.fn((engine: Engine) => {
+      engine.pub(result$, engine.getValue(result$) + 1)
     })
 
     e.addNodeInit(initFn, a$, b$)

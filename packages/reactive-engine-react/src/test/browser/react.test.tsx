@@ -47,16 +47,16 @@ describe('Reactive Engine in React', () => {
   })
 
   it('supports triggers', async () => {
-    const cell$ = Cell('hello')
+    const triggerCell$ = Cell('hello')
 
     const trigger$ = Trigger()
 
-    e.link(e.pipe(trigger$, mapTo('world')), cell$)
+    e.link(e.pipe(trigger$, mapTo('world')), triggerCell$)
 
     const { rerender, result } = await renderHook(
       () => {
         const proc = usePublisher(trigger$)
-        const value = useCellValue(cell$)
+        const value = useCellValue(triggerCell$)
         return [value, proc] as const
       },
       {

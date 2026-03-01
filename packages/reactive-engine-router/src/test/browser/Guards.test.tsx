@@ -187,7 +187,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     // Should execute in priority order: 3 (priority 1), 2 (priority 5), 1 (priority 10)
     expect(executionOrder).toEqual([3, 2, 1])
@@ -225,7 +225,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     // Broad pattern (/{*rest}) is shorter, should execute first
     expect(executionOrder).toEqual(['broad', 'specific'])
@@ -267,7 +267,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     // Should execute in definition order
     expect(executionOrder).toEqual([1, 2, 3])
@@ -302,7 +302,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     expect(capturedId).toBe(42)
   })
@@ -336,7 +336,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     expect(guardExecuted).toBe(true)
   })
@@ -369,7 +369,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     expect(guardExecuted).toBe(false)
   })
@@ -411,7 +411,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     expect(executionOrder).toEqual([1, 2, 3])
   })
@@ -454,7 +454,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     // Should execute guards 1 and 2, but not 3
     expect(executionOrder).toEqual([1, 2])
@@ -502,7 +502,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     expect(executionOrder).toEqual([1, 2, 3])
 
@@ -540,7 +540,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     expect(guardReadValue).toBe('john@example.com')
   })
@@ -573,7 +573,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     expect(visitedPaths).toContain('/admin')
   })
@@ -606,7 +606,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     expect(hasEngine).toBe(true)
   })
@@ -628,7 +628,7 @@ describe('Guards', () => {
 
     const asyncGuard = Guard('/admin', async () => {
       executionOrder.push('guard-start')
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await new Promise((resolve) => { setTimeout(resolve, 50) })
       executionOrder.push('guard-end')
     })
 
@@ -642,7 +642,7 @@ describe('Guards', () => {
       </EngineProvider>
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await new Promise((resolve) => { setTimeout(resolve, 100) })
 
     expect(executionOrder).toEqual(['guard-start', 'guard-end'])
 
@@ -664,7 +664,7 @@ describe('Guards', () => {
     })
 
     const asyncRedirectGuard = Guard('/admin', async (context) => {
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await new Promise((resolve) => { setTimeout(resolve, 50) })
       return context.redirect('/login')
     })
 

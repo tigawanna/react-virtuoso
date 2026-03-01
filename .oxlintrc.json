@@ -46,8 +46,6 @@
     "no-magic-numbers": "off",
     "no-negated-condition": "off",
     "no-nested-ternary": "off",
-    "no-promise-executor-return": "off",
-    "no-shadow": "off",
     "no-ternary": "off",
     "no-useless-return": "off",
     "operator-assignment": "off",
@@ -55,7 +53,6 @@
     "prefer-enum-initializers": "off",
     "prefer-exponentiation-operator": "off",
     "radix": "off",
-    "require-await": "off",
     "sort-imports": "off",
     "sort-keys": "off",
     "symbol-description": "off",
@@ -72,8 +69,8 @@
     "import/no-namespace": "off",
     "import/default": "off",
     "max-depth": "off",
-    "no-duplicate-imports": "off",
-    "no-await-in-loop": "off",
+    "no-duplicate-imports": ["error", { "allowSeparateTypeImports": true }],
+    "no-await-in-loop": "error",
     "default-param-last": "off",
     "no-inner-declarations": "off",
     "prefer-promise-reject-errors": "off"
@@ -83,6 +80,12 @@
       "files": ["**/vite.config.*", "**/playwright.config.*"],
       "rules": {
         "import/no-nodejs-modules": "off"
+      }
+    },
+    {
+      "files": ["packages/react-virtuoso/**"],
+      "rules": {
+        "no-shadow": "off"
       }
     }
   ],

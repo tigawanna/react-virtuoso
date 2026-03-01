@@ -126,7 +126,9 @@ export function rangesWithin<T>(node: AANode<T>, startIndex: number, endIndex: n
 }
 
 export function remove<T>(node: AANode<T>, key: number): AANode<T> {
-  if (empty(node)) {return NIL_NODE}
+  if (empty(node)) {
+    return NIL_NODE
+  }
 
   const { k, l, r } = node
 
