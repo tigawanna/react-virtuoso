@@ -65,11 +65,11 @@ function buildProbeGridState<D = unknown>(items: GridItem<D>[]): GridState {
   }
 }
 
-function dimensionComparator(prev: ElementDimensions, next: ElementDimensions) {
-  return prev.width === next.width && prev.height === next.height
+function dimensionComparator(prev: ElementDimensions | undefined, next: ElementDimensions) {
+  return prev !== undefined && prev.width === next.width && prev.height === next.height
 }
-function gapComparator(prev: Gap, next: Gap) {
-  return prev.column === next.column && prev.row === next.row
+function gapComparator(prev: Gap | undefined, next: Gap) {
+  return prev !== undefined && prev.column === next.column && prev.row === next.row
 }
 
 export const gridSystem = /*#__PURE__*/ u.system(
@@ -180,7 +180,7 @@ export const gridSystem = /*#__PURE__*/ u.system(
         u.combineLatest(
           u.duc(viewportDimensions, dimensionComparator),
           u.duc(itemDimensions, dimensionComparator),
-          u.duc(gap, (prev, next) => prev.column === next.column && prev.row === next.row),
+          u.duc(gap, (prev: Gap | undefined, next: Gap) => prev !== undefined && prev.column === next.column && prev.row === next.row),
           u.duc(scrollTop)
         ),
         u.map(([viewport, item, gap, scrollTop]) => ({
@@ -320,7 +320,9 @@ export const gridSystem = /*#__PURE__*/ u.system(
           const isLastItemRendered = lastIndex === totalCount - 1
 
           // User has scrolled
-          if (hasScrolled) {return isLastItemRendered}
+          if (hasScrolled) {
+            return isLastItemRendered
+          }
 
           // User has not scrolled, so check whether grid is fully rendered
           const isFullyRendered =
