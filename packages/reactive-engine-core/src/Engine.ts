@@ -320,6 +320,7 @@ export class Engine {
    * r.pub(foo$, 'bar')
    * ```
    */
+  // oxlint-disable-next-line typescript/unified-signatures - this is intentional
   pub<T>(node: Inp<T>, value: T): void
   pub<T>(node: Inp<T>, value?: T) {
     this.pubIn({ [node]: value })

@@ -65,7 +65,6 @@
     "typescript/no-unsafe-type-assertion": "off",
     "typescript/no-unsafe-argument": "off",
     "typescript/ban-types": "off",
-    "typescript/unified-signatures": "off",
 
     "import/no-named-export": "off",
     "import/group-exports": "off",
