@@ -1,4 +1,4 @@
-export default {
+const config = {
   overrides: [
     {
       files: '*.astro',
@@ -13,3 +13,4 @@ export default {
   singleQuote: true,
   trailingComma: 'es5',
 }
+export default config

@@ -1,5 +1,4 @@
-import { ListRange } from './interfaces'
-import { ScrollSeekConfiguration } from './interfaces'
+import { ListRange, ScrollSeekConfiguration } from './interfaces'
 import { stateFlagsSystem } from './stateFlagsSystem'
 import * as u from './urx'
 
