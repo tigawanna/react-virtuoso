@@ -11,8 +11,7 @@
   "exports": {
     "./eslint.config": "./eslint.config.mjs",
     "./eslint-base.config": "./eslint-base.config.mjs",
-    "./prettier.config": "./prettier.config.mjs",
-    "./tsconfig.base.json": "./tsconfig.base.json"
+    "./prettier.config": "./prettier.config.mjs"
   },
   "dependencies": {
     "@eslint/js": "^9.23.0",
@@ -21,7 +20,7 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-perfectionist": "^4.7.0",
     "eslint-plugin-react-hooks": "^5.1.0",
-    "prettier": "^3.4.2",
+    "prettier": "catalog:",
     "globals": "^14.0.0"
   },
   "peerDependencies": {

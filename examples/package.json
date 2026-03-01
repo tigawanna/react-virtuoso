@@ -23,15 +23,15 @@
     "@virtuoso.dev/tooling": "workspace:*",
     "@virtuoso.dev/reactive-engine-core": "workspace:*",
     "@virtuoso.dev/reactive-engine-react": "workspace:*",
-    "eslint": "^9.23.0",
-    "prettier": "^3.4.2",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "react-virtuoso": "workspace:*",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   },
   "devDependencies": {
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3"
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:"
   }
 }
