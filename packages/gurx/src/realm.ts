@@ -104,6 +104,16 @@ const nodeDefs$$ = new Map<symbol, CellDefinition<any> | PipeDefinition<any, any
 
 let currentRealm$$: Realm | undefined = undefined
 
+function runInRealmContext<T>(realm: Realm, fn: () => T): T {
+  const prevRealm = currentRealm$$
+  currentRealm$$ = realm
+  try {
+    return fn()
+  } finally {
+    currentRealm$$ = prevRealm
+  }
+}
+
 /**
  * The realm is the actual "engine" that orchestrates any cells and signals that it touches. The realm also stores the state and the dependencies of the nodes that are referred through it.
  *
@@ -661,11 +671,7 @@ export class Realm {
     return nodes.map((node) => this.getValue(node))
   }
   inContext<T>(fn: () => T): T {
-    const prevRealm = currentRealm$$
-    currentRealm$$ = this
-    const result = fn()
-    currentRealm$$ = prevRealm
-    return result
+    return runInRealmContext(this, fn)
   }
 
   /**
