@@ -1,7 +1,9 @@
 import { tupleComparator } from './comparators'
 import { domIOSystem } from './domIOSystem'
-import { DOWN, ScrollDirection, UP } from './stateFlagsSystem'
+import { DOWN, UP } from './stateFlagsSystem'
 import * as u from './urx'
+
+import type { ScrollDirection } from './stateFlagsSystem'
 
 export type NumberTuple = [number, number]
 export type Overscan = number | { main: number; reverse: number }

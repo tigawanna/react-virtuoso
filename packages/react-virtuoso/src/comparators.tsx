@@ -1,4 +1,4 @@
-import { ListRange } from './interfaces'
+import type { ListRange } from './interfaces'
 
 export function rangeComparator(prev: ListRange | undefined, next: ListRange) {
   return !!(prev && prev.startIndex === next.startIndex && prev.endIndex === next.endIndex)

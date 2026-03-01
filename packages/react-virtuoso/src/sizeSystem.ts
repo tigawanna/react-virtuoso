@@ -1,10 +1,13 @@
-import { AANode, arrayToRanges, empty, find, findMaxKeyValue, insert, newTree, Range, rangesWithin, remove, walk } from './AATree'
-import { SizeFunction, SizeRange } from './interfaces'
-import { Log, loggerSystem, LogLevel } from './loggerSystem'
+import { arrayToRanges, empty, find, findMaxKeyValue, insert, newTree, rangesWithin, remove, walk } from './AATree'
+import { loggerSystem, LogLevel } from './loggerSystem'
 import { recalcSystem } from './recalcSystem'
 import * as u from './urx'
 import * as arrayBinarySearch from './utils/binaryArraySearch'
 import { correctItemSize } from './utils/correctItemSize'
+
+import type { AANode, Range } from './AATree'
+import type { SizeFunction, SizeRange } from './interfaces'
+import type { Log } from './loggerSystem'
 
 export type Data = readonly unknown[] | undefined
 

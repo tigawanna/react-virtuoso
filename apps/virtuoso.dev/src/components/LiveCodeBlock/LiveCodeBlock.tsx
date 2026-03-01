@@ -1,4 +1,5 @@
-import React, { type ComponentProps, type ReactNode, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 
@@ -6,7 +7,7 @@ import { CheckIcon, ClipboardCopyIcon, CubeIcon, ReloadIcon, ResetIcon } from '@
 import { shikiToMonaco } from '@shikijs/monaco'
 import copy from 'copy-text-to-clipboard'
 
-import { type Theme, useStarlightTheme } from '@/components/theme-utils'
+import { useStarlightTheme } from '@/components/theme-utils'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { getShikiHighlighter } from '@/utils/shikiHighlighter'
@@ -15,6 +16,8 @@ import { createSandbox } from './createCodesandbox'
 import { transformToFunctionBody } from './esmTransform'
 import { importMap, libDefinitions } from './extraImports'
 import iFrameStyle from './iframe-style.css?raw'
+
+import type { Theme } from '@/components/theme-utils'
 
 let shikiInitialized = false
 

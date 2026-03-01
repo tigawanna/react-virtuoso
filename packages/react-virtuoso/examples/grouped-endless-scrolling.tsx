@@ -4,7 +4,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { faker } from '@faker-js/faker'
 import { groupBy } from 'lodash'
 
-import { Components, GroupedVirtuoso } from '../src'
+import { GroupedVirtuoso } from '../src'
+
+import type { Components } from '../src'
 
 const getUser = () => {
   const firstName = faker.name.firstName()

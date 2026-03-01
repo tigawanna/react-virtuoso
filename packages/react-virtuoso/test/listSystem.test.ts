@@ -1,8 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { AANode, walk } from '../src/AATree'
+import { walk } from '../src/AATree'
 import { listSystem } from '../src/listSystem'
 import { getValue, init, publish, subscribe } from '../src/urx'
+
+import type { AANode } from '../src/AATree'
 
 describe('list engine', () => {
   describe('basics', () => {

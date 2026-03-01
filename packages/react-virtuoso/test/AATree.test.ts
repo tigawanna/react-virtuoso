@@ -2,7 +2,8 @@
 import { describe, expect, it } from 'vitest'
 
 import * as AA from '../src/AATree'
-import { AANode } from '../src/AATree'
+
+import type { AANode } from '../src/AATree'
 
 function partition(array: number[], predicate: (input: number) => boolean) {
   const result: [number[], number[]] = [[], []]

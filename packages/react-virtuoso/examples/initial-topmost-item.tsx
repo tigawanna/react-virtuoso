@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
-import { IndexLocationWithAlign, Virtuoso } from '../src'
-import { IndexLocation } from '../src/scrollToIndexSystem'
+import { Virtuoso } from '../src'
+
+import type { IndexLocationWithAlign } from '../src'
+import type { IndexLocation } from '../src/scrollToIndexSystem'
 
 // @ts-expect-error I know, I know, I know
 globalThis.VIRTUOSO_LOG_LEVEL = 0

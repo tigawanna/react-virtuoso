@@ -1,8 +1,6 @@
 import { rangeComparator, tupleComparator } from './comparators'
-import { ElementDimensions, Gap, GridStateSnapshot } from './component-interfaces/VirtuosoGrid'
 import { domIOSystem } from './domIOSystem'
 import { getInitialTopMostItemIndexNumber } from './initialTopMostItemIndexSystem'
-import { FlatIndexLocationWithAlign, GridIndexLocation, GridItem } from './interfaces'
 import { loggerSystem } from './loggerSystem'
 import { propsReadySystem } from './propsReadySystem'
 import { scrollSeekSystem } from './scrollSeekSystem'
@@ -12,6 +10,9 @@ import { stateFlagsSystem } from './stateFlagsSystem'
 import * as u from './urx'
 import { skipFrames } from './utils/skipFrames'
 import { windowScrollerSystem } from './windowScrollerSystem'
+
+import type { ElementDimensions, Gap, GridStateSnapshot } from './component-interfaces/VirtuosoGrid'
+import type { FlatIndexLocationWithAlign, GridIndexLocation, GridItem } from './interfaces'
 
 export type Data = null | unknown[]
 

@@ -1,6 +1,7 @@
-import { ListRange, ScrollSeekConfiguration } from './interfaces'
 import { stateFlagsSystem } from './stateFlagsSystem'
 import * as u from './urx'
+
+import type { ListRange, ScrollSeekConfiguration } from './interfaces'
 
 export const scrollSeekSystem = u.system(
   ([{ scrollVelocity }]) => {

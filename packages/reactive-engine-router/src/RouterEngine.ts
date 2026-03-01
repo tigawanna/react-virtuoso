@@ -3,19 +3,13 @@ import * as React from 'react'
 import { Cell, Stream } from '@virtuoso.dev/reactive-engine-core'
 
 import { guardDefinitions$$ } from './Guard'
-import {
-  CONTINUE_RESULT,
-  type GuardContext,
-  NAVIGATE_RESULT,
-  type NavigateResult,
-  REDIRECT_RESULT,
-  type RedirectResult,
-} from './guardTypes'
+import { CONTINUE_RESULT, NAVIGATE_RESULT, REDIRECT_RESULT } from './guardTypes'
 import { findMatchingLayouts } from './Layout'
 import { routeComponents$$, routeDefinitions$$ } from './Route'
 import { SuspenceTrigger } from './SuspenceTrigger'
 import { getUrl, interpolateRoute, matchGuardPattern, parseUrl } from './utils'
 
+import type { GuardContext, NavigateResult, RedirectResult } from './guardTypes'
 import type { ActiveComponent, RouteRef, RouteReference, RouteRefValue } from './types'
 import type { Engine, NodeRef, Subscription, UnsubscribeHandle } from '@virtuoso.dev/reactive-engine-core'
 

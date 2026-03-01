@@ -4,11 +4,14 @@
  *
  * @packageDocumentation
  */
-import { Emitter, publish, reset, subscribe, Subscription } from './actions'
+import { publish, reset, subscribe } from './actions'
 import { RESET, SUBSCRIBE } from './constants'
-import { Comparator, defaultComparator, distinctUntilChanged, pipe } from './pipe'
+import { defaultComparator, distinctUntilChanged, pipe } from './pipe'
 import { stream } from './streams'
 import { joinProc } from './utils'
+
+import type { Emitter, Subscription } from './actions'
+import type { Comparator } from './pipe'
 
 /**
  * Creates an emitter with the latest values from all passed emitters as an array.

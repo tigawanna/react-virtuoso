@@ -32,9 +32,11 @@
  * @packageDocumentation
  */
 
-import { connect, Emitter, StatefulStream, Stream, subscribe, Subscription, Unsubscribe } from './actions'
+import { connect, subscribe } from './actions'
 import { PUBLISH, RESET, SUBSCRIBE, VALUE } from './constants'
 import { noop, tap } from './utils'
+
+import type { Emitter, StatefulStream, Stream, Subscription, Unsubscribe } from './actions'
 
 /**
  * Event handlers are special emitters which can have **at most one active subscription**.

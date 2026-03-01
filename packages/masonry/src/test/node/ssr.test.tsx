@@ -2,7 +2,9 @@ import { parse } from 'node-html-parser'
 import { renderToString } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import { VirtuosoMasonry, type VirtuosoMasonryProps } from '../../VirtuosoMasonry'
+import { VirtuosoMasonry } from '../../VirtuosoMasonry'
+
+import type { VirtuosoMasonryProps } from '../../VirtuosoMasonry'
 
 const ItemContent: VirtuosoMasonryProps<number, unknown>['ItemContent'] = ({ data }) => <div>{data}</div>
 

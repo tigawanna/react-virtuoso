@@ -1,11 +1,12 @@
 import { findMaxKeyValue } from './AATree'
 import { domIOSystem } from './domIOSystem'
-import { CalculateViewLocation, ScrollIntoViewLocation } from './interfaces'
 import { listStateSystem } from './listStateSystem'
 import { loggerSystem } from './loggerSystem'
 import { scrollToIndexSystem } from './scrollToIndexSystem'
 import { offsetOf, originalIndexFromLocation, sizeSystem } from './sizeSystem'
 import * as u from './urx'
+
+import type { CalculateViewLocation, ScrollIntoViewLocation } from './interfaces'
 
 const defaultCalculateViewLocation: CalculateViewLocation = ({
   itemBottom,

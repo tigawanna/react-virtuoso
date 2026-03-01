@@ -1,6 +1,5 @@
 import { find } from './AATree'
 import { domIOSystem } from './domIOSystem'
-import { ListItem } from './interfaces'
 import { listStateSystem } from './listStateSystem'
 import { loggerSystem, LogLevel } from './loggerSystem'
 import { recalcSystem } from './recalcSystem'
@@ -8,6 +7,8 @@ import { sizeSystem } from './sizeSystem'
 import { stateFlagsSystem, UP } from './stateFlagsSystem'
 import * as u from './urx'
 import { simpleMemoize } from './utils/simpleMemoize'
+
+import type { ListItem } from './interfaces'
 
 const isMobileSafari = simpleMemoize(() => {
   return /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(navigator.userAgent)

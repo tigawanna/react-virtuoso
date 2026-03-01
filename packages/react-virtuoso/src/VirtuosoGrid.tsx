@@ -1,17 +1,19 @@
 import React from 'react'
 
-import { VirtuosoGridHandle, VirtuosoGridProps } from './component-interfaces/VirtuosoGrid'
 import { gridSystem } from './gridSystem'
 import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect'
 import useSize from './hooks/useSize'
 import useWindowViewportRectRef from './hooks/useWindowViewportRect'
-import { GridComponents, GridComputeItemKey, GridItemContent, GridRootProps } from './interfaces'
-import { Log, LogLevel } from './loggerSystem'
+import { LogLevel } from './loggerSystem'
 import { systemToComponent } from './react-urx'
 import * as u from './urx'
 import { VirtuosoGridMockContext } from './utils/context'
 import { correctItemSize } from './utils/correctItemSize'
 import { buildScroller, buildWindowScroller, contextPropIfNotDomElement, identity, viewportStyle } from './Virtuoso'
+
+import type { VirtuosoGridHandle, VirtuosoGridProps } from './component-interfaces/VirtuosoGrid'
+import type { GridComponents, GridComputeItemKey, GridItemContent, GridRootProps } from './interfaces'
+import type { Log } from './loggerSystem'
 
 const gridComponentPropsSystem = /*#__PURE__*/ u.system(() => {
   const itemContent = u.statefulStream<GridItemContent<any, any>>((index) => `Item ${index}`)

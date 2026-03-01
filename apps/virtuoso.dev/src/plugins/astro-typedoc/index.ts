@@ -6,15 +6,9 @@ import { fileURLToPath } from 'node:url'
 import type { AstroIntegration } from 'astro'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-import {
-  Application,
-  Converter,
-  type DeclarationReflection,
-  PageEvent,
-  type ProjectReflection,
-  ReflectionKind,
-  TSConfigReader,
-} from 'typedoc'
+import { Application, Converter, PageEvent, ReflectionKind, TSConfigReader } from 'typedoc'
+
+import type { DeclarationReflection, ProjectReflection } from 'typedoc'
 
 interface EntryPoint {
   name?: string

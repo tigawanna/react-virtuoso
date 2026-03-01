@@ -1,4 +1,5 @@
-import { type ComponentProps, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import type { ComponentProps } from 'react'
 
 import { CheckIcon, ClipboardCopyIcon } from '@radix-ui/react-icons'
 import copy from 'copy-text-to-clipboard'

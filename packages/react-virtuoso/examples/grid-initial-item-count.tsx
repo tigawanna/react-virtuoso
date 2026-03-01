@@ -3,7 +3,9 @@ import { createHashRouter, Link, RouterProvider, useParams, useSearchParams } fr
 
 import { debounce } from 'lodash'
 
-import { GridComponents, GridStateSnapshot, ListRange, VirtuosoGrid } from '../src'
+import { VirtuosoGrid } from '../src'
+
+import type { GridComponents, GridStateSnapshot, ListRange } from '../src'
 
 function fetchData(page: number) {
   return new Promise<string[]>((resolve) => {

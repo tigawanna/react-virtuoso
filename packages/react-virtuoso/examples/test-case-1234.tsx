@@ -1,4 +1,5 @@
-import { useState, useCallback, forwardRef, useRef, ReactNode } from 'react'
+import { useState, useCallback, forwardRef, useRef } from 'react'
+import type { ReactNode } from 'react'
 
 import { v4 as uuidv4 } from 'uuid'
 

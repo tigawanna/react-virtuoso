@@ -1,15 +1,18 @@
-import { empty, findMaxKeyValue, Range, rangesWithin } from './AATree'
+import { empty, findMaxKeyValue, rangesWithin } from './AATree'
 import { rangeComparator, tupleComparator } from './comparators'
 import { groupedListSystem } from './groupedListSystem'
 import { getInitialTopMostItemIndexNumber, initialTopMostItemIndexSystem } from './initialTopMostItemIndexSystem'
-import { FlatIndexLocationWithAlign, Item, ListItem, ListRange } from './interfaces'
 import { propsReadySystem } from './propsReadySystem'
 import { recalcSystem } from './recalcSystem'
 import { scrollToIndexSystem } from './scrollToIndexSystem'
 import { BOTTOM, TOP, sizeRangeSystem } from './sizeRangeSystem'
-import { Data, hasGroups, originalIndexFromItemIndex, rangesWithinOffsets, SizeState, sizeSystem } from './sizeSystem'
+import { hasGroups, originalIndexFromItemIndex, rangesWithinOffsets, sizeSystem } from './sizeSystem'
 import { stateFlagsSystem } from './stateFlagsSystem'
 import * as u from './urx'
+
+import type { Range } from './AATree'
+import type { FlatIndexLocationWithAlign, Item, ListItem, ListRange } from './interfaces'
+import type { Data, SizeState } from './sizeSystem'
 
 export type ListItems = ListItem<unknown>[]
 export interface ListState {

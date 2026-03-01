@@ -39,7 +39,7 @@
  *
  * @packageDocumentation
  */
-import { Emitter } from './actions'
+import type { Emitter } from './actions'
 
 /** @internal **/
 export type AnySystemSpec = SystemSpec<any, any>

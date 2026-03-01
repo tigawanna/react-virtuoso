@@ -1,24 +1,8 @@
 import React from 'react'
 
-import {
-  GroupedTableVirtuosoHandle,
-  GroupedTableVirtuosoProps,
-  TableVirtuosoHandle,
-  TableVirtuosoProps,
-} from './component-interfaces/TableVirtuoso'
 import useChangedListContentsSizes from './hooks/useChangedChildSizes'
 import useSize from './hooks/useSize'
 import useWindowViewportRectRef from './hooks/useWindowViewportRect'
-import {
-  ComputeItemKey,
-  FixedFooterContent,
-  FixedHeaderContent,
-  GroupContent,
-  GroupItemContent,
-  ItemContent,
-  TableComponents,
-  TableRootProps,
-} from './interfaces'
 import { listSystem } from './listSystem'
 import { systemToComponent } from './react-urx'
 import * as u from './urx'
@@ -33,6 +17,23 @@ import {
   itemPropIfNotDomElement,
   viewportStyle,
 } from './Virtuoso'
+
+import type {
+  GroupedTableVirtuosoHandle,
+  GroupedTableVirtuosoProps,
+  TableVirtuosoHandle,
+  TableVirtuosoProps,
+} from './component-interfaces/TableVirtuoso'
+import type {
+  ComputeItemKey,
+  FixedFooterContent,
+  FixedHeaderContent,
+  GroupContent,
+  GroupItemContent,
+  ItemContent,
+  TableComponents,
+  TableRootProps,
+} from './interfaces'
 
 const tableComponentPropsSystem = /*#__PURE__*/ u.system(() => {
   const itemContent = u.statefulStream<ItemContent<any, unknown>>((index: number) => <td>Item ${index}</td>)

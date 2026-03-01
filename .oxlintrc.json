@@ -72,7 +72,6 @@
     "import/group-exports": "off",
     "import/exports-last": "off",
     "import/prefer-default-export": "off",
-    "import/consistent-type-specifier-style": "off",
     "import/no-namespace": "off",
     "import/no-nodejs-modules": "off",
     "import/default": "off",

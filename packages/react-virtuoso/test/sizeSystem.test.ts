@@ -1,8 +1,10 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { AANode, ranges, walk } from '../src/AATree'
+import { ranges, walk } from '../src/AATree'
 import { initialSizeState, offsetOf, rangesWithinOffsets, sizeStateReducer, sizeSystem, sizeTreeToRanges } from '../src/sizeSystem'
 import { getValue, init, publish, subscribe } from '../src/urx'
+
+import type { AANode } from '../src/AATree'
 
 function toKV<T>(tree: AANode<T>) {
   return walk(tree).map((node) => [node.k, node.v] as [number, T])

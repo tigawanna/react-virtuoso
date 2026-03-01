@@ -1,6 +1,7 @@
 import { domIOSystem } from './domIOSystem'
-import { ScrollContainerState, WindowViewportInfo } from './interfaces'
 import * as u from './urx'
+
+import type { ScrollContainerState, WindowViewportInfo } from './interfaces'
 
 export const windowScrollerSystem = u.system(([{ scrollContainerState, scrollTo }]) => {
   const windowScrollContainerState = u.stream<ScrollContainerState>()

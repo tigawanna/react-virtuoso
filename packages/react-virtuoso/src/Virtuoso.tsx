@@ -1,18 +1,19 @@
 import React from 'react'
 
-import { GroupedVirtuosoHandle, GroupedVirtuosoProps, VirtuosoHandle, VirtuosoProps } from './component-interfaces/Virtuoso'
 import useChangedListContentsSizes from './hooks/useChangedChildSizes'
 import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect'
 import useScrollTop from './hooks/useScrollTop'
 import useSize from './hooks/useSize'
 import useWindowViewportRectRef from './hooks/useWindowViewportRect'
-import { Components, ComputeItemKey, ContextProp, GroupContent, GroupItemContent, ItemContent, ListRootProps } from './interfaces'
 import { listSystem } from './listSystem'
 import { systemToComponent } from './react-urx'
 import * as u from './urx'
 import { VirtuosoMockContext } from './utils/context'
 import { correctItemSize } from './utils/correctItemSize'
 import { positionStickyCssValue } from './utils/positionStickyCssValue'
+
+import type { GroupedVirtuosoHandle, GroupedVirtuosoProps, VirtuosoHandle, VirtuosoProps } from './component-interfaces/Virtuoso'
+import type { Components, ComputeItemKey, ContextProp, GroupContent, GroupItemContent, ItemContent, ListRootProps } from './interfaces'
 
 export function identity<T>(value: T) {
   return value

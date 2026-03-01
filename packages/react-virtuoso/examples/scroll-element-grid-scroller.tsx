@@ -3,7 +3,9 @@ import * as React from 'react'
 //@ts-nocheck
 import styled from '@emotion/styled'
 
-import { GridComponents, VirtuosoGrid } from '../src'
+import { VirtuosoGrid } from '../src'
+
+import type { GridComponents } from '../src'
 
 const ItemContainer = styled.div`
   box-sizing: border-box;

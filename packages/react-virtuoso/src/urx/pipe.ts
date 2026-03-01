@@ -1,4 +1,4 @@
-import { Emitter, reset, subscribe, Subscription } from './actions'
+import { reset, subscribe } from './actions'
 import { RESET, SUBSCRIBE } from './constants'
 /**
  *
@@ -20,6 +20,8 @@ import { RESET, SUBSCRIBE } from './constants'
  * @packageDocumentation
  */
 import { compose, thrush } from './utils'
+
+import type { Emitter, Subscription } from './actions'
 
 /**
  * A function which determines if two values are equal.

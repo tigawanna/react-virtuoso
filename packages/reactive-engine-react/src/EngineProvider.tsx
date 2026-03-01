@@ -2,7 +2,9 @@ import * as React from 'react'
 
 import { Engine } from '@virtuoso.dev/reactive-engine-core'
 
-import { EngineContext, type EngineRef, getRefInternal, setRegistryEngine, useIsomorphicLayoutEffect } from './hooks'
+import { EngineContext, getRefInternal, setRegistryEngine, useIsomorphicLayoutEffect } from './hooks'
+
+import type { EngineRef } from './hooks'
 
 /**
  * @inline

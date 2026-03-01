@@ -1,7 +1,6 @@
 import { contextSystem } from './contextSystem'
 import { domIOSystem } from './domIOSystem'
 import { initialTopMostItemIndexSystem } from './initialTopMostItemIndexSystem'
-import { FollowOutput, FollowOutputScalarType, ScrollIntoViewLocation } from './interfaces'
 import { loggerSystem, LogLevel } from './loggerSystem'
 import { propsReadySystem } from './propsReadySystem'
 import { scrollIntoViewSystem } from './scrollIntoViewSystem'
@@ -9,6 +8,8 @@ import { scrollToIndexSystem } from './scrollToIndexSystem'
 import { sizeSystem } from './sizeSystem'
 import { stateFlagsSystem } from './stateFlagsSystem'
 import * as u from './urx'
+
+import type { FollowOutput, FollowOutputScalarType, ScrollIntoViewLocation } from './interfaces'
 
 function normalizeFollowOutput(follow: FollowOutputScalarType): FollowOutputScalarType {
   if (!follow) {

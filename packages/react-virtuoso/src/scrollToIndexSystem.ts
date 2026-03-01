@@ -1,9 +1,10 @@
 import { findMaxKeyValue } from './AATree'
 import { domIOSystem } from './domIOSystem'
-import { IndexLocationWithAlign } from './interfaces'
 import { loggerSystem, LogLevel } from './loggerSystem'
 import { offsetOf, originalIndexFromLocation, sizeSystem } from './sizeSystem'
 import * as u from './urx'
+
+import type { IndexLocationWithAlign } from './interfaces'
 
 export type IndexLocation = IndexLocationWithAlign | number
 

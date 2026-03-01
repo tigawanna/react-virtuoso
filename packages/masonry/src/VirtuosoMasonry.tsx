@@ -1,14 +1,16 @@
-import { type CSSProperties, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 
 import { Realm, RealmContext, useCellValue, useCellValues, useRealm } from '@virtuoso.dev/gurx'
 
 import { DefaultItemContent, itemContent$ } from './content'
 import { context$, data$ } from './data'
 import { listOffset$, scrollHeight$, scrollTop$, useWindowScroll$, viewportHeight$, viewportWidth$ } from './dom'
-import { type MasonryItem, masonryItemsState$ } from './masonry-item-state'
+import { masonryItemsState$ } from './masonry-item-state'
 import { absoluteSizes$, columnCount$, indexesInColumns$, initialItemCount$, knownSizes$, masonryRanges$ } from './masonry-sizes'
 
 import type { ItemContent, ScrollerProps, SizeRange } from './interfaces'
+import type { MasonryItem } from './masonry-item-state'
 
 /**
  * Props for the VirtuosoMasonry component.

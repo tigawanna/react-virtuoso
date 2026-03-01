@@ -1,12 +1,9 @@
 import { useRef, useState } from 'react'
 
 import { randPhrase, randTextRange } from '@ngneat/falso'
-import {
-  VirtuosoMessageList,
-  VirtuosoMessageListLicense,
-  type VirtuosoMessageListMethods,
-  type VirtuosoMessageListProps,
-} from '@virtuoso.dev/message-list'
+import { VirtuosoMessageList, VirtuosoMessageListLicense } from '@virtuoso.dev/message-list'
+
+import type { VirtuosoMessageListMethods, VirtuosoMessageListProps } from '@virtuoso.dev/message-list'
 
 interface Message {
   key: string

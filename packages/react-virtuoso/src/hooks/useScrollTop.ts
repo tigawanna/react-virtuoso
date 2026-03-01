@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { ScrollContainerState } from '../interfaces'
 import * as u from '../urx'
 import { approximatelyEqual } from '../utils/approximatelyEqual'
 import { correctItemSize } from '../utils/correctItemSize'
+
+import type { ScrollContainerState } from '../interfaces'
 
 export type ScrollerRef = HTMLElement | null | Window
 

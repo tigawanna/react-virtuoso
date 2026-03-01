@@ -1,5 +1,6 @@
 import { forwardRef, useMemo } from 'react'
-import { TableVirtuoso, TableVirtuosoProps } from 'react-virtuoso'
+import { TableVirtuoso } from 'react-virtuoso'
+import type { TableVirtuosoProps } from 'react-virtuoso'
 
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'

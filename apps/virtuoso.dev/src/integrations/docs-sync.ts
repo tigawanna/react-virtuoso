@@ -1,9 +1,10 @@
-import { type FSWatcher, watch } from 'node:fs'
+import { watch } from 'node:fs'
 import { mkdir, readdir, readFile, rm, stat, unlink, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import type { AstroIntegration } from 'astro'
+import type { FSWatcher } from 'node:fs'
 
 export interface DocsSyncSource {
   /** Target subdirectory under src/content/docs/ */

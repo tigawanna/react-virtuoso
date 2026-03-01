@@ -1,6 +1,8 @@
 import * as React from 'react'
 
-import { ListRange, VirtuosoGrid } from '../src'
+import { VirtuosoGrid } from '../src'
+
+import type { ListRange } from '../src'
 
 export function Example() {
   const { data, rangeRendered } = useDataPager(1000)

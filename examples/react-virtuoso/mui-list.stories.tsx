@@ -1,5 +1,6 @@
 import { forwardRef, useMemo } from 'react'
-import { GroupedVirtuoso, GroupedVirtuosoProps } from 'react-virtuoso'
+import { GroupedVirtuoso } from 'react-virtuoso'
+import type { GroupedVirtuosoProps } from 'react-virtuoso'
 
 import Avatar from '@mui/material/Avatar'
 import List from '@mui/material/List'
