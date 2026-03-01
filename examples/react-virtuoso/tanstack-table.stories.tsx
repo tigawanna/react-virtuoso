@@ -99,7 +99,7 @@ export const TanstackTableExample = () => {
           },
           TableRow: (props) => {
             const index = props['data-index']
-            const row = rows[index]
+            const row = rows[index]!
 
             return (
               <tr {...props}>

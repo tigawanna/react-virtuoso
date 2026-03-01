@@ -23,8 +23,7 @@
   "scripts": {
     "build": "tsc && vite build",
     "test": "vitest --run --passWithNoTests --browser.headless",
-    "lint": "oxlint --type-aware",
-    "typecheck": "tsgo --noEmit",
+    "lint": "oxlint --type-aware --type-check",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
   },

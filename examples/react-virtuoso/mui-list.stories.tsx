@@ -62,7 +62,7 @@ export const MuiListExample = () => {
       }}
       groupCounts={groupCounts}
       itemContent={(index) => {
-        const user = users[index]
+        const user = users[index]!
         return (
           <>
             <ListItemAvatar>

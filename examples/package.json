@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "ladle dev",
-    "lint": "oxlint --type-aware",
+    "lint": "oxlint --type-aware --type-check",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
   },

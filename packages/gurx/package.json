@@ -27,8 +27,7 @@
     "test:browser": "vitest run --project=browser",
     "test:node": "vitest run --project=node",
     "test:watch": "vitest",
-    "lint": "oxlint --type-aware",
-    "typecheck": "tsgo --noEmit",
+    "lint": "oxlint --type-aware --type-check",
     "format": "oxfmt",
     "format:check": "oxfmt --check"
   },

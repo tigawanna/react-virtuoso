@@ -45,8 +45,7 @@
     "test:browser": "vitest run --project=browser",
     "test:node": "vitest run --project=\"node env\"",
     "test:watch": "vitest",
-    "typecheck": "tsgo --noEmit",
-    "lint": "oxlint --type-aware",
+    "lint": "oxlint --type-aware --type-check",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "knip": "knip"
