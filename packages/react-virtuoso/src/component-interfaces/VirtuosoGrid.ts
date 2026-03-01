@@ -1,4 +1,4 @@
-import { LogLevel } from '../loggerSystem'
+import type { LogLevel } from '../loggerSystem'
 
 import type {
   GridComponents,

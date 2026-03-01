@@ -28,7 +28,6 @@
 
     "arrow-body-style": "off",
     "capitalized-comments": "off",
-    "consistent-type-imports": "off",
     "func-names": "off",
     "func-style": "off",
     "id-length": "off",

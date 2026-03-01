@@ -18,6 +18,7 @@ import { importMap, libDefinitions } from './extraImports'
 import iFrameStyle from './iframe-style.css?raw'
 
 import type { Theme } from '@/components/theme-utils'
+import type * as MonacoEditor from 'monaco-editor'
 
 let shikiInitialized = false
 
@@ -145,7 +146,7 @@ const ErrorMessage: React.FC<{ message: string; retry: () => void }> = ({ messag
   )
 }
 
-async function initializeMonacoWithShiki(m: typeof import('monaco-editor')) {
+async function initializeMonacoWithShiki(m: typeof MonacoEditor) {
   if (shikiInitialized) {return}
 
   try {
@@ -195,8 +196,8 @@ export default function LiveCodeBlock({ code, disableSandbox = false }: { code: 
     return `file:///custom-example-${Math.random().toString(36).substring(7)}.tsx`
   }, [])
   const editorContainerRef = useRef<HTMLDivElement>(null)
-  const editorRef = useRef<import('monaco-editor').editor.IStandaloneCodeEditor | null>(null)
-  const monacoRef = useRef<null | typeof import('monaco-editor')>(null)
+  const editorRef = useRef<MonacoEditor.editor.IStandaloneCodeEditor | null>(null)
+  const monacoRef = useRef<null | typeof MonacoEditor>(null)
   const [errorKey, setErrorKey] = useState(0)
   const [monacoReady, setMonacoReady] = useState(false)
 
