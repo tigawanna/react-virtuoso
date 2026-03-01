@@ -19,10 +19,7 @@
       }
     ],
     "typescript/restrict-template-expressions": ["error", { "allowNumber": true }],
-    "react/display-name": "off",
     "react/prop-types": "off",
-    "react/rules-of-hooks": "error",
-    "react/exhaustive-deps": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-boolean-value": "off",

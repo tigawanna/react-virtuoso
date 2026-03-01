@@ -24,7 +24,7 @@ const generateItems = () => {
   return items
 }
 
-const StreamCardsWrapper = forwardRef<HTMLDivElement>((props, ref) => {
+const StreamCardsWrapper = forwardRef<HTMLDivElement>(function StreamCardsWrapper(props, ref) {
   return <div className="stream-cards-wrapper" ref={ref} {...props}></div>
 })
 

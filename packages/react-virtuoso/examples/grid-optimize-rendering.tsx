@@ -42,7 +42,7 @@ const ListContainer = styled.div`
   flex-wrap: wrap;
 ` as GridComponents['List']
 
-const Item = React.memo(({ item }: { item: { index: number; selected: boolean } }) => {
+const Item = React.memo(function Item({ item }: { item: { index: number; selected: boolean } }) {
   return <div style={{ backgroundColor: item.selected ? 'blue' : 'white' }}>Item {item.index}</div>
 })
 

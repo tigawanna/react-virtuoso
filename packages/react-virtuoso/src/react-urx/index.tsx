@@ -209,7 +209,7 @@ export function systemToComponent<SS extends AnySystemSpec, M extends SystemProp
    * A React component generated from an urx system
    */
 
-  const Component = React.forwardRef<CompMethods, CompProps>((propsWithChildren, ref) => {
+  const Component = React.forwardRef<CompMethods, CompProps>(function SystemComponent(propsWithChildren, ref) {
     const { children, ...props } = propsWithChildren as any
 
     const [system] = React.useState(() => {

@@ -154,7 +154,7 @@ const router = createHashRouter([
   { element: <Detail />, path: '/item/:id' },
 ])
 
-const TheList: GridComponents['List'] = React.forwardRef(({ style, ...props }, ref) => {
+const TheList: GridComponents['List'] = React.forwardRef(function TheList({ style, ...props }, ref) {
   return <div ref={ref} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', ...style }} {...props} />
 })
 
