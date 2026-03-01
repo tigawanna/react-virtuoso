@@ -16,3 +16,5 @@ apps/virtuoso.dev/docs/virtuoso-masonry-api/*
 .vscode
 .serena
 .claude/settings.local.json
+plans
+prompts
