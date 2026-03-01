@@ -1,7 +1,4 @@
-import baseConfig from '@virtuoso.dev/tooling/prettier.config'
-
 export default {
-  ...baseConfig,
   overrides: [
     {
       files: '*.astro',
@@ -11,4 +8,8 @@ export default {
     },
   ],
   plugins: ['prettier-plugin-astro'],
+  printWidth: 140,
+  semi: false,
+  singleQuote: true,
+  trailingComma: 'es5',
 }

@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## NPM Registry Queries
+
+This project uses `devEngines.packageManager` with `"onFail": "error"` in `package.json`, which causes `pnpm info` and `pnpm view` to fail because they delegate to npm, and npm 11 rejects the request. To check package versions, run npm from outside the project directory:
+
+```bash
+(cd /tmp && npm info <package> version)
+```
+
 ## Build Commands
 
 This is a pnpm workspaces monorepo. Run commands from the root or within specific workspace packages.
@@ -13,7 +21,7 @@ Run from repository root for all packages:
 - Build all: `pnpm build`
 - Typecheck all: `pnpm typecheck`
 - Lint all: `pnpm lint`
-- Format all: `pnpm format` (Prettier)
+- Format all: `pnpm format` (oxfmt)
 - Format check: `pnpm format:check`
 - Test all: `pnpm test`
 - E2E tests all: `pnpm e2e`
@@ -32,7 +40,7 @@ Run from repository root for all packages:
 - E2E tests: `pnpm run e2e` (playwright)
 - Lint: `pnpm run lint`
 - Typecheck: `pnpm run typecheck`
-- Format: `pnpm run format` (Prettier)
+- Format: `pnpm run format` (oxfmt)
 - Format check: `pnpm run format:check`
 - Dev/preview examples: `pnpm run ladle` (launches Ladle server for browsing examples/ folder)
 
@@ -41,7 +49,7 @@ Run from repository root for all packages:
 - Dev server: `pnpm run dev`
 - Build: `pnpm run build`
 - Typecheck: `pnpm run typecheck`
-- Format: `pnpm run format` (Prettier with Astro plugin)
+- Format: `pnpm run format` (oxfmt + Prettier for .astro files)
 
 After docs changes: run `pnpm typecheck` from the app directory or root.
 
@@ -147,7 +155,7 @@ E2E tests in `packages/react-virtuoso/e2e/`:
 ## Code Style
 
 - TypeScript with strong typing; avoid `any`
-- Prettier: 140 char width, single quotes, no semicolons
+- oxfmt: 140 char width, single quotes, no semicolons
 - Naming: camelCase for variables/functions, PascalCase for components
 - Imports: React first, external libs, then internal modules
 - Functional components with hooks preferred
@@ -203,7 +211,7 @@ After making code changes, run these commands to verify quality:
 
 - `pnpm typecheck` - Verify TypeScript types pass
 - `pnpm lint` - Check code style (ESLint)
-- `pnpm format` - Format code with Prettier
+- `pnpm format` - Format code with oxfmt
 - `pnpm test` - Run unit tests (vitest)
 
 ### Conditionally Required
@@ -222,7 +230,7 @@ After making code changes, run these commands to verify quality:
 
 Format issues are auto-fixed by `pnpm format`. ESLint issues must be fixed manually. Configure your editor to:
 
-- Format on save using Prettier (140 char width, single quotes, no semicolons)
+- Format on save using oxfmt (140 char width, single quotes, no semicolons)
 - Show ESLint warnings/errors
 
 Pre-commit hooks will block commits if typecheck or lint fails.

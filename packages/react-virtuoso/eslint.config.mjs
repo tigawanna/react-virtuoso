@@ -1,10 +1,9 @@
-import globals from 'globals'
 import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
 import pluginReact from 'eslint-plugin-react'
 // import perfectionist from 'eslint-plugin-perfectionist'
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import reactHooks from 'eslint-plugin-react-hooks'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 /** @type {import('typescript-eslint').Config} */
 const config = tseslint.config(
@@ -23,7 +22,6 @@ const config = tseslint.config(
     },
   },
   // perfectionist.configs['recommended-natural'],
-  eslintPluginPrettierRecommended,
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     languageOptions: {

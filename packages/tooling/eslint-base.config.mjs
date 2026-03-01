@@ -1,6 +1,5 @@
 import pluginJs from '@eslint/js'
 import perfectionist from 'eslint-plugin-perfectionist'
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
@@ -9,7 +8,6 @@ export default tseslint.config(
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,
   perfectionist.configs['recommended-natural'],
-  eslintPluginPrettierRecommended,
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     languageOptions: {
@@ -35,7 +33,9 @@ export default tseslint.config(
         },
       ],
       'no-console': ['error', { allow: ['warn', 'error'] }],
+      'perfectionist/sort-imports': 'off',
       'perfectionist/sort-modules': 'off',
+      'perfectionist/sort-named-imports': 'off',
     },
   },
   {

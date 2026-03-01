@@ -1,8 +1,8 @@
 {
   "name": "@virtuoso.dev/virtuoso.dev",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
-  "version": "0.0.1",
   "publishConfig": {
     "access": "restricted"
   },
@@ -14,8 +14,8 @@
     "astro": "astro",
     "typecheck": "astro check",
     "lint": "eslint",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "oxfmt && prettier --write '**/*.astro'",
+    "format:check": "oxfmt --check && prettier --check '**/*.astro'"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
@@ -77,7 +77,7 @@
     "eslint-plugin-better-tailwindcss": "^3.7.11",
     "estree-util-visit": "^2.0.0",
     "mdast-util-mdx": "^3.0.0",
-    "prettier": "catalog:",
+    "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
     "react-virtuoso": "workspace:*",
     "typescript": "catalog:",
