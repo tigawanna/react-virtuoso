@@ -1,15 +1,20 @@
-import { type Environments, initializePaddle, type Paddle } from '@paddle/paddle-js'
+import { useEffect, useState } from 'react'
+import type { JSX } from 'react'
+
+import { initializePaddle } from '@paddle/paddle-js'
 import { PADDLE_ENVIRONMENT, PADDLE_PRO_PRICE_ID, PADDLE_STANDARD_PRICE_ID, PADDLE_TOKEN } from 'astro:env/client'
-import { type JSX, useEffect, useState } from 'react'
 
 import { Button } from './ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
+
+import type { Environments, Paddle } from '@paddle/paddle-js'
 
 export default function Purchase(): JSX.Element {
   const [paddle, setPaddle] = useState<Paddle>()
 
   useEffect(() => {
     void initializePaddle({
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       environment: PADDLE_ENVIRONMENT as Environments,
       token: PADDLE_TOKEN,
     }).then((paddleInstance: Paddle | undefined) => {
@@ -51,7 +56,6 @@ export default function Purchase(): JSX.Element {
           </div>
         </CardContent>
         <CardFooter>
-          {/* eslint-disable-next-line better-tailwindcss/enforce-consistent-line-wrapping */}
           <code className={`w-full rounded bg-muted px-3 py-2 text-center text-sm`}>npm i react-virtuoso</code>
         </CardFooter>
       </Card>

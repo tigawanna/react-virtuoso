@@ -1,19 +1,22 @@
-import Paper from '@mui/material/Paper'
+import { forwardRef, useMemo } from 'react'
+import { TableVirtuoso } from 'react-virtuoso'
+import type { TableVirtuosoProps } from 'react-virtuoso'
+
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import { forwardRef, useMemo } from 'react'
-import { TableVirtuoso, TableVirtuosoProps } from 'react-virtuoso'
 
-const TableComponents: TableVirtuosoProps<{ description: string; name: string }, unknown>['components'] = {
-  Scroller: forwardRef((props, ref) => <TableContainer component={Paper} {...props} ref={ref} />),
+const TableComponents: NonNullable<TableVirtuosoProps<{ description: string; name: string }, unknown>['components']> = {
+  Scroller: forwardRef<HTMLDivElement>((props, ref) => (
+    <TableContainer component="div" {...props} ref={ref} sx={{ '& > table': { borderCollapse: 'separate' } }} />
+  )),
   Table: (props) => <Table {...props} style={{ borderCollapse: 'separate' }} />,
-  TableBody: forwardRef((props, ref) => <TableBody {...props} ref={ref} />),
-  TableHead: TableHead,
-  TableRow: TableRow,
+  TableBody: forwardRef<HTMLTableSectionElement>((props, ref) => <TableBody component="tbody" {...props} ref={ref} />),
+  TableHead: forwardRef<HTMLTableSectionElement>((props, ref) => <TableHead component="thead" {...props} ref={ref} />),
+  TableRow: (props) => <TableRow {...(props.style ? { style: props.style } : {})}>{props.children}</TableRow>,
 }
 
 export const MuiTableExample = () => {

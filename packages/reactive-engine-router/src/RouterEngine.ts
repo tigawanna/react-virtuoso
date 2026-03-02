@@ -1,23 +1,17 @@
-import type { Engine, NodeRef, Subscription, UnsubscribeHandle } from '@virtuoso.dev/reactive-engine-core'
-
-import { Cell, Stream } from '@virtuoso.dev/reactive-engine-core'
 import * as React from 'react'
 
-import type { ActiveComponent, RouteRef, RouteReference, RouteRefValue } from './types'
+import { Cell, Stream } from '@virtuoso.dev/reactive-engine-core'
 
 import { guardDefinitions$$ } from './Guard'
-import {
-  CONTINUE_RESULT,
-  type GuardContext,
-  NAVIGATE_RESULT,
-  type NavigateResult,
-  REDIRECT_RESULT,
-  type RedirectResult,
-} from './guardTypes'
+import { CONTINUE_RESULT, NAVIGATE_RESULT, REDIRECT_RESULT } from './guardTypes'
 import { findMatchingLayouts } from './Layout'
 import { routeComponents$$, routeDefinitions$$ } from './Route'
 import { SuspenceTrigger } from './SuspenceTrigger'
 import { getUrl, interpolateRoute, matchGuardPattern, parseUrl } from './utils'
+
+import type { GuardContext, NavigateResult, RedirectResult } from './guardTypes'
+import type { ActiveComponent, RouteRef, RouteReference, RouteRefValue } from './types'
+import type { Engine, NodeRef, Subscription, UnsubscribeHandle } from '@virtuoso.dev/reactive-engine-core'
 
 export function RouterEngine(eng: Engine, routes: RouteRef[], layouts?: symbol[], guards?: symbol[]) {
   const currentRoute$ = Cell<null | string>(null)
@@ -49,18 +43,18 @@ export function RouterEngine(eng: Engine, routes: RouteRef[], layouts?: symbol[]
 
   // Subscribe to goToUrl$ to parse URLs and activate matching routes
   unsubscriptions.push(
-    eng.sub(goToUrl$, (urlOrRef, eng) => {
+    eng.sub(goToUrl$, (urlOrRef, engine) => {
       // Convert RouteReference to URL string if needed
       const url = typeof urlOrRef === 'string' ? urlOrRef : getUrl(urlOrRef)
 
       // Find matching route and publish to it
       for (const route$ of routes) {
         const routeDef = routeDefinitions$$.get(route$ as symbol)
-        if (routeDef) {
+        if (routeDef !== undefined) {
           const parsed = parseUrl(url, routeDef)
           if (parsed !== null) {
             // Found a match! Publish to this route
-            eng.pub(route$, parsed)
+            engine.pub(route$, parsed)
             return
           }
         }
@@ -101,17 +95,21 @@ function createRouteSubscription({
     const nullPayload = Object.fromEntries(restRoutes.map((r) => [r, null]))
     if (params !== null) {
       const routeDef = routeDefinitions$$.get(route$ as symbol)
-      if (routeDef) {
+      if (routeDef !== undefined) {
         const interpolated = interpolateRoute(routeDef, params)
 
         // STEP 1: Execute guards for this route before rendering
         const matchedGuards = guards
           .map((guardSymbol) => {
             const def = guardDefinitions$$.get(guardSymbol)
-            if (!def) return null
+            if (!def) {
+              return null
+            }
 
             const parsed = matchGuardPattern(interpolated, def.pattern)
-            if (parsed === null) return null
+            if (parsed === null) {
+              return null
+            }
 
             return { def, parsed }
           })
@@ -144,11 +142,11 @@ function createRouteSubscription({
               pathname: targetUrl.split('?')[0] ?? '',
               search: targetUrl.includes('?') ? (targetUrl.split('?')[1] ?? '') : '',
             },
-            navigate: (route: string | symbol, params?: Record<string, unknown>) => {
+            navigate: (route: string | symbol, routeParams?: Record<string, unknown>) => {
               let url: string
 
               if (typeof route === 'symbol') {
-                url = getUrl(route as RouteReference, params)
+                url = getUrl(route as RouteReference, routeParams)
               } else {
                 // It's a string URL
                 url = route
@@ -191,15 +189,18 @@ function createRouteSubscription({
             let rendered: React.ReactNode = React.createElement(SuspenceTrigger, { promise: result })
 
             for (let i = guardMatchingLayoutComponents.length - 1; i >= 0; i--) {
-              const LayoutComponent = guardMatchingLayoutComponents[i]
+              const LayoutComponent = guardMatchingLayoutComponents[i]!
               rendered = React.createElement(LayoutComponent, null, rendered)
             }
             eng.pub(component$, () => rendered)
           }
 
+          // oxlint-disable-next-line no-await-in-loop
           const awaitedResult = result instanceof Promise ? await result : result
 
-          if (!awaitedResult) continue
+          if (!awaitedResult) {
+            continue
+          }
 
           if ('type' in awaitedResult) {
             if (awaitedResult.type === REDIRECT_RESULT) {
@@ -213,7 +214,7 @@ function createRouteSubscription({
               // Find and activate the route that matches the new URL
               for (const r$ of routes) {
                 const rDef = routeDefinitions$$.get(r$ as symbol)
-                if (rDef) {
+                if (rDef !== undefined) {
                   const rParsed = parseUrl(targetUrl, rDef)
                   if (rParsed !== null) {
                     eng.pub(r$, rParsed)
@@ -239,7 +240,7 @@ function createRouteSubscription({
 
               // Wrap with layouts from innermost to outermost
               for (let i = matchingLayoutComponents.length - 1; i >= 0; i--) {
-                const LayoutComponent = matchingLayoutComponents[i]
+                const LayoutComponent = matchingLayoutComponents[i]!
                 rendered = React.createElement(LayoutComponent, null, rendered)
               }
 

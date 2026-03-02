@@ -1,45 +1,48 @@
 {
   "name": "@virtuoso.dev/reactive-engine-query",
-  "private": false,
-  "sideEffects": false,
-  "type": "module",
   "version": "0.0.2",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc && vite build",
-    "test": "vitest --run --passWithNoTests",
-    "lint": "eslint",
-    "typecheck": "tsgo --noEmit",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
-  },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
+  "private": false,
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/petyosi/react-virtuoso.git",
     "directory": "packages/reactive-engine-query"
   },
-  "license": "MIT",
-  "peerDependencies": {
-    "@virtuoso.dev/reactive-engine-core": ">=0.0.4"
-  },
-  "devDependencies": {
-    "@types/node": "^22.10.1",
-    "@virtuoso.dev/reactive-engine-core": "workspace:*",
-    "@virtuoso.dev/tooling": "workspace:*",
-    "eslint": "^9.24.0",
-    "prettier": "^3.5.3",
-    "typescript": "~5.9.3",
-    "vite": "^6.4.1",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^4.0.16"
-  },
   "files": [
     "dist"
-  ]
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsc && vite build",
+    "test": "vitest --run --passWithNoTests",
+    "lint": "oxlint --type-aware --type-check",
+    "typecheck": "tsgo --noEmit",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@virtuoso.dev/reactive-engine-core": "workspace:*",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@virtuoso.dev/reactive-engine-core": ">=0.0.4"
+  }
 }

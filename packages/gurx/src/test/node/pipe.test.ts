@@ -4,8 +4,8 @@ import { Cell, Realm, Signal } from '../..'
 import { debounceTime, filter, map, mapTo, once, onNext, scan, throttleTime, withLatestFrom } from '../../operators'
 import { noop } from '../../utils'
 
-async function awaitCall(cb: () => unknown, delay: number) {
-  return await new Promise((resolve) => {
+function awaitCall(cb: () => unknown, delay: number) {
+  return new Promise((resolve) => {
     setTimeout(() => {
       cb()
       resolve(undefined)
@@ -212,7 +212,7 @@ describe('pipe', () => {
       r.pipe(
         a,
         withLatestFrom(b),
-        map(([, b]) => b + 1)
+        map(([, bVal]) => bVal + 1)
       ),
       b
     )

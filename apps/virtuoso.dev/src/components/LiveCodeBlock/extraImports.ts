@@ -1,8 +1,9 @@
+import React from 'react'
+import * as _V from 'react-virtuoso'
+
 import * as _Falso from '@ngneat/falso'
 import * as _Masonry from '@virtuoso.dev/masonry'
 import * as _ML from '@virtuoso.dev/message-list'
-import React from 'react'
-import * as _V from 'react-virtuoso'
 
 // third-pary
 import falsoTypeDefs from '../../../node_modules/@ngneat/falso/src/index.d.ts?raw'

@@ -1,6 +1,9 @@
-import { flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable } from '@tanstack/react-table'
 import { useMemo, useReducer, useState } from 'react'
 import { TableVirtuoso } from 'react-virtuoso'
+
+import { flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from '@tanstack/react-table'
+
+import type { SortingState } from '@tanstack/react-table'
 
 function makeData(count: number) {
   return Array.from({ length: count }, (_, index) => {
@@ -98,7 +101,7 @@ export const TanstackTableExample = () => {
           },
           TableRow: (props) => {
             const index = props['data-index']
-            const row = rows[index]
+            const row = rows[index]!
 
             return (
               <tr {...props}>
@@ -139,7 +142,10 @@ export const TanstackTableExample = () => {
                         tabIndex={header.column.getCanSort() ? 0 : undefined}
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{ asc: ' 🔼', desc: ' 🔽' }[header.column.getIsSorted() as string] ?? null}
+                        {(() => {
+                          const sorted = header.column.getIsSorted()
+                          return sorted === 'asc' ? ' 🔼' : sorted === 'desc' ? ' 🔽' : null
+                        })()}
                       </div>
                     )}
                   </th>

@@ -1,12 +1,12 @@
 import { Cell, combine, filter, link, pipe, pub, scan, sub } from '@virtuoso.dev/gurx'
 
-import type { Data, OffsetPoint } from './interfaces'
-
 import { data$, totalCount$ } from './data'
 import { listOffset$, scrollTop$, useWindowScroll$, visibleListHeight$ } from './dom'
 import { columnCount$, indexesInColumns$, initialItemCount$, offsetTrees$, sizeTrees$, totalHeights$ } from './masonry-sizes'
 import { empty, newTree } from './sizing/AATree'
 import { rangesWithinOffsets } from './sizing/rangesWithinOffsets'
+
+import type { Data, OffsetPoint } from './interfaces'
 
 export interface MasonryItem<T> {
   columnIndex: number
@@ -115,7 +115,6 @@ export const masonryItemsState$ = Cell<MasonryItemsState<unknown>>({ columns: []
               }
 
               if (
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 currentColumnState?.offsetTree === offsetTree &&
                 current.totalCount === totalCount &&
                 current.data === data &&
@@ -159,7 +158,7 @@ export const masonryItemsState$ = Cell<MasonryItemsState<unknown>>({ columns: []
                   if (listBottom >= viewportBottom) {
                     break
                   }
-                  const realIndex = indexes[i]
+                  const realIndex = indexes[i]!
                   const item: MasonryItem<unknown> = {
                     columnIndex,
                     data: data?.[realIndex],
@@ -216,7 +215,7 @@ export const masonryItemsState$ = Cell<MasonryItemsState<unknown>>({ columns: []
       filter((state) => state.columns.some((column) => column.listBottom < column.viewportBottom))
     ),
     (masonryItemsState) => {
-      const shortestColumn = masonryItemsState.columns.slice().sort((a, b) => a.listBottom - b.listBottom)[0]
+      const shortestColumn = masonryItemsState.columns.slice().sort((a, b) => a.listBottom - b.listBottom)[0]!
       const indexes = r.getValue(indexesInColumns$)
       const flattenedIndexes = indexes.flat()
       const nextIndex = flattenedIndexes.length ? Math.max(...flattenedIndexes) + 1 : 0

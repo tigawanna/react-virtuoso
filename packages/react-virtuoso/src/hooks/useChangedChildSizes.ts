@@ -1,8 +1,10 @@
 import React from 'react'
 
-import { ScrollContainerState, SizeFunction, SizeRange } from '../interfaces'
-import { Log, LogLevel } from '../loggerSystem'
+import { LogLevel } from '../loggerSystem'
 import { useSizeWithElRef } from './useSize'
+
+import type { ScrollContainerState, SizeFunction, SizeRange } from '../interfaces'
+import type { Log } from '../loggerSystem'
 export default function useChangedListContentsSizes(
   callback: (ranges: SizeRange[]) => void,
   itemSize: SizeFunction,
@@ -19,11 +21,10 @@ export default function useChangedListContentsSizes(
       const ranges = getChangedChildSizes(el.children, itemSize, horizontalDirection ? 'offsetWidth' : 'offsetHeight', log)
       let scrollableElement = el.parentElement!
 
-      while (!scrollableElement.dataset.virtuosoScroller) {
+      while (scrollableElement.dataset.virtuosoScroller === undefined) {
         scrollableElement = scrollableElement.parentElement!
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-confusing-non-null-assertion
       const windowScrolling = (scrollableElement.lastElementChild! as HTMLDivElement).dataset.viewportType! === 'window'
       let theWindow!: Window
       if (windowScrolling) {
@@ -117,10 +118,10 @@ function getChangedChildSizes(children: HTMLCollection, itemSize: SizeFunction, 
     }
 
     const lastResult = results[results.length - 1]
-    if (results.length === 0 || lastResult.size !== size || lastResult.endIndex !== index - 1) {
+    if (results.length === 0 || lastResult!.size !== size || lastResult!.endIndex !== index - 1) {
       results.push({ endIndex: index, size, startIndex: index })
     } else {
-      results[results.length - 1].endIndex++
+      results[results.length - 1]!.endIndex++
     }
   }
 
@@ -128,7 +129,7 @@ function getChangedChildSizes(children: HTMLCollection, itemSize: SizeFunction, 
 }
 
 function resolveGapValue(property: string, value: string | undefined, log: Log) {
-  if (value !== 'normal' && !value?.endsWith('px')) {
+  if (value !== 'normal' && value?.endsWith('px') !== true) {
     log(`${property} was not resolved to pixel value correctly`, value, LogLevel.WARN)
   }
   if (value === 'normal') {

@@ -38,7 +38,9 @@ export function newTree(): AANode {
 }
 
 export function remove(node: AANode, key: number): AANode {
-  if (empty(node)) return NIL_NODE
+  if (empty(node)) {
+    return NIL_NODE
+  }
 
   const { k, l, r } = node
 
@@ -259,12 +261,12 @@ export function arrayToRanges<T, V>(
     return []
   }
 
-  let { index: start, value } = parser(items[0])
+  let { index: start, value } = parser(items[0]!)
 
   const result = []
 
   for (let i = 1; i < length; i++) {
-    const { index: nextIndex, value: nextValue } = parser(items[i])
+    const { index: nextIndex, value: nextValue } = parser(items[i]!)
     result.push({ end: nextIndex - 1, start, value })
 
     start = nextIndex

@@ -1,16 +1,18 @@
-import { empty, findMaxKeyValue, Range, rangesWithin } from './AATree'
+import { empty, findMaxKeyValue, rangesWithin } from './AATree'
 import { rangeComparator, tupleComparator } from './comparators'
 import { groupedListSystem } from './groupedListSystem'
 import { getInitialTopMostItemIndexNumber, initialTopMostItemIndexSystem } from './initialTopMostItemIndexSystem'
-import { FlatIndexLocationWithAlign, Item, ListItem, ListRange } from './interfaces'
 import { propsReadySystem } from './propsReadySystem'
 import { recalcSystem } from './recalcSystem'
 import { scrollToIndexSystem } from './scrollToIndexSystem'
-import { sizeRangeSystem } from './sizeRangeSystem'
-import { BOTTOM, TOP } from './sizeRangeSystem'
-import { Data, hasGroups, originalIndexFromItemIndex, rangesWithinOffsets, SizeState, sizeSystem } from './sizeSystem'
+import { BOTTOM, TOP, sizeRangeSystem } from './sizeRangeSystem'
+import { hasGroups, originalIndexFromItemIndex, rangesWithinOffsets, sizeSystem } from './sizeSystem'
 import { stateFlagsSystem } from './stateFlagsSystem'
 import * as u from './urx'
+
+import type { Range } from './AATree'
+import type { FlatIndexLocationWithAlign, Item, ListItem, ListRange } from './interfaces'
+import type { Data, SizeState } from './sizeSystem'
 
 export type ListItems = ListItem<unknown>[]
 export interface ListState {
@@ -65,8 +67,8 @@ function buildListState(
   let bottom = 0
 
   if (items.length > 0) {
-    offsetTop = items[0].offset
-    const lastItem = items[items.length - 1]
+    offsetTop = items[0]!.offset
+    const lastItem = items[items.length - 1]!
     bottom = lastItem.offset + lastItem.size
   }
 
@@ -127,8 +129,8 @@ function transposeItems(items: Item<any>[], sizes: SizeState, firstItemIndex: nu
     return items.map((item) => ({ ...item, index: item.index + firstItemIndex, originalIndex: item.index }))
   }
 
-  const startIndex = items[0].index
-  const endIndex = items[items.length - 1].index
+  const startIndex = items[0]!.index
+  const endIndex = items[items.length - 1]!.index
 
   const transposedItems = [] as ListItems
   const groupRanges = rangesWithin(sizes.groupOffsetTree, startIndex, endIndex)
@@ -168,7 +170,9 @@ function transposeItems(items: Item<any>[], sizes: SizeState, firstItemIndex: nu
 }
 
 function getMinOverscanItemCount(value: MinOverscanItemCount | undefined, end: typeof TOP | typeof BOTTOM) {
-  if (value === undefined) return 0
+  if (value === undefined) {
+    return 0
+  }
   return typeof value === 'number' ? value : (value[end] ?? 0)
 }
 
@@ -209,7 +213,7 @@ export const listStateSystem = u.system(
         u.filter(([mount, recalcInProgress, , totalCount, , , , , , , , data]) => {
           // When data length changes, it is synced to totalCount, both of which trigger a recalc separately.
           // Recalc should be skipped then, as the calculation expects both data and totalCount to be in sync.
-          const dataChangeInProgress = data && data.length !== totalCount
+          const dataChangeInProgress = data !== undefined && data.length !== totalCount
           return mount && !recalcInProgress && !dataChangeInProgress
         }),
         u.map(
@@ -239,9 +243,8 @@ export const listStateSystem = u.system(
             if (startOffset === 0 && endOffset === 0) {
               if (initialItemCountValue === 0) {
                 return { ...EMPTY_LIST_STATE, totalCount }
-              } else {
-                return buildListStateFromItemCount(initialItemCountValue, initialTopMostItemIndex, sizes, firstItemIndex, gap, data || [])
               }
+              return buildListStateFromItemCount(initialItemCountValue, initialTopMostItemIndex, sizes, firstItemIndex, gap, data || [])
             }
 
             if (empty(sizeTree)) {
@@ -262,8 +265,8 @@ export const listStateSystem = u.system(
             const topItems = [] as Item<any>[]
 
             if (topItemsIndexes.length > 0) {
-              const startIndex = topItemsIndexes[0]
-              const endIndex = topItemsIndexes[topItemsIndexes.length - 1]
+              const startIndex = topItemsIndexes[0]!
+              const endIndex = topItemsIndexes[topItemsIndexes.length - 1]!
               let offset = 0
               for (const range of rangesWithin(sizeTree, startIndex, endIndex)) {
                 const size = range.value
@@ -285,7 +288,7 @@ export const listStateSystem = u.system(
               return buildListState([], topItems, totalCount, gap, sizesValue, firstItemIndex)
             }
 
-            const minStartIndex = topItemsIndexes.length > 0 ? topItemsIndexes[topItemsIndexes.length - 1] + 1 : 0
+            const minStartIndex = topItemsIndexes.length > 0 ? topItemsIndexes[topItemsIndexes.length - 1]! + 1 : 0
 
             const offsetPointRanges = rangesWithinOffsets(offsetTree, startOffset, endOffset, minStartIndex)
             if (offsetPointRanges.length === 0) {
@@ -330,8 +333,8 @@ export const listStateSystem = u.system(
             const bottomOverscanCount = getMinOverscanItemCount(minOverscanItemCountValue, BOTTOM)
 
             if (items.length > 0 && (topOverscanCount > 0 || bottomOverscanCount > 0)) {
-              const firstItem = items[0]
-              const lastItem = items[items.length - 1]
+              const firstItem = items[0]!
+              const lastItem = items[items.length - 1]!
 
               // Prepend items before the first rendered item
               if (topOverscanCount > 0 && firstItem.index > minStartIndex) {
@@ -409,7 +412,7 @@ export const listStateSystem = u.system(
         listState,
         u.filter(({ items }) => items.length > 0),
         u.withLatestFrom(totalCount, data),
-        u.filter(([{ items }, totalCount]) => items[items.length - 1].originalIndex === totalCount - 1),
+        u.filter(([{ items }, totalCount]) => items[items.length - 1]!.originalIndex === totalCount - 1),
         u.map(([, totalCount, data]) => [totalCount - 1, data] as [number, unknown[]]),
         u.distinctUntilChanged(tupleComparator),
         u.map(([count]) => count)
@@ -421,9 +424,9 @@ export const listStateSystem = u.system(
         listState,
         u.throttleTime(200),
         u.filter(({ items, topItems }) => {
-          return items.length > 0 && items[0].originalIndex === topItems.length
+          return items.length > 0 && items[0]!.originalIndex === topItems.length
         }),
-        u.map(({ items }) => items[0].index),
+        u.map(({ items }) => items[0]!.index),
         u.distinctUntilChanged()
       )
     )
@@ -436,17 +439,17 @@ export const listStateSystem = u.system(
           let startIndex = 0
           let endIndex = items.length - 1
 
-          while (items[startIndex].type === 'group' && startIndex < endIndex) {
+          while (items[startIndex]!.type === 'group' && startIndex < endIndex) {
             startIndex++
           }
 
-          while (items[endIndex].type === 'group' && endIndex > startIndex) {
+          while (items[endIndex]!.type === 'group' && endIndex > startIndex) {
             endIndex--
           }
 
           return {
-            endIndex: items[endIndex].index,
-            startIndex: items[startIndex].index,
+            endIndex: items[endIndex]!.index,
+            startIndex: items[startIndex]!.index,
           } as ListRange
         }),
         u.distinctUntilChanged(rangeComparator)

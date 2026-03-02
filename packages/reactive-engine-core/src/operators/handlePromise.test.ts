@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/prefer-promise-reject-errors */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* oxlint-disable typescript-eslint/prefer-promise-reject-errors */
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { e, Engine, Stream } from '../index'
@@ -214,7 +213,7 @@ describe('handlePromise operator', () => {
         () => 'loading',
         (value) => value,
         (error) => {
-          return `error: ${error}`
+          return `error: ${String(error)}`
         }
       )
     )
@@ -391,7 +390,9 @@ describe('handlePromise operator', () => {
     const spy2 = createSpyWithHistory<string>()
     e.sub(handled, spy2.spy)
 
-    await new Promise((resolve) => setTimeout(resolve, 10))
+    await new Promise((resolve) => {
+      setTimeout(resolve, 10)
+    })
 
     expect(spy1.history[1]).toBe('delayed')
     expect(spy2.callCount()).toBeGreaterThan(0) // Should receive subsequent emissions

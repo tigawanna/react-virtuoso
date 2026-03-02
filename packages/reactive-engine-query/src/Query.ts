@@ -1,10 +1,9 @@
-import type { Engine } from '@virtuoso.dev/reactive-engine-core'
-
 import { addNodeInit, Cell, e, Trigger } from '@virtuoso.dev/reactive-engine-core'
 
-import type { QueryOptions, QueryResult } from './types'
-
 import { defaultRetryDelay, executeWithRetry } from './utils'
+
+import type { QueryOptions, QueryResult } from './types'
+import type { Engine } from '@virtuoso.dev/reactive-engine-core'
 
 /**
  * Creates a reactive query for fetching remote data with automatic retry, polling, and cache management.
@@ -66,27 +65,28 @@ import { defaultRetryDelay, executeWithRetry } from './utils'
  */
 export function Query<TParams, TData>(options: QueryOptions<TParams, TData>) {
   // Determine initial state
-  const initialState: QueryResult<TData> = options.initialData
-    ? {
-        data: options.initialData,
-        dataUpdatedAt: Date.now(),
-        error: null,
-        isError: false,
-        isFetching: false,
-        isLoading: false,
-        isSuccess: true,
-        type: 'success',
-      }
-    : {
-        data: null,
-        dataUpdatedAt: null,
-        error: null,
-        isError: false,
-        isFetching: true,
-        isLoading: true,
-        isSuccess: false,
-        type: 'pending',
-      }
+  const initialState: QueryResult<TData> =
+    options.initialData !== undefined
+      ? {
+          data: options.initialData,
+          dataUpdatedAt: Date.now(),
+          error: null,
+          isError: false,
+          isFetching: false,
+          isLoading: false,
+          isSuccess: true,
+          type: 'success',
+        }
+      : {
+          data: null,
+          dataUpdatedAt: null,
+          error: null,
+          isError: false,
+          isFetching: true,
+          isLoading: true,
+          isSuccess: false,
+          type: 'pending',
+        }
 
   // Create nodes
   const data$ = Cell<QueryResult<TData>>(initialState)
@@ -111,7 +111,7 @@ export function Query<TParams, TData>(options: QueryOptions<TParams, TData>) {
   }
 
   function startPolling(engine: Engine, params: TParams) {
-    if (options.refetchInterval && options.refetchInterval > 0) {
+    if (typeof options.refetchInterval === 'number' && options.refetchInterval > 0) {
       clearPolling(engine)
       const intervalId = setInterval(() => {
         executeQuery(params, engine)

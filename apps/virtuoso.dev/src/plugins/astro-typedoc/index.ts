@@ -1,21 +1,15 @@
-/* eslint-disable no-console */
-import type { AstroIntegration } from 'astro'
-
+// oxlint-disable no-await-in-loop
 import { watch } from 'node:fs'
 import { readdir, readFile, rename, rmdir, unlink, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import type { AstroIntegration } from 'astro'
+
 const __dirname = dirname(fileURLToPath(import.meta.url))
-import {
-  Application,
-  Converter,
-  type DeclarationReflection,
-  PageEvent,
-  type ProjectReflection,
-  ReflectionKind,
-  TSConfigReader,
-} from 'typedoc'
+import { Application, Converter, PageEvent, ReflectionKind, TSConfigReader } from 'typedoc'
+
+import type { DeclarationReflection, ProjectReflection } from 'typedoc'
 
 interface EntryPoint {
   name?: string
@@ -41,11 +35,13 @@ interface CommentType {
 
 // Extract @group tag from a comment
 const getGroupFromComment = (comment: CommentType | undefined): string | undefined => {
-  if (!comment?.blockTags) return undefined
+  if (!comment?.blockTags) {
+    return undefined
+  }
 
   const groupTag = comment.blockTags.find((tag) => tag.tag === '@group')
   if (groupTag && groupTag.content.length > 0) {
-    return groupTag.content[0].text.trim()
+    return groupTag.content[0]!.text.trim()
   }
   return undefined
 }
@@ -54,14 +50,20 @@ const getGroupFromComment = (comment: CommentType | undefined): string | undefin
 // For function reflections (created by @function tag), the comment may be on the signature
 const getGroupFromReflection = (reflection: DeclarationReflection): string | undefined => {
   // Check direct comment first
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   const directGroup = getGroupFromComment(reflection.comment as CommentType)
-  if (directGroup) return directGroup
+  if (directGroup !== undefined) {
+    return directGroup
+  }
 
   // For functions, check signatures
   if (reflection.signatures && reflection.signatures.length > 0) {
     for (const sig of reflection.signatures) {
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       const sigGroup = getGroupFromComment(sig.comment as CommentType)
-      if (sigGroup) return sigGroup
+      if (sigGroup !== undefined) {
+        return sigGroup
+      }
     }
   }
 
@@ -69,16 +71,17 @@ const getGroupFromReflection = (reflection: DeclarationReflection): string | und
 }
 
 const onRendererPageEnd = (frontmatterObject?: FrontmatterObject) => (event: PageEvent) => {
-  if (!event.contents) {
+  if (event.contents === undefined) {
     return
   }
 
   // Extract group from the model's comment (or from signatures for functions)
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
   const group = getGroupFromReflection(event.model as DeclarationReflection)
 
   const prependix = `---
 title: '${event.model.name}'
-${group ? `group: '${group}'` : ''}
+${group !== undefined ? `group: '${group}'` : ''}
 ${objectToFrontmatter(frontmatterObject)}
 ---
 
@@ -166,7 +169,7 @@ const ITEM_SORT_ORDER: Record<string, string[]> = {
 
 // Get sort priority for an item within a group (lower = first)
 const getItemSortPriority = (group: string, title: string): number => {
-  const order = ITEM_SORT_ORDER[group] as string[] | undefined
+  const order = ITEM_SORT_ORDER[group]
   if (!order) {
     return Infinity
   }
@@ -239,7 +242,7 @@ const mergeHeadingsWithTypes = (content: string): string => {
   const result: string[] = []
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
+    const line = lines[i]!
     const nextLine = lines[i + 1]
     const lineAfterNext = lines[i + 2]
 
@@ -248,11 +251,12 @@ const mergeHeadingsWithTypes = (content: string): string => {
     if (
       /^#{3,6} \S+\?$/.test(line) &&
       nextLine === '' &&
-      lineAfterNext &&
+      lineAfterNext !== undefined &&
+      lineAfterNext !== '' &&
       !lineAfterNext.startsWith('>') &&
       !lineAfterNext.startsWith('#') &&
       !lineAfterNext.startsWith('***') &&
-      !lineAfterNext.startsWith('*The ') && // Skip italic notes like "*The property accepts pixel values*"
+      !lineAfterNext.startsWith('*The ') &&
       (lineAfterNext.includes('`') || lineAfterNext.includes('['))
     ) {
       // Merge heading with type
@@ -281,20 +285,20 @@ const fixCrossLinks = (content: string, fileToGroupMap: Map<string, string>): st
   return content.replace(/\[([^\]]+)\]\(([^)]+\.mdx?(?:#[^)]*)?)\)/g, (match, linkText: string, linkPath: string) => {
     // Extract the filename (without path and extension) and any anchor
     const pathParts = linkPath.split('/')
-    const fileWithAnchor = pathParts[pathParts.length - 1]
+    const fileWithAnchor = pathParts[pathParts.length - 1]!
     const [filename, existingAnchor] = fileWithAnchor.split('#')
-    const baseFilename = filename.replace(/\.mdx?$/, '')
+    const baseFilename = filename!.replace(/\.mdx?$/, '')
 
     // Look up the group for this file
     const group = fileToGroupMap.get(baseFilename)
 
-    if (group) {
+    if (group !== undefined) {
       // Use just the kebab-case group name without order prefix
       // Starlight strips numeric prefixes from URLs
       const groupFilename = toKebabCase(group)
 
       // Use existing anchor if present, otherwise create anchor from filename
-      const anchor = existingAnchor || titleToAnchor(baseFilename)
+      const anchor = existingAnchor !== undefined && existingAnchor !== '' ? existingAnchor : titleToAnchor(baseFilename)
 
       return `[${linkText}](../${groupFilename}/#${anchor})`
     }
@@ -326,7 +330,7 @@ const mergeFilesByGroup = async (dir: string): Promise<void> => {
 
     // Extract group from frontmatter (group: 'GroupName' or group: 'Multi Word'), default to 'Misc' if not found
     const groupMatch = /^group:\s*['"]([^'"]+)['"]\s*$/m.exec(content)
-    const group = groupMatch ? groupMatch[1] : 'Misc'
+    const group = groupMatch?.[1] ?? 'Misc'
 
     // Build mapping from filename (without extension) to group
     const baseFilename = file.name.replace(/\.mdx?$/, '')
@@ -360,7 +364,9 @@ const mergeFilesByGroup = async (dir: string): Promise<void> => {
     groupFiles.sort((a, b) => {
       const priorityA = getItemSortPriority(group, a.title)
       const priorityB = getItemSortPriority(group, b.title)
-      if (priorityA !== priorityB) return priorityA - priorityB
+      if (priorityA !== priorityB) {
+        return priorityA - priorityB
+      }
       return a.title.localeCompare(b.title)
     })
 
@@ -423,42 +429,46 @@ export const initAstroTypedoc = async ({
   // Track the current page end handler to prevent duplicates
   let currentPageEndHandler: ((event: PageEvent) => void) | null = null
 
-  const getReflections = async (): Promise<ProjectReflection | undefined> => await app.convert()
-  const generateDocs = async ({ frontmatter, outputFolder = 'src/pages/docs', project }: GenerateDocsOptions): Promise<void> => {
+  const getReflections = (): Promise<ProjectReflection | undefined> => app.convert()
+  const generateDocs = async ({
+    frontmatter: docFrontmatter,
+    outputFolder: docOutputFolder = 'src/pages/docs',
+    project,
+  }: GenerateDocsOptions): Promise<void> => {
     // Remove the previous handler if it exists
     if (currentPageEndHandler) {
       app.renderer.off(PageEvent.END, currentPageEndHandler)
     }
 
     // Create and register the new frontmatter handler
-    currentPageEndHandler = onRendererPageEnd(frontmatter)
+    currentPageEndHandler = onRendererPageEnd(docFrontmatter)
     app.renderer.on(PageEvent.END, currentPageEndHandler)
 
     // Configure outputs dynamically to ensure markdown generation
     app.options.setValue('outputs', [
       {
         name: 'markdown',
-        path: outputFolder,
+        path: docOutputFolder,
       },
     ])
 
     await app.generateOutputs(project)
 
     // Remove redundant prefixes from generated files
-    await removePrefixesFromFiles(outputFolder)
+    await removePrefixesFromFiles(docOutputFolder)
 
     // Merge files by @group tag into single pages per group
-    await mergeFilesByGroup(outputFolder)
+    await mergeFilesByGroup(docOutputFolder)
 
     // Remove README.md if it exists
     try {
-      await unlink(join(outputFolder, 'README.md'))
+      await unlink(join(docOutputFolder, 'README.md'))
     } catch {
       // Ignore if file doesn't exist
     }
   }
 
-  const setupWatch = (frontmatter?: FrontmatterObject, outputFolder = 'src/pages/docs') => {
+  const setupWatch = (watchFrontmatter: FrontmatterObject = {}, watchOutputFolder = 'src/pages/docs') => {
     const watchers: ReturnType<typeof watch>[] = []
     let regenerateTimeout: NodeJS.Timeout | null = null
 
@@ -468,13 +478,12 @@ export const initAstroTypedoc = async ({
         clearTimeout(regenerateTimeout)
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       regenerateTimeout = setTimeout(async () => {
         console.log('[TypeDoc] Regenerating documentation...')
         try {
           const project = await getReflections()
           if (project) {
-            await generateDocs({ frontmatter, outputFolder, project })
+            await generateDocs({ frontmatter: watchFrontmatter, outputFolder: watchOutputFolder, project })
             console.log('[TypeDoc] Documentation regenerated successfully')
           }
         } catch (error) {
@@ -489,7 +498,7 @@ export const initAstroTypedoc = async ({
 
       try {
         const watcher = watch(dir, { recursive: true }, (_eventType, filename) => {
-          if (filename?.endsWith('.ts')) {
+          if (filename?.endsWith('.ts') === true) {
             console.log(`[TypeDoc] File changed: ${filename}`)
             regenerateDocs()
           }

@@ -1,8 +1,8 @@
-import type { Root, RootContent } from 'mdast'
-import type { MdxjsEsm } from 'mdast-util-mdx'
-
 import { createProgram } from '@virtuoso.dev/m2dx-utils'
 import { visit } from 'unist-util-visit'
+
+import type { Root, RootContent } from 'mdast'
+import type { MdxjsEsm } from 'mdast-util-mdx'
 
 interface ComponentImport {
   /** Whether this is a default import (default: true) */
@@ -27,14 +27,14 @@ function findExistingImports(tree: Root): Set<string> {
       const namedImports = importMatch[1]
       const defaultImport = importMatch[2]
 
-      if (defaultImport) {
+      if (defaultImport !== undefined && defaultImport !== '') {
         imported.add(defaultImport)
       }
 
-      if (namedImports) {
+      if (namedImports !== undefined && namedImports !== '') {
         const names = namedImports.split(',').map((s) => {
           const parts = s.trim().split(/\s+as\s+/)
-          return parts[parts.length - 1].trim()
+          return parts[parts.length - 1]!.trim()
         })
         names.forEach((n) => imported.add(n))
       }
@@ -48,7 +48,12 @@ function findUsedComponents(tree: Root): Set<string> {
   const used = new Set<string>()
 
   visit(tree, (node) => {
-    if ((node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') && node.name && /^[A-Z]/.test(node.name)) {
+    if (
+      (node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') &&
+      node.name !== undefined &&
+      node.name !== null &&
+      /^[A-Z]/.test(node.name)
+    ) {
       used.add(node.name)
     }
   })
@@ -67,8 +72,7 @@ export function autoImports(options: AutoImportsOptions) {
     const needed: { config: ComponentImport; name: string }[] = []
     for (const component of usedComponents) {
       const importConfig = imports[component]
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- importConfig can be undefined at runtime
-      if (!existingImports.has(component) && importConfig) {
+      if (!existingImports.has(component) && importConfig !== undefined) {
         needed.push({ config: importConfig, name: component })
       }
     }
@@ -97,16 +101,17 @@ export function autoImports(options: AutoImportsOptions) {
       let importStatement: string
       if (defaultImports.length > 0 && namedImports.length > 0) {
         // import Default, { Named } from 'source'
-        importStatement = `import ${defaultImports[0].name}, { ${namedImports.map((c) => c.name).join(', ')} } from '${source}'`
+        importStatement = `import ${defaultImports[0]!.name}, { ${namedImports.map((c) => c.name).join(', ')} } from '${source}'`
       } else if (defaultImports.length > 0) {
         // import Default from 'source'
-        importStatement = `import ${defaultImports[0].name} from '${source}'`
+        importStatement = `import ${defaultImports[0]!.name} from '${source}'`
       } else {
         // import { Named } from 'source'
         importStatement = `import { ${namedImports.map((c) => c.name).join(', ')} } from '${source}'`
       }
 
       const importNode = createProgram(importStatement)
+      // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
       tree.children.unshift(importNode as unknown as RootContent)
     }
   }

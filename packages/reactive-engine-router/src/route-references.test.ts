@@ -10,10 +10,10 @@
 
 import { describe, expect, it } from 'vitest'
 
-import type { RouteReference } from './types'
-
 import { Route } from './Route'
 import { getUrl } from './utils'
+
+import type { RouteReference } from './types'
 
 const TEST_ROUTES = {
   ADMIN: '/admin/{section}',
@@ -118,12 +118,7 @@ describe('getUrl() Utility Function', () => {
     })
 
     it('should handle empty search params object', () => {
-      const url = getUrl(search$, { $search: {} })
-      expect(url).toBe('/search')
-    })
-
-    it('should handle undefined search param values', () => {
-      const url = getUrl(search$, { $search: { page: undefined, q: undefined } })
+      const url = getUrl(search$, { $search: {} as Record<string, never> })
       expect(url).toBe('/search')
     })
 

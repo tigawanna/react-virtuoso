@@ -99,16 +99,16 @@ useRemoteCellValues<T1, T2, ...>(options: { cells: [Out<T1>, Out<T2>, ...], engi
 
 ### Hook Behavior Comparison
 
-| Hook | No Engine | Engine Available |
-|------|-----------|------------------|
-| `useCellValue` | throws | returns value |
-| `useRemoteCellValue(cell$, id)` | returns `undefined` | returns value from engine with ID |
-| `usePublisher` | throws | returns publisher fn |
-| `useRemotePublisher(node$, id)` | returns noop fn | returns publisher fn for engine with ID |
-| `useCell` | throws | returns `[value, publisher]` |
-| `useRemoteCell(cell$, id)` | returns `[undefined, noop]` | returns `[value, publisher]` |
-| `useCellValues` | throws | returns values array |
-| `useRemoteCellValues({ cells, engineId })` | returns `undefined` | returns values array |
+| Hook                                       | No Engine                   | Engine Available                        |
+| ------------------------------------------ | --------------------------- | --------------------------------------- |
+| `useCellValue`                             | throws                      | returns value                           |
+| `useRemoteCellValue(cell$, id)`            | returns `undefined`         | returns value from engine with ID       |
+| `usePublisher`                             | throws                      | returns publisher fn                    |
+| `useRemotePublisher(node$, id)`            | returns noop fn             | returns publisher fn for engine with ID |
+| `useCell`                                  | throws                      | returns `[value, publisher]`            |
+| `useRemoteCell(cell$, id)`                 | returns `[undefined, noop]` | returns `[value, publisher]`            |
+| `useCellValues`                            | throws                      | returns values array                    |
+| `useRemoteCellValues({ cells, engineId })` | returns `undefined`         | returns values array                    |
 
 ### Success Criteria
 
@@ -210,7 +210,7 @@ const engineRegistry = new Map<string, EngineRegistryEntry>()
 // Extended EngineProviderProps (add engineId)
 interface EngineProviderProps {
   children: React.ReactNode
-  engineId?: string           // NEW: optional ID to register in global registry
+  engineId?: string // NEW: optional ID to register in global registry
   // ... existing props unchanged
   initFn?: (engine: Engine) => void
   initWith?: Record<symbol, unknown>

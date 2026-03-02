@@ -1,7 +1,8 @@
-import type { NodeRef } from '@virtuoso.dev/reactive-engine-core'
 import type * as React from 'react'
 
 import { useIsomorphicLayoutEffect, usePublisher } from '@virtuoso.dev/reactive-engine-react'
+
+import type { NodeRef } from '@virtuoso.dev/reactive-engine-core'
 
 /**
  * Props for the LayoutSlotFill component

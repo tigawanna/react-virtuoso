@@ -1,13 +1,13 @@
 import { readFile } from 'node:fs/promises'
 
-import type { Export } from './types'
-
 import { parseExports } from './parseExports'
+
+import type { Export } from './types'
 
 const CAPITAL_LETTER = /[A-Z]/
 
 export function isJsxName(name: string): boolean {
-  return !!name && name.length > 0 && CAPITAL_LETTER.test(name.charAt(0))
+  return name.length > 0 && CAPITAL_LETTER.test(name.charAt(0))
 }
 
 export async function getExports(file: string): Promise<Export[]> {

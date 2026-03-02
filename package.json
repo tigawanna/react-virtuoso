@@ -3,15 +3,15 @@
   "private": true,
   "scripts": {
     "ci": "pnpm ci-setup && pnpm build && pnpm typecheck && pnpm lint && pnpm lint:md && pnpm test && pnpm e2e",
-    "ci-setup": "pnpm run --if-present --parallel ci-setup",
+    "ci-setup": "pnpm run --if-present --parallel --no-bail ci-setup",
     "typecheck": "pnpm run --if-present --parallel typecheck",
-    "lint": "pnpm run --if-present --parallel lint",
+    "lint": "pnpm run --if-present --parallel --no-bail lint",
     "lint:md": "markdownlint '**/*.md' --ignore-path .markdownlintignore",
     "lint:md:fix": "markdownlint '**/*.md' --ignore-path .markdownlintignore --fix",
-    "format": "prettier --write . --ignore-path .prettierignore",
-    "format:check": "prettier --check . --ignore-path .prettierignore",
-    "test": "pnpm run --if-present --parallel test",
-    "e2e": "pnpm run  --if-present --parallel e2e",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "test": "pnpm run --if-present --parallel --no-bail test",
+    "e2e": "pnpm run --if-present --parallel --no-bail e2e",
     "build": "pnpm --if-present --recursive run build",
     "release": "pnpm build && pnpm publish -r",
     "changeset-add": "pnpm changeset add",
@@ -23,22 +23,15 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.8",
-    "@types/node": "^22.19.1",
-    "@typescript/native-preview": "7.0.0-dev.20251221.1",
+    "@types/node": "catalog:",
+    "@typescript/native-preview": "7.0.0-dev.20260301.1",
     "knip": "^5.70.2",
     "lefthook": "^2.0.8",
     "markdownlint-cli": "^0.46.0",
-    "prettier": "^3.4.2",
-    "prettier-plugin-astro": "^0.14.1",
-    "typescript": "^5.9.3"
-  },
-  "packageManager": "pnpm@10.24.0",
-  "pnpm": {
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "react-inspector>react": "19"
-      }
-    }
+    "oxfmt": "^0.35.0",
+    "oxlint": "^1.50.0",
+    "oxlint-tsgolint": "^0.15.0",
+    "typescript": "catalog:"
   },
   "devEngines": {
     "packageManager": {
@@ -50,6 +43,14 @@
       "name": "node",
       "version": ">=22.0.0",
       "onFail": "error"
+    }
+  },
+  "packageManager": "pnpm@10.24.0",
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react-inspector>react": "19"
+      }
     }
   }
 }

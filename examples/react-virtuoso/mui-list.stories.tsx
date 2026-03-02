@@ -1,11 +1,13 @@
+import { forwardRef, useMemo } from 'react'
+import { GroupedVirtuoso } from 'react-virtuoso'
+import type { GroupedVirtuosoProps } from 'react-virtuoso'
+
 import Avatar from '@mui/material/Avatar'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemText from '@mui/material/ListItemText'
 import ListSubheader from '@mui/material/ListSubheader'
-import { forwardRef, useMemo } from 'react'
-import { GroupedVirtuoso, GroupedVirtuosoProps } from 'react-virtuoso'
 
 const MUIComponents: GroupedVirtuosoProps<unknown, unknown>['components'] = {
   Group: ({ children, style, ...props }) => {
@@ -41,16 +43,16 @@ const MUIComponents: GroupedVirtuosoProps<unknown, unknown>['components'] = {
 
 export const MuiListExample = () => {
   const { groupCounts, groups, users } = useMemo(() => {
-    const users = Array.from({ length: 500 }, (_, index) => ({
+    const allUsers = Array.from({ length: 500 }, (_, index) => ({
       description: `Description for user ${index}`,
       initials: `U${index}`,
       name: `User ${index}`,
     }))
-    const groups = Array.from({ length: 10 }, (_, index) => `Group ${index}`)
-    const groupCounts = groups.map((_, index) => {
-      return users.filter((_, userIndex) => userIndex % 10 === index).length
+    const allGroups = Array.from({ length: 10 }, (_, index) => `Group ${index}`)
+    const allGroupCounts = allGroups.map((_group, index) => {
+      return allUsers.filter((_user, userIndex) => userIndex % 10 === index).length
     })
-    return { groupCounts, groups, users }
+    return { groupCounts: allGroupCounts, groups: allGroups, users: allUsers }
   }, [])
 
   return (
@@ -61,7 +63,7 @@ export const MuiListExample = () => {
       }}
       groupCounts={groupCounts}
       itemContent={(index) => {
-        const user = users[index]
+        const user = users[index]!
         return (
           <>
             <ListItemAvatar>

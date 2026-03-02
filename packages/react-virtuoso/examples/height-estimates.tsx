@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+
 import { Virtuoso } from '../src'
 
 // Simulate a scenario where item heights vary widely
@@ -40,19 +41,19 @@ export function Example() {
       <Virtuoso
         key={useEstimates ? 'with-estimates' : 'without-estimates'}
         computeItemKey={(key) => `item-${key}`}
-        heightEstimates={useEstimates ? heightEstimates : undefined}
+        {...(useEstimates ? { heightEstimates } : {})}
         itemContent={(index) => (
           <div
             style={{
-              height: heightEstimates[index],
+              height: heightEstimates[index]!,
               padding: '8px 16px',
               borderBottom: '1px solid #eee',
-              background: heightEstimates[index] > 400 ? '#f0f8ff' : '#fff',
+              background: heightEstimates[index]! > 400 ? '#f0f8ff' : '#fff',
             }}
           >
             <strong>Item {index}</strong>
-            <div style={{ color: '#666', fontSize: 12 }}>Height: {heightEstimates[index]}px</div>
-            {heightEstimates[index] > 200 && <div style={{ marginTop: 8, color: '#888' }}>This is a larger item with more content...</div>}
+            <div style={{ color: '#666', fontSize: 12 }}>Height: {heightEstimates[index]!}px</div>
+            {heightEstimates[index]! > 200 && <div style={{ marginTop: 8, color: '#888' }}>This is a larger item with more content...</div>}
           </div>
         )}
         style={{ height: 600 }}

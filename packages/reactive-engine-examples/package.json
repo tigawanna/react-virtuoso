@@ -1,7 +1,7 @@
 {
   "name": "@virtuoso.dev/reactive-engine-examples",
-  "private": true,
   "version": "0.0.7",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev:basic": "vite serve basic",
@@ -15,14 +15,14 @@
     "@virtuoso.dev/reactive-engine-react": "workspace:*",
     "@virtuoso.dev/reactive-engine-router": "workspace:*",
     "@virtuoso.dev/reactive-engine-storage": "workspace:*",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^4.5.0",
-    "typescript": "~5.9.3",
-    "vite": "^6.4.1"
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
   }
 }

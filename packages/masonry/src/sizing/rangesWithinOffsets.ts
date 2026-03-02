@@ -1,7 +1,7 @@
-import type { OffsetPoint } from '../interfaces'
-
 import { arrayToRanges } from './AATree'
 import * as arrayBinarySearch from './binaryArraySearch'
+
+import type { OffsetPoint } from '../interfaces'
 
 export function indexComparator({ index: itemIndex }: OffsetPoint, index: number) {
   return index === itemIndex ? 0 : index < itemIndex ? -1 : 1

@@ -1,7 +1,7 @@
+import { visit } from 'unist-util-visit'
+
 import type { Code, Root, RootContent } from 'mdast'
 import type { MdxJsxFlowElement } from 'mdast-util-mdx-jsx'
-
-import { visit } from 'unist-util-visit'
 
 /**
  * Remark plugin that transforms ALL code blocks:
@@ -12,7 +12,7 @@ export function remarkCustomCodeBlocks() {
   return (tree: Root) => {
     visit(tree, 'code', (node: Code, index, parent) => {
       if (parent && typeof index === 'number') {
-        const isLive = node.meta?.includes('live')
+        const isLive = node.meta?.includes('live') === true
 
         const jsxNode: MdxJsxFlowElement = {
           attributes: isLive
@@ -32,7 +32,7 @@ export function remarkCustomCodeBlocks() {
                   type: 'mdxJsxAttribute',
                   value: node.lang ?? 'text',
                 },
-                ...(node.meta
+                ...(node.meta !== undefined && node.meta !== null
                   ? [
                       {
                         name: 'meta',

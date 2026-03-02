@@ -29,7 +29,7 @@ export function RealmProvider({
    */
   updateWith?: Record<string, unknown>
 }) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // oxlint-disable-next-line exhaustive-deps
   const theRealm = React.useMemo(() => new Realm(initWith), [])
 
   React.useEffect(() => {

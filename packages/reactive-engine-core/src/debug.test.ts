@@ -1,7 +1,9 @@
-import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { Engine } from './Engine'
 import { Cell, e, Stream, Trigger } from './index'
+
+import type { Mock } from 'vitest'
 
 describe('debug utility', () => {
   let eng!: Engine

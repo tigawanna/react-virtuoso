@@ -1,12 +1,13 @@
-/* eslint-disable no-console */
-import { CheckIcon, ClipboardCopyIcon, CubeIcon, ReloadIcon, ResetIcon } from '@radix-ui/react-icons'
-import { shikiToMonaco } from '@shikijs/monaco'
-import copy from 'copy-text-to-clipboard'
-import React, { type ComponentProps, type ReactNode, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import { type Theme, useStarlightTheme } from '@/components/theme-utils'
+import { CheckIcon, ClipboardCopyIcon, CubeIcon, ReloadIcon, ResetIcon } from '@radix-ui/react-icons'
+import { shikiToMonaco } from '@shikijs/monaco'
+import copy from 'copy-text-to-clipboard'
+
+import { useStarlightTheme } from '@/components/theme-utils'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { getShikiHighlighter } from '@/utils/shikiHighlighter'
@@ -16,11 +17,16 @@ import { transformToFunctionBody } from './esmTransform'
 import { importMap, libDefinitions } from './extraImports'
 import iFrameStyle from './iframe-style.css?raw'
 
+import type { Theme } from '@/components/theme-utils'
+import type * as MonacoEditor from 'monaco-editor'
+
 let shikiInitialized = false
 
 // Configure Monaco workers for Vite
 function configureMonacoWorkers() {
-  if (typeof self === 'undefined') return
+  if (typeof self === 'undefined') {
+    return
+  }
 
   self.MonacoEnvironment = {
     getWorker: function (_workerId: string, label: string) {
@@ -96,6 +102,7 @@ const IframePortal: React.FC<{ children: React.ReactNode; theme: Theme }> = ({ c
     <iframe
       onLoad={(e) => {
         if (isFirefox) {
+          // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
           setIframeEl(e.target as HTMLIFrameElement)
         }
       }}
@@ -142,8 +149,10 @@ const ErrorMessage: React.FC<{ message: string; retry: () => void }> = ({ messag
   )
 }
 
-async function initializeMonacoWithShiki(m: typeof import('monaco-editor')) {
-  if (shikiInitialized) return
+async function initializeMonacoWithShiki(m: typeof MonacoEditor) {
+  if (shikiInitialized) {
+    return
+  }
 
   try {
     const highlighter = await getShikiHighlighter()
@@ -192,8 +201,8 @@ export default function LiveCodeBlock({ code, disableSandbox = false }: { code: 
     return `file:///custom-example-${Math.random().toString(36).substring(7)}.tsx`
   }, [])
   const editorContainerRef = useRef<HTMLDivElement>(null)
-  const editorRef = useRef<import('monaco-editor').editor.IStandaloneCodeEditor | null>(null)
-  const monacoRef = useRef<null | typeof import('monaco-editor')>(null)
+  const editorRef = useRef<MonacoEditor.editor.IStandaloneCodeEditor | null>(null)
+  const monacoRef = useRef<null | typeof MonacoEditor>(null)
   const [errorKey, setErrorKey] = useState(0)
   const [monacoReady, setMonacoReady] = useState(false)
 
@@ -216,7 +225,9 @@ export default function LiveCodeBlock({ code, disableSandbox = false }: { code: 
   // Create the Monaco editor
   useEffect(() => {
     const m = monacoRef.current
-    if (!monacoReady || !m || !editorContainerRef.current || editorRef.current) return
+    if (!monacoReady || !m || !editorContainerRef.current || editorRef.current) {
+      return
+    }
 
     const typography = getCodeTypographyFromCSS()
 
@@ -269,7 +280,7 @@ export default function LiveCodeBlock({ code, disableSandbox = false }: { code: 
       editor.dispose()
       editorRef.current = null
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- theme is handled by separate useEffect to avoid editor recreation
+    // oxlint-disable-next-line exhaustive-deps
   }, [monacoReady, code, randomTypeScriptFileName])
 
   // Update Monaco theme when Starlight theme changes
@@ -286,7 +297,7 @@ export default function LiveCodeBlock({ code, disableSandbox = false }: { code: 
       .then((result) => {
         if (result.type === 'success') {
           try {
-            // eslint-disable-next-line @typescript-eslint/no-implied-eval, @typescript-eslint/no-unsafe-call
+            // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
             const NewComp = new Function(result.code ?? '')(importMap) as React.FC
             setComp(() => NewComp)
             setUsedPackages(result.packages ?? [])

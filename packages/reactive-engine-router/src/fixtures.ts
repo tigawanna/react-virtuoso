@@ -217,7 +217,7 @@ export const EDGE_CASE_TEST_CASES = [
   {
     expected: '/search',
     name: 'route with empty search params object',
-    params: { $search: {} },
+    params: { $search: {} as Record<string, never> },
     route: TEST_ROUTES.SEARCH,
   },
   {

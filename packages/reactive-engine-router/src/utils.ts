@@ -1,8 +1,8 @@
 import invariant from 'tiny-invariant'
 
-import type { RouteReference, RouteRefValue } from './types'
-
 import { routeDefinitions$$ } from './Route'
+
+import type { RouteReference, RouteRefValue } from './types'
 
 export function interpolateRoute(route: string, params: NonNullable<RouteRefValue>): string {
   const { $search, ...pathParams } = params as Record<string, unknown> & { $search?: Record<string, unknown> }
@@ -40,14 +40,14 @@ export function interpolateRoute(route: string, params: NonNullable<RouteRefValu
             searchParams.append(name, String(v))
           })
         } else {
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          // oxlint-disable-next-line no-base-to-string
           searchParams.set(name, String(value))
         }
       }
     }
 
     // Parse query template to extract param names (if template exists)
-    if (queryPart) {
+    if (queryPart !== undefined) {
       // Matches: paramName={placeholderName} or paramName={placeholderName?} or paramName={placeholderName:type} or paramName={placeholderName?:type}
       const queryParamPattern = /(\w+)=\{([^}]+)\}/g
       const matches = [...queryPart.matchAll(queryParamPattern)]
@@ -56,15 +56,17 @@ export function interpolateRoute(route: string, params: NonNullable<RouteRefValu
         const searchParamName = match[1]
         const placeholder = match[2]
 
-        invariant(placeholder, 'Query param placeholder should exist in regex match')
-        invariant(searchParamName, 'Query param name should exist in regex match')
+        invariant(placeholder !== undefined, 'Query param placeholder should exist in regex match')
+        invariant(searchParamName !== undefined, 'Query param name should exist in regex match')
 
         // Extract placeholder name from {name}, {name?}, {name:type}, or {name?:type}
         const placeholderMatch = /^(\w+)/.exec(placeholder)
-        if (!placeholderMatch) continue
+        if (!placeholderMatch) {
+          continue
+        }
 
         const placeholderName = placeholderMatch[1]
-        invariant(placeholderName, 'Placeholder name should exist in regex match')
+        invariant(placeholderName !== undefined, 'Placeholder name should exist in regex match')
 
         processedKeys.add(placeholderName)
         addParam(searchParamName, queryParams[placeholderName])
@@ -119,7 +121,7 @@ export function getUrl(route: RouteReference | string, params?: Record<string, u
   if (typeof route === 'symbol') {
     // It's a RouteReference (which at runtime is a symbol from Cell())
     const definition = routeDefinitions$$.get(route)
-    invariant(definition, 'Route definition not found for symbol')
+    invariant(definition !== undefined, 'Route definition not found for symbol')
     routeDefinition = definition
   } else {
     // It's a string path
@@ -176,14 +178,16 @@ function parsePathParams(urlPath: string, templatePath: string): null | Record<s
   while (i < templatePath.length) {
     if (templatePath[i] === '{') {
       const end = templatePath.indexOf('}', i)
-      if (end === -1) break
+      if (end === -1) {
+        break
+      }
 
       const paramDef = templatePath.slice(i + 1, end)
       const isRest = paramDef.startsWith('*')
 
-      const paramName = isRest ? paramDef.slice(1) : paramDef.split(':')[0]
+      const paramName = isRest ? paramDef.slice(1) : paramDef.split(':')[0]!
 
-      const paramType = isRest ? 'string[]' : paramDef.includes(':') ? paramDef.split(':')[1] : 'string'
+      const paramType = isRest ? 'string[]' : paramDef.includes(':') ? paramDef.split(':')[1]! : 'string'
 
       paramNames.push({ isRest, name: paramName, type: paramType })
 
@@ -196,7 +200,7 @@ function parsePathParams(urlPath: string, templatePath: string): null | Record<s
       i = end + 1
     } else {
       const char = templatePath[i]
-      if (/[.*+?^${}()|[\]\\]/.test(char)) {
+      if (/[.*+?^${}()|[\]\\]/.test(char!)) {
         pattern += `\\${char}`
       } else {
         pattern += char
@@ -217,11 +221,9 @@ function parsePathParams(urlPath: string, templatePath: string): null | Record<s
 
   // Extract and type-cast parameters
   paramNames.forEach((paramInfo, index) => {
-    // biome-ignore lint/style/noNonNullAssertion: ok
-
     const value = match[index + 1]
     if (paramInfo.isRest) {
-      params[paramInfo.name] = value.split('/')
+      params[paramInfo.name] = value!.split('/')
     } else if (paramInfo.type === 'number') {
       params[paramInfo.name] = Number(value)
     } else if (paramInfo.type === 'boolean') {
@@ -245,38 +247,41 @@ function parseQueryParams(urlQuery: string, templateQuery: string): Record<strin
   const processedQueryKeys = new Set<string>()
 
   for (const match of matches) {
-    // biome-ignore lint/style/noNonNullAssertion: ok
-
     const queryParamName = match[1]
-    // biome-ignore lint/style/noNonNullAssertion: ok
 
     const placeholder = match[2]
 
     // Extract type info from placeholder
-    const typeMatch = /^(\w+)(\?)?(?::(.+))?$/.exec(placeholder)
-    if (!typeMatch) continue
+    const typeMatch = /^(\w+)(\?)?(?::(.+))?$/.exec(placeholder!)
+    if (!typeMatch) {
+      continue
+    }
 
     const [, placeholderName, isOptional, typeInfo] = typeMatch as unknown as [unknown, string, string | undefined, string | undefined]
-    processedQueryKeys.add(queryParamName)
+    processedQueryKeys.add(queryParamName!)
 
-    const values = urlSearchParams.getAll(queryParamName)
+    const values = urlSearchParams.getAll(queryParamName!)
 
     if (values.length === 0) {
-      if (!isOptional) {
+      if (isOptional === undefined) {
         // Required param missing - but we still return params
       }
       continue
     }
 
     // Determine if it's an array type
-    const isArray = typeInfo?.endsWith('[]')
+    const isArray = typeInfo?.endsWith('[]') === true
     const baseType = isArray ? typeInfo?.slice(0, -2) : typeInfo
 
     if (isArray) {
       // Array parameter
       params[placeholderName] = values.map((v) => {
-        if (baseType === 'number') return Number(v)
-        if (baseType === 'boolean') return v === 'true'
+        if (baseType === 'number') {
+          return Number(v)
+        }
+        if (baseType === 'boolean') {
+          return v === 'true'
+        }
         return v
       })
     } else {
@@ -322,13 +327,17 @@ function parseQueryParams(urlQuery: string, templateQuery: string): Record<strin
  */
 export function matchesPathPrefix(actualPath: string, patternPath: string): boolean {
   // Root path matches everything
-  if (patternPath === '/') return true
+  if (patternPath === '/') {
+    return true
+  }
 
   // Normalize pattern by removing trailing slash (except for root)
   const normalizedPattern = patternPath.endsWith('/') && patternPath !== '/' ? patternPath.slice(0, -1) : patternPath
 
   // Exact match
-  if (actualPath === normalizedPattern) return true
+  if (actualPath === normalizedPattern) {
+    return true
+  }
   // Prefix match (must be followed by /)
   return actualPath.startsWith(`${normalizedPattern}/`)
 }

@@ -1,6 +1,5 @@
-import type { Engine } from '@virtuoso.dev/reactive-engine-core'
-
 import type { RouteReference } from './types'
+import type { Engine } from '@virtuoso.dev/reactive-engine-core'
 
 // Guard result types - use symbols for type discrimination
 export const REDIRECT_RESULT = Symbol('redirect')
@@ -22,8 +21,6 @@ export interface NavigateResult {
   url: string
 }
 
-// biome-ignore lint/suspicious/noConfusingVoidType: void is needed for implicit return compatibility
-// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents, @typescript-eslint/no-invalid-void-type
 export type GuardResult = ContinueResult | NavigateResult | RedirectResult | undefined | void
 
 export type AsyncGuardResult = GuardResult | Promise<GuardResult>

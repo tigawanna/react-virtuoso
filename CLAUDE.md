@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## NPM Registry Queries
+
+This project uses `devEngines.packageManager` with `"onFail": "error"` in `package.json`, which causes `pnpm info` and `pnpm view` to fail because they delegate to npm, and npm 11 rejects the request. To check package versions, run npm from outside the project directory:
+
+```bash
+(cd /tmp && npm info <package> version)
+```
+
 ## Build Commands
 
 This is a pnpm workspaces monorepo. Run commands from the root or within specific workspace packages.
@@ -11,14 +19,13 @@ This is a pnpm workspaces monorepo. Run commands from the root or within specifi
 Run from repository root for all packages:
 
 - Build all: `pnpm build`
-- Typecheck all: `pnpm typecheck`
-- Lint all: `pnpm lint`
-- Format all: `pnpm format` (Prettier)
+- Lint all (includes type checking): `pnpm lint`
+- Format all: `pnpm format` (oxfmt)
 - Format check: `pnpm format:check`
 - Test all: `pnpm test`
 - E2E tests all: `pnpm e2e`
 - Markdown lint: `pnpm lint:md` / fix: `pnpm lint:md:fix`
-- Full CI: `pnpm ci` (setup, build, typecheck, lint, lint:md, test, e2e)
+- Full CI: `pnpm ci` (setup, build, lint, lint:md, test, e2e)
 - Release: `pnpm release` (build + publish with changesets)
 - Add changeset: `pnpm changeset-add`
 - Dev docs site: `pnpm dev:docs`
@@ -30,9 +37,8 @@ Run from repository root for all packages:
 - Test watch: `pnpm run test:watch`
 - Run single test: `pnpm vitest <test-file-path>` or `pnpm vitest -t "<test-name>"`
 - E2E tests: `pnpm run e2e` (playwright)
-- Lint: `pnpm run lint`
-- Typecheck: `pnpm run typecheck`
-- Format: `pnpm run format` (Prettier)
+- Lint (includes type checking): `pnpm run lint`
+- Format: `pnpm run format` (oxfmt)
 - Format check: `pnpm run format:check`
 - Dev/preview examples: `pnpm run ladle` (launches Ladle server for browsing examples/ folder)
 
@@ -40,10 +46,9 @@ Run from repository root for all packages:
 
 - Dev server: `pnpm run dev`
 - Build: `pnpm run build`
-- Typecheck: `pnpm run typecheck`
-- Format: `pnpm run format` (Prettier with Astro plugin)
+- Format: `pnpm run format` (oxfmt + Prettier for .astro files)
 
-After docs changes: run `pnpm typecheck` from the app directory or root.
+After docs changes: run `pnpm lint` from the app directory or root.
 
 **IMPORTANT - Documentation Locations:**
 
@@ -147,7 +152,7 @@ E2E tests in `packages/react-virtuoso/e2e/`:
 ## Code Style
 
 - TypeScript with strong typing; avoid `any`
-- Prettier: 140 char width, single quotes, no semicolons
+- oxfmt: 140 char width, single quotes, no semicolons
 - Naming: camelCase for variables/functions, PascalCase for components
 - Imports: React first, external libs, then internal modules
 - Functional components with hooks preferred
@@ -201,9 +206,8 @@ After making code changes, run these commands to verify quality:
 
 ### Required (always run)
 
-- `pnpm typecheck` - Verify TypeScript types pass
-- `pnpm lint` - Check code style (ESLint)
-- `pnpm format` - Format code with Prettier
+- `pnpm lint` - Lint and type check (oxlint --type-aware --type-check)
+- `pnpm format` - Format code with oxfmt
 - `pnpm test` - Run unit tests (vitest)
 
 ### Conditionally Required
@@ -215,22 +219,22 @@ After making code changes, run these commands to verify quality:
 
 ### Quick Full Validation
 
-- `pnpm ci` - Run complete CI pipeline (setup, build, typecheck, lint, lint:md, test, e2e)
+- `pnpm ci` - Run complete CI pipeline (setup, build, lint, lint:md, test, e2e)
 - `pnpm format:check` - Check if files are formatted without modifying them
 
 ### Fixing Issues
 
-Format issues are auto-fixed by `pnpm format`. ESLint issues must be fixed manually. Configure your editor to:
+Format issues are auto-fixed by `pnpm format`. oxlint issues must be fixed manually. Configure your editor to:
 
-- Format on save using Prettier (140 char width, single quotes, no semicolons)
-- Show ESLint warnings/errors
+- Format on save using oxfmt (140 char width, single quotes, no semicolons)
+- Show oxlint warnings/errors
 
-Pre-commit hooks will block commits if typecheck or lint fails.
+Pre-commit hooks will block commits if lint (which includes type checking) fails.
 
 ## Development Workflow
 
 1. Make changes in `packages/react-virtuoso/src/`
-2. Run `pnpm format && pnpm typecheck && pnpm lint && pnpm test`
+2. Run `pnpm format && pnpm lint && pnpm test`
 3. Check examples with `pnpm run ladle` if UI changes
 4. Run `pnpm e2e` for end-to-end validation if needed
 5. Add changeset with `pnpm changeset-add` for versioned changes
@@ -243,9 +247,9 @@ This project uses [lefthook](https://github.com/evilmartians/lefthook) for git h
 
 On every commit, the following checks run automatically on staged files:
 
+- **Code formatting**: Formats `.ts/.tsx/.js/.jsx` files with oxfmt and `.astro` files with prettier; changes are auto-staged via `stage_fixed`
 - **Markdown linting**: Validates .md files with markdownlint
-- **Code linting**: Validates code files with ESLint
-- **Type checking**: Runs TypeScript compiler on affected packages
+- **Code linting**: Validates code files with oxlint
 
 ### Skipping Hooks
 

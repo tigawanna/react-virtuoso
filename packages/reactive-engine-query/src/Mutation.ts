@@ -1,10 +1,9 @@
-import type { Engine } from '@virtuoso.dev/reactive-engine-core'
-
 import { Cell, e, Stream } from '@virtuoso.dev/reactive-engine-core'
 
-import type { MutationOptions, MutationResult } from './types'
-
 import { defaultRetryDelay, executeWithRetry } from './utils'
+
+import type { MutationOptions, MutationResult } from './types'
+import type { Engine } from '@virtuoso.dev/reactive-engine-core'
 
 /**
  * Creates a reactive mutation for performing remote operations like POST, PUT, DELETE requests.

@@ -1,34 +1,44 @@
 {
   "name": "@virtuoso.dev/masonry",
+  "version": "1.4.0",
   "private": false,
   "description": "Virtualized React component for rendering masonry layouts",
   "keywords": [
-    "react",
-    "virtual",
-    "masonry",
     "endless scrolling",
-    "list",
-    "scrolling",
     "infinite",
+    "list",
+    "masonry",
+    "react",
+    "scrolling",
+    "virtual",
     "virtualized"
   ],
-  "author": "The Virtuoso team <support@virtuoso.dev>",
-  "license": "MIT",
   "homepage": "https://virtuoso.dev/virtuoso-masonry/",
+  "bugs": {
+    "email": "support@virtuoso.dev"
+  },
+  "license": "MIT",
+  "author": "The Virtuoso team <support@virtuoso.dev>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/petyosi/react-virtuoso.git",
     "directory": "packages/masonry"
   },
-  "bugs": {
-    "email": "support@virtuoso.dev"
-  },
-  "version": "1.4.0",
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
   "type": "module",
-  "module": "dist/index.js",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -41,44 +51,37 @@
     "test:browser": "vitest run --project=browser",
     "test:node": "vitest run --project=\"node env\"",
     "test:watch": "vitest",
+    "lint": "oxlint --type-aware --type-check",
     "typecheck": "tsgo --noEmit",
-    "lint": "eslint",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "knip": "knip"
   },
   "dependencies": {
     "@virtuoso.dev/gurx": "workspace:*"
   },
-  "peerDependencies": {
-    "react": ">= 18 || >= 19",
-    "react-dom": ">= 18 || >= 19"
-  },
   "devDependencies": {
-    "@virtuoso.dev/tooling": "workspace:*",
     "@ladle/react": "^5.0.1",
     "@microsoft/api-extractor": "^7.55.1",
-    "@types/node": "^22.10.1",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^4.7.0",
-    "@vitest/browser": "^4.0.16",
-    "@vitest/browser-playwright": "^4.0.16",
-    "eslint": "^9.19.0",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/browser": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
     "jsdom": "^27.4.0",
     "knip": "^5.38.3",
     "node-html-parser": "^6.1.13",
-    "playwright": "^1.33.0",
-    "prettier": "^3.4.2",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "typescript": "~5.9.3",
-    "vite": "^6.4.1",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^4.0.16"
+    "playwright": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:",
+    "vitest": "catalog:"
   },
-  "files": [
-    "dist",
-    "CHANGELOG.md"
-  ]
+  "peerDependencies": {
+    "react": ">= 18 || >= 19",
+    "react-dom": ">= 18 || >= 19"
+  }
 }

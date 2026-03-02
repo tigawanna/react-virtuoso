@@ -1,5 +1,10 @@
 import invariant from 'tiny-invariant'
 
+import { CELL_TYPE, inEngineContext, nodeDebugLabels$$, nodeDefs$$, nodeInits$$, nodeInitSubscriptions$$, resourceDefs$$ } from './globals'
+import { RefCount } from './RefCount'
+import { SetMap } from './SetMap'
+import { combinedCellProjection, defaultComparator, tap } from './utils'
+
 import type { O } from './operators'
 import type {
   CombinedCellRecord,
@@ -16,11 +21,6 @@ import type {
   UnsubscribeHandle,
 } from './types'
 
-import { CELL_TYPE, inEngineContext, nodeDebugLabels$$, nodeDefs$$, nodeInits$$, nodeInitSubscriptions$$, resourceDefs$$ } from './globals'
-import { RefCount } from './RefCount'
-import { SetMap } from './SetMap'
-import { combinedCellProjection, defaultComparator, tap } from './utils'
-
 // use this so that streams don't skip undefined values
 const emptyStreamValue = Symbol('empty stream')
 
@@ -29,7 +29,7 @@ const emptyStreamValue = Symbol('empty stream')
  * @category Engine
  */
 export class Engine {
-  public readonly id?: string
+  public readonly id?: string | undefined
   private readonly calledInits = new Set<NodeInit<unknown>>()
   private childEngines: Engine[] = []
   private readonly combinedCells: CombinedCellRecord[] = []
@@ -55,8 +55,8 @@ export class Engine {
    */
   constructor(initialValues: Record<symbol, unknown> = {}, id?: string, parentEngine?: Engine) {
     this.id = id
-    for (const id of Object.getOwnPropertySymbols(initialValues)) {
-      this.state.set(id, initialValues[id])
+    for (const sym of Object.getOwnPropertySymbols(initialValues)) {
+      this.state.set(sym, initialValues[sym])
     }
     this.parentEngine = parentEngine
     parentEngine?.childEngines.push(this)
@@ -215,7 +215,7 @@ export class Engine {
 
     // Dispose resources - check Symbol.dispose first, then fall back to dispose()
     for (const resource of this.resources.values()) {
-      if (resource && typeof resource === 'object') {
+      if (resource !== null && typeof resource === 'object') {
         if (Symbol.dispose in resource) {
           ;(resource as { [Symbol.dispose]: () => void })[Symbol.dispose]()
         } else if ('dispose' in resource && typeof (resource as { dispose?: unknown }).dispose === 'function') {
@@ -247,7 +247,7 @@ export class Engine {
    * @typeParam T - The type of values that the node emits.
    */
   getValue<T>(node: Out<T>): T {
-    if (this.parentEngine?.hasOwnOrParentHasRef(node)) {
+    if (this.parentEngine?.hasOwnOrParentHasRef(node) === true) {
       return this.parentEngine.getValue(node)
     }
     this.register(node)
@@ -320,7 +320,7 @@ export class Engine {
    * r.pub(foo$, 'bar')
    * ```
    */
-  // eslint-disable-next-line @typescript-eslint/unified-signatures
+  // oxlint-disable-next-line typescript/unified-signatures - this is intentional
   pub<T>(node: Inp<T>, value: T): void
   pub<T>(node: Inp<T>, value?: T) {
     this.pubIn({ [node]: value })
@@ -389,7 +389,7 @@ export class Engine {
       let resolved = false
       const done = (value: unknown) => {
         const dnRef = this.distinctNodes.get(id)
-        if (transientState.has(id) && dnRef?.(transientState.get(id), value)) {
+        if (transientState.has(id) && dnRef?.(transientState.get(id), value) === true) {
           resolved = false
           return
         }
@@ -409,21 +409,20 @@ export class Engine {
         inEngineContext(this, () => {
           map.projections.use(id, (nodeProjections) => {
             for (const projection of nodeProjections) {
-              const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map((id) => transientState.get(id))
+              const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map((nodeId) => transientState.get(nodeId))
               projection.map(done)(...args)
             }
           })
         })
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (resolved) {
         const value = transientState.get(id)
 
         const debugLabel = nodeDebugLabels$$.get(id)
-        if (debugLabel) {
+        if (debugLabel !== undefined) {
           const displayValue = value === undefined ? '[triggered]' : value
-          // eslint-disable-next-line no-console
+          // oxlint-disable-next-line no-console
           console.log(`[reactive-engine] ${debugLabel}:`, displayValue)
         }
 
@@ -453,7 +452,7 @@ export class Engine {
    */
   register(node$: NodeRef) {
     // Check if already registered in this engine or parent
-    if (this.definitionRegistry.has(node$) || this.parentEngine?.hasOwnOrParentHasRef(node$)) {
+    if (this.definitionRegistry.has(node$) || this.parentEngine?.hasOwnOrParentHasRef(node$) === true) {
       return node$
     }
 
@@ -506,7 +505,7 @@ export class Engine {
    * @typeParam T - The type of values that the node will emit.
    */
   singletonSub<T>(node: Out<T>, subscription: Subscription<T> | undefined): UnsubscribeHandle {
-    if (this.parentEngine?.hasOwnOrParentHasRef(node)) {
+    if (this.parentEngine?.hasOwnOrParentHasRef(node) === true) {
       // Delegate to parent's singletonSub
       return this.parentEngine.singletonSub(node, subscription)
     }
@@ -538,7 +537,7 @@ export class Engine {
    * @typeParam T - The type of values that the node will emit.
    */
   sub<T>(node: Out<T>, subscription: Subscription<T>): UnsubscribeHandle {
-    if (this.parentEngine?.hasOwnOrParentHasRef(node)) {
+    if (this.parentEngine?.hasOwnOrParentHasRef(node) === true) {
       // Delegate to parent's sub
       return this.parentEngine.sub(node, subscription)
     }
@@ -548,8 +547,6 @@ export class Engine {
     return () => nodeSubscriptions.delete(subscription as Subscription<unknown>)
   }
 
-  // biome-ignore lint/suspicious/noExplicitAny: any is god
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   subMultiple(nodes: Out[], subscription: Subscription<any>): UnsubscribeHandle {
     const sink = this.streamInstance()
     this.connect({
@@ -614,8 +611,12 @@ export class Engine {
   private combineOperators<T, O1, O2, O3>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>]): (s: Out<T>) => NodeRef<O3> // prettier-ignore
   private combineOperators<T, O1, O2, O3, O4>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>]): (s: Out<T>) => NodeRef<O4> // prettier-ignore
   private combineOperators<T, O1, O2, O3, O4, O5>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>]): (s: Out<T>) => NodeRef<O5> // prettier-ignore
-  private combineOperators<T, O1, O2, O3, O4, O5, O6>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>]): (s: Out<T>) => NodeRef<O6> // prettier-ignore
-  private combineOperators<T, O1, O2, O3, O4, O5, O6, O7>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>]): (s: Out<T>) => NodeRef<O7> // prettier-ignore
+  private combineOperators<T, O1, O2, O3, O4, O5, O6>(
+    ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>]
+  ): (s: Out<T>) => NodeRef<O6> // prettier-ignore
+  private combineOperators<T, O1, O2, O3, O4, O5, O6, O7>(
+    ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>]
+  ): (s: Out<T>) => NodeRef<O7> // prettier-ignore
   private combineOperators<T>(...o: O<unknown, unknown>[]): (s: Out<T>) => NodeRef
   private combineOperators<T>(...o: O<unknown, unknown>[]): (s: Out<T>) => NodeRef {
     return (source: Out) => {
@@ -630,15 +631,15 @@ export class Engine {
     let key: symbol | symbol[] = nodes
     if (nodes.length === 1) {
       const singleNode = nodes[0]
-      invariant(singleNode, 'Single node array should have one element')
+      invariant(singleNode !== undefined, 'Single node array should have one element')
       key = singleNode
       const existingMap = this.executionMaps.get(key)
       if (existingMap !== undefined) {
         return existingMap
       }
     } else {
-      for (const [key, existingMap] of this.executionMaps.entries()) {
-        if (Array.isArray(key) && key.length === nodes.length && key.every((id) => nodes.includes(id))) {
+      for (const [existingKey, existingMap] of this.executionMaps.entries()) {
+        if (Array.isArray(existingKey) && existingKey.length === nodes.length && existingKey.every((id) => nodes.includes(id))) {
           return existingMap
         }
       }

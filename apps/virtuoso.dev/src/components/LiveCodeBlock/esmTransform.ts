@@ -29,7 +29,7 @@ export async function transformToFunctionBody(code: string) {
     const imports = Array.from(code.matchAll(importRegex))
     const startImports = Array.from(code.matchAll(starImportRegex))
 
-    const packages = [...imports, ...startImports].map((match) => match[2]).filter((pkg) => pkg !== 'react')
+    const packages = [...imports, ...startImports].map((match) => match[2]!).filter((pkg) => pkg !== 'react')
 
     // First convert imports to assignments
     const codeWithAssignments = convertExportsToAssignments(convertImportsToAssignments(code))

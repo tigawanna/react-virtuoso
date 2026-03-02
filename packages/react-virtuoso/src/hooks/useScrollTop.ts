@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { ScrollContainerState } from '../interfaces'
 import * as u from '../urx'
 import { approximatelyEqual } from '../utils/approximatelyEqual'
 import { correctItemSize } from '../utils/correctItemSize'
+
+import type { ScrollContainerState } from '../interfaces'
 
 export type ScrollerRef = HTMLElement | null | Window
 
@@ -38,19 +39,18 @@ export default function useScrollTop(
 
       if (isDocument(el) || isWindow(el)) {
         const theWindow = isWindow(el) ? el : (el as unknown as Document).defaultView!
-        scrollTop = horizontalDirection ? theWindow.scrollX : theWindow.scrollY
+        scrollTop = horizontalDirection === true ? theWindow.scrollX : theWindow.scrollY
 
-        scrollHeight = horizontalDirection
-          ? theWindow.document.documentElement.scrollWidth
-          : theWindow.document.documentElement.scrollHeight
+        scrollHeight =
+          horizontalDirection === true ? theWindow.document.documentElement.scrollWidth : theWindow.document.documentElement.scrollHeight
 
-        viewportHeight = horizontalDirection ? theWindow.innerWidth : theWindow.innerHeight
+        viewportHeight = horizontalDirection === true ? theWindow.innerWidth : theWindow.innerHeight
       } else {
-        scrollTop = horizontalDirection ? el.scrollLeft : el.scrollTop
+        scrollTop = horizontalDirection === true ? el.scrollLeft : el.scrollTop
 
-        scrollHeight = horizontalDirection ? el.scrollWidth : el.scrollHeight
+        scrollHeight = horizontalDirection === true ? el.scrollWidth : el.scrollHeight
 
-        viewportHeight = horizontalDirection ? el.offsetWidth : el.offsetHeight
+        viewportHeight = horizontalDirection === true ? el.offsetWidth : el.offsetHeight
       }
 
       const call = () => {
@@ -60,8 +60,7 @@ export default function useScrollTop(
           viewportHeight,
         })
       }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if ((ev as any).suppressFlushSync) {
+      if ((ev as any).suppressFlushSync === true) {
         call()
       } else {
         ReactDOM.flushSync(call)
@@ -98,7 +97,7 @@ export default function useScrollTop(
     const scrollerElement = scrollerRef.current
     if (
       !scrollerElement ||
-      (horizontalDirection
+      (horizontalDirection === true
         ? 'offsetWidth' in scrollerElement && scrollerElement.offsetWidth === 0
         : 'offsetHeight' in scrollerElement && scrollerElement.offsetHeight === 0)
     ) {
@@ -114,15 +113,17 @@ export default function useScrollTop(
     if (isWindow(scrollerElement)) {
       // this is not a mistake
       scrollHeight = Math.max(
-        correctItemSize(scrollerElement.document.documentElement, horizontalDirection ? 'width' : 'height'),
-        horizontalDirection ? scrollerElement.document.documentElement.scrollWidth : scrollerElement.document.documentElement.scrollHeight
+        correctItemSize(scrollerElement.document.documentElement, horizontalDirection === true ? 'width' : 'height'),
+        horizontalDirection === true
+          ? scrollerElement.document.documentElement.scrollWidth
+          : scrollerElement.document.documentElement.scrollHeight
       )
-      offsetHeight = horizontalDirection ? scrollerElement.innerWidth : scrollerElement.innerHeight
-      scrollTop = horizontalDirection ? window.scrollX : window.scrollY
+      offsetHeight = horizontalDirection === true ? scrollerElement.innerWidth : scrollerElement.innerHeight
+      scrollTop = horizontalDirection === true ? window.scrollX : window.scrollY
     } else {
-      scrollHeight = scrollerElement[horizontalDirection ? 'scrollWidth' : 'scrollHeight']
-      offsetHeight = correctItemSize(scrollerElement, horizontalDirection ? 'width' : 'height')
-      scrollTop = scrollerElement[horizontalDirection ? 'scrollLeft' : 'scrollTop']
+      scrollHeight = scrollerElement[horizontalDirection === true ? 'scrollWidth' : 'scrollHeight']
+      offsetHeight = correctItemSize(scrollerElement, horizontalDirection === true ? 'width' : 'height')
+      scrollTop = scrollerElement[horizontalDirection === true ? 'scrollLeft' : 'scrollTop']
     }
 
     const maxScrollTop = scrollHeight - offsetHeight
@@ -154,16 +155,19 @@ export default function useScrollTop(
       scrollTopTarget.current = null
     }
 
-    if (horizontalDirection) {
-      location = { behavior: location.behavior, left: location.top }
+    if (horizontalDirection === true) {
+      location = { ...(location.behavior !== undefined ? { behavior: location.behavior } : {}), left: location.top }
     }
 
     scrollerElement.scrollTo(location)
   }
 
   function scrollByCallback(location: ScrollToOptions) {
-    if (horizontalDirection) {
-      location = { behavior: location.behavior, left: location.top }
+    if (horizontalDirection === true) {
+      location = {
+        ...(location.behavior !== undefined ? { behavior: location.behavior } : {}),
+        ...(location.top !== undefined ? { left: location.top } : {}),
+      }
     }
     scrollerRef.current!.scrollBy(location)
   }

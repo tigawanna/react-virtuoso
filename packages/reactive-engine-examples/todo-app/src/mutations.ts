@@ -1,6 +1,8 @@
 import { Cell, e } from '@virtuoso.dev/reactive-engine-core'
 import { Mutation } from '@virtuoso.dev/reactive-engine-query'
+
 import { listsQuery, tasksQuery } from './queries'
+
 import type { List, Task } from './types'
 
 const API_BASE = 'http://localhost:3001'
@@ -12,7 +14,9 @@ export const createListMutation = Mutation<{ name: string }, List>({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name }),
     })
-    if (!res.ok) throw new Error('Failed to create list')
+    if (!res.ok) {
+      throw new Error('Failed to create list')
+    }
     return res.json()
   },
 })
@@ -24,7 +28,9 @@ export const updateListMutation = Mutation<{ id: string; name: string }, List>({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name }),
     })
-    if (!res.ok) throw new Error('Failed to update list')
+    if (!res.ok) {
+      throw new Error('Failed to update list')
+    }
     return res.json()
   },
 })
@@ -34,7 +40,9 @@ export const deleteListMutation = Mutation<{ id: string }, void>({
     const res = await fetch(`${API_BASE}/lists/${id}`, {
       method: 'DELETE',
     })
-    if (!res.ok) throw new Error('Failed to delete list')
+    if (!res.ok) {
+      throw new Error('Failed to delete list')
+    }
   },
 })
 
@@ -45,7 +53,9 @@ export const createTaskMutation = Mutation<{ listId: string; description: string
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ listId, description, done }),
     })
-    if (!res.ok) throw new Error('Failed to create task')
+    if (!res.ok) {
+      throw new Error('Failed to create task')
+    }
     return res.json()
   },
 })
@@ -57,7 +67,9 @@ export const updateTaskMutation = Mutation<{ id: number; listId: string; descrip
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ listId, description, done }),
     })
-    if (!res.ok) throw new Error('Failed to update task')
+    if (!res.ok) {
+      throw new Error('Failed to update task')
+    }
     return res.json()
   },
 })
@@ -67,7 +79,9 @@ export const deleteTaskMutation = Mutation<{ id: number }, void>({
     const res = await fetch(`${API_BASE}/tasks/${id}`, {
       method: 'DELETE',
     })
-    if (!res.ok) throw new Error('Failed to delete task')
+    if (!res.ok) {
+      throw new Error('Failed to delete task')
+    }
   },
 })
 

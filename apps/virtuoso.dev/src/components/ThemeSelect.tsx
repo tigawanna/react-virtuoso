@@ -1,5 +1,6 @@
-import { Half2Icon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import { useEffect, useState } from 'react'
+
+import { Half2Icon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 
 type Theme = 'auto' | 'dark' | 'light'
 
@@ -37,7 +38,7 @@ export function ThemeSelect() {
   }, [])
 
   const handleClick = () => {
-    const nextTheme = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]
+    const nextTheme = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length]!
     setTheme(nextTheme)
     applyTheme(nextTheme)
     if (typeof localStorage !== 'undefined') {

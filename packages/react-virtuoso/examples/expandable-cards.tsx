@@ -3,9 +3,8 @@ import { useState } from 'react'
 import { Virtuoso } from '../src'
 
 const Row = (props: any) => {
-  const { expanded, rowIndex, setExpanded } = props
-  const [ex, setEx] = useState(expanded)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const { expanded, rowIndex, setExpanded } = props as { expanded: boolean; rowIndex: number; setExpanded: (v: boolean) => void }
+  const [ex, setEx] = useState<boolean>(expanded)
   const color = Math.floor(Math.abs(Math.sin(rowIndex) * 16777215) % 16777215).toString(16)
   return (
     <div style={{}}>

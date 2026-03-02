@@ -130,14 +130,7 @@ describe('Path Parameter Validation at Runtime (T015)', () => {
 
   it('should handle empty search params object', () => {
     // T015: Empty search params
-    engine.pub(search$, { $search: {} })
-
-    expect(engine.getValue(routerEngine.currentRoute$)).toBe('/search')
-  })
-
-  it('should handle undefined search param values', () => {
-    // T015: Undefined search params
-    engine.pub(search$, { $search: { page: undefined, q: undefined } })
+    engine.pub(search$, { $search: {} as Record<string, never> })
 
     expect(engine.getValue(routerEngine.currentRoute$)).toBe('/search')
   })

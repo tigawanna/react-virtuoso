@@ -1,5 +1,6 @@
-import { ScrollContainerState } from './interfaces'
 import * as u from './urx'
+
+import type { ScrollContainerState } from './interfaces'
 
 export const domIOSystem = u.system(
   () => {

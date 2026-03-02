@@ -1,8 +1,8 @@
 import type * as React from 'react'
 
-import type { LayoutComponent } from './types'
-
 import { matchesPathPrefix } from './utils'
+
+import type { LayoutComponent } from './types'
 
 export function Layout(path: string, component: LayoutComponent): symbol {
   const layoutSymbol = Symbol('layout')
@@ -26,9 +26,11 @@ export function findMatchingLayouts(currentPath: string, layouts?: symbol[]): Re
       return { layoutComponent, layoutPath, layoutSymbol }
     })
     .filter(({ layoutComponent, layoutPath }) => {
-      if (!layoutPath || !layoutComponent) return false
+      if (layoutPath === undefined || !layoutComponent) {
+        return false
+      }
       // Use shared prefix matching logic
-      return matchesPathPrefix(pathOnly, layoutPath)
+      return matchesPathPrefix(pathOnly!, layoutPath)
     })
     .sort((a, b) => {
       // Sort by path length: shortest first (outermost)

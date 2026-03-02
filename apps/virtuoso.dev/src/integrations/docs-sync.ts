@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import type { AstroIntegration } from 'astro'
-
-import { type FSWatcher, watch } from 'node:fs'
+// oxlint-disable no-await-in-loop
+import { watch } from 'node:fs'
 import { mkdir, readdir, readFile, rm, stat, unlink, writeFile } from 'node:fs/promises'
 import { basename, dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+import type { AstroIntegration } from 'astro'
+import type { FSWatcher } from 'node:fs'
 
 export interface DocsSyncSource {
   /** Target subdirectory under src/content/docs/ */
@@ -31,13 +32,15 @@ const NUMERIC_PREFIX_PATTERN = /^(\d+)\./
 // Extract numeric prefix from filename (e.g., "6.troubleshooting.md" → 6)
 function getNumericPrefix(filename: string): null | number {
   const match = NUMERIC_PREFIX_PATTERN.exec(filename)
-  return match ? parseInt(match[1], 10) : null
+  return match ? parseInt(match[1]!, 10) : null
 }
 
 // Inject sidebar.order and prefixed label into frontmatter based on filename prefix
 function injectSidebarOrder(content: string, filename: string): string {
   const order = getNumericPrefix(filename)
-  if (order === null) return content
+  if (order === null) {
+    return content
+  }
 
   // Check if file has frontmatter
   if (content.startsWith('---')) {
@@ -134,7 +137,6 @@ async function syncFile(
     await writeFile(finalDestPath, content, 'utf-8')
     return finalDestPath
   } catch (error) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     console.error(`Failed to sync ${sourcePath}: ${error}`)
     return null
   }
@@ -176,7 +178,7 @@ async function syncSource(
     cleanedDests.add(destDir)
   }
 
-  if (source.file) {
+  if (source.file !== undefined) {
     // Single file sync
     const sourcePath = source.file.startsWith('/') ? source.file : join(projectRoot, source.file)
 
@@ -193,8 +195,10 @@ async function syncSource(
     const destPath = join(destDir, resolvedDestFileName)
 
     const result = await syncFile(sourcePath, destPath, source.transform)
-    if (result) syncedFiles.push(result)
-  } else if (source.path) {
+    if (result !== null) {
+      syncedFiles.push(result)
+    }
+  } else if (source.path !== undefined) {
     // Directory sync
     const sourcePath = source.path.startsWith('/') ? source.path : join(projectRoot, source.path)
 
@@ -210,7 +214,9 @@ async function syncSource(
       const destPath = join(destDir, relativePath)
 
       const result = await syncFile(filePath, destPath, source.transform)
-      if (result) syncedFiles.push(result)
+      if (result !== null) {
+        syncedFiles.push(result)
+      }
     }
   }
 
@@ -251,7 +257,7 @@ export function docsSync(options: DocsSyncOptions): AstroIntegration {
         let watchCount = 0
 
         for (const source of options.sources) {
-          if (source.file) {
+          if (source.file !== undefined) {
             // Watch single file
             const sourcePath = source.file.startsWith('/') ? source.file : join(projectRoot, source.file)
             const sourceDir = dirname(sourcePath)
@@ -259,7 +265,9 @@ export function docsSync(options: DocsSyncOptions): AstroIntegration {
 
             try {
               const watcher = watch(sourceDir, async (eventType, changedFile) => {
-                if (changedFile !== fileName) return
+                if (changedFile !== fileName) {
+                  return
+                }
 
                 const destDir = join(docsDir, source.dest)
                 const resolvedDestFileName = source.destFileName ?? (fileName.toLowerCase() === 'readme.md' ? 'index.mdx' : fileName)
@@ -285,16 +293,17 @@ export function docsSync(options: DocsSyncOptions): AstroIntegration {
               watchers.push(watcher)
               watchCount++
             } catch (error) {
-              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
               logger.warn(`Could not watch ${sourcePath}: ${error}`)
             }
-          } else if (source.path) {
+          } else if (source.path !== undefined) {
             // Watch directory
             const sourcePath = source.path.startsWith('/') ? source.path : join(projectRoot, source.path)
 
             try {
               const watcher = watch(sourcePath, { recursive: true }, async (eventType, filename) => {
-                if (!filename || !MD_PATTERN.test(filename)) return
+                if (filename === null || !MD_PATTERN.test(filename)) {
+                  return
+                }
 
                 const fullSourcePath = join(sourcePath, filename)
                 const destDir = join(docsDir, source.dest)
@@ -320,7 +329,6 @@ export function docsSync(options: DocsSyncOptions): AstroIntegration {
               watchers.push(watcher)
               watchCount++
             } catch (error) {
-              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
               logger.warn(`Could not watch ${sourcePath}: ${error}`)
             }
           }

@@ -1,13 +1,16 @@
-import { Realm, RealmContext, useCellValue, useCellValues, useRealm } from '@virtuoso.dev/gurx'
-import { type CSSProperties, forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 
-import type { ItemContent, ScrollerProps, SizeRange } from './interfaces'
+import { Realm, RealmContext, useCellValue, useCellValues, useRealm } from '@virtuoso.dev/gurx'
 
 import { DefaultItemContent, itemContent$ } from './content'
 import { context$, data$ } from './data'
 import { listOffset$, scrollHeight$, scrollTop$, useWindowScroll$, viewportHeight$, viewportWidth$ } from './dom'
-import { type MasonryItem, masonryItemsState$ } from './masonry-item-state'
+import { masonryItemsState$ } from './masonry-item-state'
 import { absoluteSizes$, columnCount$, indexesInColumns$, initialItemCount$, knownSizes$, masonryRanges$ } from './masonry-sizes'
+
+import type { ItemContent, ScrollerProps, SizeRange } from './interfaces'
+import type { MasonryItem } from './masonry-item-state'
 
 /**
  * Props for the VirtuosoMasonry component.
@@ -98,7 +101,7 @@ export const VirtuosoMasonry = forwardRef<Record<string, never>, VirtuosoMasonry
       })
 
       return r
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // oxlint-disable-next-line exhaustive-deps
     }, [])
 
     useImperativeHandle(ref, () => ({}), [])
@@ -117,15 +120,14 @@ export const VirtuosoMasonry = forwardRef<Record<string, never>, VirtuosoMasonry
       </RealmContext.Provider>
     )
   }
+  // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion) -- generic forwardRef pattern requires cast
 ) as <Data, Context>(props: VirtuosoMasonryProps<Data, Context> & { ref?: NoInfer<React.Ref<Record<string, never>>> }) => React.ReactElement
 
 // @ts-expect-error not typing this
 VirtuosoMasonry.displayName = 'VirtuosoMasonry'
 
 const SSRObserverShim = {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   observe: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   unobserve: () => {},
 }
 
@@ -151,11 +153,13 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
       let pubPayload = {}
 
       for (let i = 0; i < length; i++) {
-        const entry = entries[i]
+        const entry = entries[i]!
+        // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
         const element = entry.target as HTMLDivElement
 
         if (element === scrollerRef.current) {
-          const theWindow = element.ownerDocument.defaultView as Window
+          const theWindow = element.ownerDocument.defaultView!
+
           pubPayload = {
             ...pubPayload,
             [scrollHeight$]: useWindowScroll ? theWindow.document.documentElement.scrollHeight : element.scrollHeight,
@@ -191,13 +195,13 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
           continue
         }
 
-        const columnResults = results[columnIndex]
+        const columnResults = results[columnIndex]!
 
         const lastResult = columnResults[columnResults.length - 1]
-        if (columnResults.length === 0 || lastResult.size !== size || lastResult.endIndex !== index - 1) {
+        if (columnResults.length === 0 || lastResult!.size !== size || lastResult!.endIndex !== index - 1) {
           columnResults.push({ endIndex: index, size: size, startIndex: index })
         } else {
-          columnResults[columnResults.length - 1].endIndex++
+          columnResults[columnResults.length - 1]!.endIndex++
         }
       }
 
@@ -243,7 +247,7 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
         observer.observe(el, { box: 'border-box' })
       } else {
         const current = listRef.current[index]
-        if (current != null) {
+        if (current !== null && current !== undefined) {
           observer.unobserve(current)
           listRef.current[index] = null
         }
@@ -280,8 +284,9 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
 
   useEffect(() => {
     if (useWindowScroll) {
-      const theWin = scrollerRef.current?.ownerDocument.defaultView as Window
-      const onScroll = () => {
+      const theWin = scrollerRef.current?.ownerDocument.defaultView!
+
+      const handleWindowScroll = () => {
         realm.pubIn({
           [listOffset$]: scrollerRef.current?.getBoundingClientRect().top ?? 0,
           [scrollHeight$]: theWin.document.documentElement.scrollHeight,
@@ -289,12 +294,13 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
           [viewportHeight$]: theWin.innerHeight,
         })
       }
-      theWin.addEventListener('scroll', onScroll)
-      onScroll()
+      theWin.addEventListener('scroll', handleWindowScroll)
+      handleWindowScroll()
       return () => {
-        theWin.removeEventListener('scroll', onScroll)
+        theWin.removeEventListener('scroll', handleWindowScroll)
       }
     }
+    return undefined
   }, [useWindowScroll, realm])
 
   const builtInStyle: CSSProperties = useWindowScroll
@@ -311,36 +317,35 @@ const VirtuosoScroller: React.FC<ScrollerProps> = ({ style: passedStyle, ...html
       }
 
   return (
-    <>
-      <div
-        {...htmlProps}
-        data-testid="virtuoso-scroller"
-        ref={scrollerCallbackRef}
-        style={{
-          ...builtInStyle,
-          ...passedStyle,
-        }}
-      >
-        {itemsState.columns.map((columnState, index) => (
-          <div
-            data-testid="virtuoso-list"
-            key={`column-${index}`}
-            ref={listCallbackRef(index)}
-            style={{
-              boxSizing: 'content-box',
-              flexGrow: 1,
-              height: columnState.totalHeight,
-              overflowAnchor: 'none',
-              position: 'relative',
-            }}
-          >
-            {columnState.items.map((item) => {
-              return <MasonryListItem item={item} ItemContent={ItemContent} key={item.index} mount={observe} unmount={unobserve} />
-            })}
-          </div>
-        ))}
-      </div>
-    </>
+    <div
+      {...htmlProps}
+      data-testid="virtuoso-scroller"
+      ref={scrollerCallbackRef}
+      style={{
+        ...builtInStyle,
+        ...passedStyle,
+      }}
+    >
+      {itemsState.columns.map((columnState, index) => (
+        <div
+          data-testid="virtuoso-list"
+          // oxlint-disable-next-line no-array-index-key -- stable column layout
+          key={`column-${index}`}
+          ref={listCallbackRef(index)}
+          style={{
+            boxSizing: 'content-box',
+            flexGrow: 1,
+            height: columnState.totalHeight,
+            overflowAnchor: 'none',
+            position: 'relative',
+          }}
+        >
+          {columnState.items.map((item) => {
+            return <MasonryListItem item={item} ItemContent={ItemContent} key={item.index} mount={observe} unmount={unobserve} />
+          })}
+        </div>
+      ))}
+    </div>
   )
 }
 

@@ -3,13 +3,13 @@
  * The nodes functions are used to create node definitions.
  */
 
-import type { O } from './operators'
-import type { Distinct, Inp, NodeRef, Out, ResourceFactory, ResourceRef } from './types'
-
 import { link, pipe } from './combinators'
 import { CELL_TYPE, nodeDefs$$, RESOURCE_TYPE, resourceDefs$$ } from './globals'
 import { addNodeInit } from './nodeUtils'
 import { tap } from './utils'
+
+import type { O } from './operators'
+import type { Distinct, Inp, NodeRef, Out, ResourceFactory, ResourceRef } from './types'
 
 /**
  * Defines a new **stateless node** and returns a reference to it.
@@ -238,11 +238,17 @@ export function Pipe<T, O1, O2, O3, O4, O5>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3
 /** @hidden */
 export function Pipe<T, O1, O2, O3, O4, O5, O6>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>]): [Inp<T>, Out<O6>] // prettier-ignore
 /** @hidden */
-export function Pipe<T, O1, O2, O3, O4, O5, O6, O7>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>]): [Inp<T>, Out<O7>] // prettier-ignore
+export function Pipe<T, O1, O2, O3, O4, O5, O6, O7>(
+  ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>]
+): [Inp<T>, Out<O7>] // prettier-ignore
 /** @hidden */
-export function Pipe<T, O1, O2, O3, O4, O5, O6, O7, O8>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>, O<O7, O8>]): [Inp<T>, Out<O8>] // prettier-ignore
+export function Pipe<T, O1, O2, O3, O4, O5, O6, O7, O8>(
+  ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>, O<O7, O8>]
+): [Inp<T>, Out<O8>] // prettier-ignore
 /** @hidden */
-export function Pipe<T, O1, O2, O3, O4, O5, O6, O7, O8, O9>(...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>, O<O7, O8>, O<O8, O9>]): [Inp<T>, Out<O9>] // prettier-ignore
+export function Pipe<T, O1, O2, O3, O4, O5, O6, O7, O8, O9>(
+  ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>, O<O7, O8>, O<O8, O9>]
+): [Inp<T>, Out<O9>] // prettier-ignore
 export function Pipe<T>(...operators: O<unknown, unknown>[]): [Inp<T>, Out] {
   const input$ = Stream<T>()
   const output$ = Stream<unknown>()

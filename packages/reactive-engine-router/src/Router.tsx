@@ -1,9 +1,10 @@
-import { useCellValue, useEngine, useIsomorphicLayoutEffect, usePublisher } from '@virtuoso.dev/reactive-engine-react'
 import * as React from 'react'
 
-import type { RouteRef } from './types'
+import { useCellValue, useEngine, useIsomorphicLayoutEffect, usePublisher } from '@virtuoso.dev/reactive-engine-react'
 
 import { RouterEngine } from './RouterEngine'
+
+import type { RouteRef } from './types'
 
 /**
  * Props for the Router component
@@ -76,7 +77,7 @@ const RouterRender: React.FC<{
   routerEngine: ReturnType<typeof RouterEngine>
   useBrowserHistory: boolean
 }> = ({ basePath, routerEngine, useBrowserHistory: shouldUseBrowserHistory }) => {
-  useBrowserHistory(routerEngine, basePath, shouldUseBrowserHistory)
+  useBrowserHistory(routerEngine, shouldUseBrowserHistory, basePath)
   const ActiveComponent = useCellValue(routerEngine.component$)
   return ActiveComponent && <ActiveComponent />
 }
@@ -92,7 +93,7 @@ const RouterRender: React.FC<{
  * @category React Hooks and Components
  */
 
-function useBrowserHistory(routerEngine: ReturnType<typeof RouterEngine>, basePath = '', enable: boolean) {
+function useBrowserHistory(routerEngine: ReturnType<typeof RouterEngine>, enable: boolean, basePath = '') {
   const publishUrl = usePublisher(routerEngine.goToUrl$)
   const engine = useEngine()
 
@@ -119,6 +120,7 @@ function useBrowserHistory(routerEngine: ReturnType<typeof RouterEngine>, basePa
         window.removeEventListener('popstate', handlePopState)
       }
     }
+    return undefined
   }, [publishUrl, basePath, enable])
 
   // Push route changes to browser history
@@ -133,5 +135,6 @@ function useBrowserHistory(routerEngine: ReturnType<typeof RouterEngine>, basePa
         }
       })
     }
+    return undefined
   }, [engine, routerEngine, basePath, enable])
 }

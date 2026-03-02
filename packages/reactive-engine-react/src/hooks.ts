@@ -1,7 +1,8 @@
-import type { Engine, Inp, NodeRef, Out, Subscription } from '@virtuoso.dev/reactive-engine-core'
-
 import * as React from 'react'
+
 import invariant from 'tiny-invariant'
+
+import type { Engine, Inp, NodeRef, Out, Subscription } from '@virtuoso.dev/reactive-engine-core'
 
 export const useIsomorphicLayoutEffect = typeof document !== 'undefined' ? React.useLayoutEffect : React.useEffect
 
@@ -243,21 +244,37 @@ export function useCellValues<T1, T2, T3, T4>(...cells: [Out<T1>, Out<T2>, Out<T
 /** @hidden */
 export function useCellValues<T1, T2, T3, T4, T5>(...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>]): [T1, T2, T3, T4, T5] // prettier-ignore
 /** @hidden */
-export function useCellValues<T1, T2, T3, T4, T5, T6>(...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>]): [T1, T2, T3, T4, T5, T6] // prettier-ignore
+export function useCellValues<T1, T2, T3, T4, T5, T6>(
+  ...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>]
+): [T1, T2, T3, T4, T5, T6] // prettier-ignore
 /** @hidden */
-export function useCellValues<T1, T2, T3, T4, T5, T6, T7>(...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>]): [T1, T2, T3, T4, T5, T6, T7] // prettier-ignore
+export function useCellValues<T1, T2, T3, T4, T5, T6, T7>(
+  ...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>]
+): [T1, T2, T3, T4, T5, T6, T7] // prettier-ignore
 /** @hidden */
-export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8>(...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>]): [T1, T2, T3, T4, T5, T6, T7, T8] // prettier-ignore
+export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8>(
+  ...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>]
+): [T1, T2, T3, T4, T5, T6, T7, T8] // prettier-ignore
 /** @hidden */
-export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9>(...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>]): [T1, T2, T3, T4, T5, T6, T7, T8, T9] // prettier-ignore
+export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+  ...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>]
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9] // prettier-ignore
 /** @hidden */
-export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>]): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10] // prettier-ignore
+export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
+  ...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>]
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10] // prettier-ignore
 /** @hidden */
-export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>]): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11] // prettier-ignore
+export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
+  ...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>]
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11] // prettier-ignore
 /** @hidden */
-export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>]): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12] // prettier-ignore
+export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(
+  ...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>]
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12] // prettier-ignore
 /** @hidden */
-export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>]): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13] // prettier-ignore
+export function useCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(
+  ...cells: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>]
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13] // prettier-ignore
 /** @hidden */
 export function useCellValues(...cells: Out[]): unknown[]
 export function useCellValues(...cells: Out[]): unknown[] {
@@ -265,7 +282,7 @@ export function useCellValues(...cells: Out[]): unknown[] {
 
   const combinedCell = React.useMemo(() => {
     return engine.combineCells(cells)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line exhaustive-deps
   }, [engine, ...cells])
 
   return useCellValue(combinedCell)
@@ -327,10 +344,12 @@ function useRemoteEngine(source: EngineSource): Engine | null {
   const engineId = isRef ? null : source
   const engineRef = isRef ? source : null
 
-  const [engineFromRegistry, setEngineFromRegistry] = React.useState<Engine | null>(() => (engineId ? getRegistryEngine(engineId) : null))
+  const [engineFromRegistry, setEngineFromRegistry] = React.useState<Engine | null>(() =>
+    engineId !== null ? getRegistryEngine(engineId) : null
+  )
 
   useIsomorphicLayoutEffect(() => {
-    if (!engineId) {
+    if (engineId === null) {
       setEngineFromRegistry(null)
       return
     }
@@ -498,23 +517,41 @@ export function useRemoteCellValues<T1, T2, T3>(options: RemoteCellValuesOptions
 /** @hidden */
 export function useRemoteCellValues<T1, T2, T3, T4>(options: RemoteCellValuesOptions<[T1, T2, T3, T4]>): [T1, T2, T3, T4] | undefined // prettier-ignore
 /** @hidden */
-export function useRemoteCellValues<T1, T2, T3, T4, T5>(options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5]>): [T1, T2, T3, T4, T5] | undefined // prettier-ignore
+export function useRemoteCellValues<T1, T2, T3, T4, T5>(
+  options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5]>
+): [T1, T2, T3, T4, T5] | undefined // prettier-ignore
 /** @hidden */
-export function useRemoteCellValues<T1, T2, T3, T4, T5, T6>(options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6]>): [T1, T2, T3, T4, T5, T6] | undefined // prettier-ignore
+export function useRemoteCellValues<T1, T2, T3, T4, T5, T6>(
+  options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6]>
+): [T1, T2, T3, T4, T5, T6] | undefined // prettier-ignore
 /** @hidden */
-export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7>(options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7]>): [T1, T2, T3, T4, T5, T6, T7] | undefined // prettier-ignore
+export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7>(
+  options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7]>
+): [T1, T2, T3, T4, T5, T6, T7] | undefined // prettier-ignore
 /** @hidden */
-export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8>(options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8]>): [T1, T2, T3, T4, T5, T6, T7, T8] | undefined // prettier-ignore
+export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8>(
+  options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8]>
+): [T1, T2, T3, T4, T5, T6, T7, T8] | undefined // prettier-ignore
 /** @hidden */
-export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9>(options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9]>): [T1, T2, T3, T4, T5, T6, T7, T8, T9] | undefined // prettier-ignore
+export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+  options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9]>
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9] | undefined // prettier-ignore
 /** @hidden */
-export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]>): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10] | undefined // prettier-ignore
+export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
+  options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]>
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10] | undefined // prettier-ignore
 /** @hidden */
-export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]>): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11] | undefined // prettier-ignore
+export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
+  options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]>
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11] | undefined // prettier-ignore
 /** @hidden */
-export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]>): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12] | undefined // prettier-ignore
+export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(
+  options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]>
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12] | undefined // prettier-ignore
 /** @hidden */
-export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]>): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13] | undefined // prettier-ignore
+export function useRemoteCellValues<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(
+  options: RemoteCellValuesOptions<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]>
+): [T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13] | undefined // prettier-ignore
 /** @hidden */
 export function useRemoteCellValues(options: RemoteCellValuesOptions<unknown[]>): undefined | unknown[]
 export function useRemoteCellValues(options: RemoteCellValuesOptions<unknown[]>): undefined | unknown[] {
@@ -523,7 +560,7 @@ export function useRemoteCellValues(options: RemoteCellValuesOptions<unknown[]>)
 
   const combinedCell = React.useMemo(() => {
     return engine ? engine.combineCells(cells) : null
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line exhaustive-deps
   }, [engine, ...cells])
 
   const [values, setValues] = React.useState<undefined | unknown[]>(() =>

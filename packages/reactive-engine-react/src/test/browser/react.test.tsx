@@ -18,7 +18,6 @@ import {
 } from '../../'
 
 const cell$ = Cell('hello')
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {}
 
 describe('Reactive Engine in React', () => {
@@ -48,16 +47,16 @@ describe('Reactive Engine in React', () => {
   })
 
   it('supports triggers', async () => {
-    const cell$ = Cell('hello')
+    const triggerCell$ = Cell('hello')
 
     const trigger$ = Trigger()
 
-    e.link(e.pipe(trigger$, mapTo('world')), cell$)
+    e.link(e.pipe(trigger$, mapTo('world')), triggerCell$)
 
     const { rerender, result } = await renderHook(
       () => {
         const proc = usePublisher(trigger$)
-        const value = useCellValue(cell$)
+        const value = useCellValue(triggerCell$)
         return [value, proc] as const
       },
       {
@@ -152,11 +151,7 @@ describe('Remote hooks', () => {
         return <div data-testid="remote-value">{value ?? 'loading'}</div>
       }
 
-      const screen = await render(
-        <>
-          <RemoteComponent />
-        </>
-      )
+      const screen = await render(<RemoteComponent />)
 
       await expect.element(screen.getByTestId('remote-value')).toHaveTextContent('loading')
 
@@ -191,11 +186,7 @@ describe('Remote hooks', () => {
 
       await expect.element(screen.getByTestId('remote-value')).toHaveTextContent('remote-value')
 
-      void screen.rerender(
-        <>
-          <RemoteComponent />
-        </>
-      )
+      void screen.rerender(<RemoteComponent />)
 
       await expect.element(screen.getByTestId('remote-value')).toHaveTextContent('loading')
     })

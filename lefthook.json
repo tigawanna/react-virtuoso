@@ -8,14 +8,22 @@
         "stage_fixed": true,
         "skip": ["merge", "rebase"]
       },
-      "eslint": {
-        "glob": "*.{js,mjs,cjs,ts,jsx,tsx}",
+      "oxlint": {
+        "glob": "*.{js,mjs,cjs,ts,jsx,tsx,astro}",
         "run": "pnpm lint",
         "skip": ["merge", "rebase"]
       },
-      "type-check": {
-        "glob": "*.{ts,tsx,astro}",
-        "run": "pnpm typecheck",
+      "format-oxfmt": {
+        "glob": "*.{js,mjs,cjs,ts,jsx,tsx}",
+        "run": "pnpm exec oxfmt --write {staged_files}",
+        "stage_fixed": true,
+        "skip": ["merge", "rebase"]
+      },
+      "format-astro": {
+        "root": "apps/virtuoso.dev/",
+        "glob": "apps/virtuoso.dev/**/*.astro",
+        "run": "pnpm exec prettier --write {staged_files}",
+        "stage_fixed": true,
         "skip": ["merge", "rebase"]
       }
     }

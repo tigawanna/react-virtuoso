@@ -1,14 +1,16 @@
-import type { HighlighterCore } from 'shiki/core'
+import { useEffect, useState } from 'react'
+import type { ComponentProps } from 'react'
 
 import { CheckIcon, ClipboardCopyIcon } from '@radix-ui/react-icons'
 import copy from 'copy-text-to-clipboard'
-import { type ComponentProps, useEffect, useState } from 'react'
 import ShikiHighlighter from 'react-shiki/core'
 
 import { useStarlightTheme } from '@/components/theme-utils'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { getShikiHighlighter } from '@/utils/shikiHighlighter'
+
+import type { HighlighterCore } from 'shiki/core'
 
 interface StaticCodeBlockProps {
   code: string

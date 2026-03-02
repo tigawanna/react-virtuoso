@@ -446,7 +446,7 @@ export type ItemContent<Data, Context> = (index: number, data: Data, context: Co
  */
 export type ItemProps<Data> = Pick<React.ComponentProps<'div'>, 'children' | 'style'> & {
   'data-index': number
-  'data-item-group-index'?: number
+  'data-item-group-index'?: number | undefined
   'data-item-index': number
   'data-known-size': number
   item: Data

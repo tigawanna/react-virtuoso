@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /**
  * ## Thinking in Systems
  * systems are a stateful **data-processing machines** which accept input through **input streams**,
@@ -43,7 +39,7 @@
  *
  * @packageDocumentation
  */
-import { Emitter } from './actions'
+import type { Emitter } from './actions'
 
 /** @internal **/
 export type AnySystemSpec = SystemSpec<any, any>
@@ -211,7 +207,6 @@ export function init<SS extends AnySystemSpec>(systemSpec: SS): SR<SS> {
     }
     const system = constructor(dependencies.map((e: AnySystemSpec) => _init(e)))
     if (singleton) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       singletons.set(id, system)
     }
     return system

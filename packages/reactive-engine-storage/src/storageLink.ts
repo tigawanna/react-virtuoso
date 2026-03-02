@@ -1,7 +1,7 @@
-import type { Engine, NodeInit, NodeRef } from '@virtuoso.dev/reactive-engine-core'
-
 import { addNodeInit } from '@virtuoso.dev/reactive-engine-core'
 import invariant from 'tiny-invariant'
+
+import type { Engine, NodeInit, NodeRef } from '@virtuoso.dev/reactive-engine-core'
 
 export interface CookieOptions {
   domain?: string
@@ -192,7 +192,7 @@ function getStorageKey<T>(engine: Engine, options: StorageLinkOptions<T>): strin
     return options.key
   }
 
-  return engine.id ? `${engine.id}:${options.key}` : options.key
+  return engine.id !== undefined ? `${engine.id}:${options.key}` : options.key
 }
 
 function isStorageAvailable(type: 'cookie' | 'localStorage' | 'sessionStorage'): boolean {
@@ -244,20 +244,20 @@ function writeCookie<T>(key: string, value: string, options: StorageLinkOptions<
   if (options.storageType === 'cookie' && options.cookieOptions) {
     const { domain, expires, path, sameSite, secure } = options.cookieOptions
 
-    if (path) {
+    if (path !== undefined) {
       cookieString += `; path=${path}`
     }
 
-    if (domain) {
+    if (domain !== undefined) {
       cookieString += `; domain=${domain}`
     }
 
-    if (expires) {
+    if (expires !== undefined) {
       const expiresDate = typeof expires === 'string' ? parseExpiresString(expires) : expires
       cookieString += `; expires=${expiresDate.toUTCString()}`
     }
 
-    if (secure) {
+    if (secure === true) {
       cookieString += '; secure'
     }
 
@@ -266,13 +266,12 @@ function writeCookie<T>(key: string, value: string, options: StorageLinkOptions<
     }
   }
 
-  // biome-ignore lint/suspicious/noDocumentCookie: necessary for cookie manipulation
   document.cookie = cookieString
 }
 
 function parseExpiresString(expires: string): Date {
   const match = /^(\d+)([dhm])$/.exec(expires)
-  invariant(match?.[1] && match[2], `Invalid expires format: ${expires}. Use format like "7d", "1h", "30m"`)
+  invariant(match?.[1] !== undefined && match[2] !== undefined, `Invalid expires format: ${expires}. Use format like "7d", "1h", "30m"`)
 
   const amount = match[1]
   const unit = match[2]

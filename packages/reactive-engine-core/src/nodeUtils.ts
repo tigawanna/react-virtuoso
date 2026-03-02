@@ -1,8 +1,8 @@
 import invariant from 'tiny-invariant'
 
-import type { NodeInit, NodeRef } from './types'
-
 import { getCurrentEngine, nodeDebugLabels$$, nodeInits$$, nodeInitSubscriptions$$ } from './globals'
+
+import type { NodeInit, NodeRef } from './types'
 
 /**
  * Registers an initialization function to be called when any of the specified nodes are initialized in an engine.
@@ -72,7 +72,7 @@ function extractCallerLocation(stack: string): null | string {
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i]
 
-    if (!line) {
+    if (line === undefined || line === '') {
       continue
     }
 
@@ -125,10 +125,10 @@ export function debug<T>(node$: NodeRef<T>, label?: string): () => void {
   let nodeLabel = label
 
   // Try to extract location from stack trace if no label provided
-  if (!nodeLabel) {
+  if (nodeLabel === undefined) {
     try {
       const stack = new Error().stack
-      if (stack) {
+      if (stack !== undefined) {
         nodeLabel = extractCallerLocation(stack) ?? undefined
       }
     } catch {

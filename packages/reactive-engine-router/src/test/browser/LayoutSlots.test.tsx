@@ -200,7 +200,7 @@ describe('LayoutSlots', () => {
 
     // The parent should only have the sibling span, not the LayoutSlotFill
     expect(parent.element().children.length).toBe(1)
-    expect(parent.element().children[0].tagName).toBe('SPAN')
+    expect(parent.element().children[0]!.tagName).toBe('SPAN')
 
     // But the slot should render the fill content
     await expect.element(screen.getByText('Fill content')).toBeInTheDocument()

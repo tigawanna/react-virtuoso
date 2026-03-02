@@ -1,10 +1,13 @@
 import { useState } from 'react'
+
 import { useCellValue, usePublisher } from '@virtuoso.dev/reactive-engine-react'
-import type { RouteParams } from '@virtuoso.dev/reactive-engine-router'
+
 import { createTaskMutation, deleteTaskMutation, updateTaskMutation } from './mutations'
 import { listsQuery, tasksQuery } from './queries'
 import { lists$ } from './routes'
+
 import type { Task } from './types'
+import type { RouteParams } from '@virtuoso.dev/reactive-engine-router'
 
 export const TasksPage: React.ComponentType<RouteParams<'/lists/{id}'>> = ({ id }) => {
   const listId = id

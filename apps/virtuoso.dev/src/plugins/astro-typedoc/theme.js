@@ -1,7 +1,7 @@
-/* eslint-disable */
+// oxlint-disable typescript-eslint(no-unsafe-argument)
+import { ReflectionKind } from 'typedoc'
 // @ts-nocheck - TypeDoc plugin integration with complex external types
 import { MarkdownTheme, MarkdownThemeContext } from 'typedoc-plugin-markdown'
-import { ReflectionKind } from 'typedoc'
 
 export function load(app) {
   app.renderer.defineTheme('custom-markdown-theme', CustomMarkdownTheme)
@@ -25,8 +25,8 @@ class CustomMarkdownThemeContext extends MarkdownThemeContext {
         if (model.kind === ReflectionKind.Property) {
           const typeStr = model.type?.toString()
           // Skip function-like properties - they need the full signature
-          if (typeStr && !typeStr.includes('=>') && !typeStr.includes('(')) {
-            const type = model.type ? this.partials.someType(model.type) : 'unknown'
+          if (typeof typeStr === 'string' && !typeStr.includes('=>') && !typeStr.includes('(')) {
+            const type = model.type !== null && model.type !== undefined ? this.partials.someType(model.type) : 'unknown'
             return `${type}\n\n`
           }
         }

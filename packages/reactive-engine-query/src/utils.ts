@@ -1,5 +1,7 @@
 function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
 }
 
 export function defaultRetryDelay(attemptIndex: number): number {
@@ -22,16 +24,19 @@ export async function executeWithRetry<T>(
     }
 
     try {
+      // oxlint-disable-next-line no-await-in-loop
       return await fn()
     } catch (error) {
       lastError = error
 
       if (attempt < options.retry) {
         const delay = options.retryDelay(attempt)
+        // oxlint-disable-next-line no-await-in-loop
         await sleep(delay)
       }
     }
   }
 
+  // oxlint-disable-next-line no-throw-literal -- re-throwing the original caught error
   throw lastError
 }

@@ -7,13 +7,13 @@ import type { Distinct, NodeRef, Out } from './types'
  * @typeParam O - The type of values that the resulting node will emit.
  * @category Operators
  */
-export type Operator<I, O> = (source: Out<I>, engine: Engine) => NodeRef<O>
+export type Operator<I, TOut> = (source: Out<I>, engine: Engine) => NodeRef<TOut>
 
 /**
  * Shorter alias for {@link Operator}, to avoid extra long type signatures.
  * @category Misc
  */
-export type O<In, Out> = Operator<In, Out>
+export type O<In, TOut> = Operator<In, TOut>
 
 /**
  * Maps a the passed value with a projection function.
@@ -21,9 +21,9 @@ export type O<In, Out> = Operator<In, Out>
  * @typeParam O - The type of values that the resulting node will emit.
  * @category Operators
  */
-export function map<I, O>(mapFunction: (value: I) => O, distinct: Distinct<O> = true) {
+export function map<I, TOut>(mapFunction: (value: I) => TOut, distinct: Distinct<TOut> = true) {
   return ((source, eng) => {
-    const sink = eng.streamInstance<O>(distinct)
+    const sink = eng.streamInstance<TOut>(distinct)
     eng.connect({
       map: (done) => (value) => {
         done(mapFunction(value as I))
@@ -32,7 +32,7 @@ export function map<I, O>(mapFunction: (value: I) => O, distinct: Distinct<O> = 
       sources: [source],
     })
     return sink
-  }) satisfies Operator<I, O>
+  }) satisfies Operator<I, TOut>
 }
 
 /** @hidden */
@@ -42,15 +42,25 @@ export function withLatestFrom<I, T1, T2>(...nodes: [Out<T1>, Out<T2>]): (source
 /** @hidden */
 export function withLatestFrom<I, T1, T2, T3>(...nodes: [Out<T1>, Out<T2>, Out<T3>]): (source: Out<I>) => NodeRef<[I, T1, T2, T3]> // prettier-ignore
 /** @hidden */
-export function withLatestFrom<I, T1, T2, T3, T4>(...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>]): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4]> // prettier-ignore
+export function withLatestFrom<I, T1, T2, T3, T4>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>]
+): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4]> // prettier-ignore
 /** @hidden */
-export function withLatestFrom<I, T1, T2, T3, T4, T5>(...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>]): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4, T5]> // prettier-ignore
+export function withLatestFrom<I, T1, T2, T3, T4, T5>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>]
+): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4, T5]> // prettier-ignore
 /** @hidden */
-export function withLatestFrom<I, T1, T2, T3, T4, T5, T6>(...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>]): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4, T5, T6]> // prettier-ignore
+export function withLatestFrom<I, T1, T2, T3, T4, T5, T6>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>]
+): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4, T5, T6]> // prettier-ignore
 /** @hidden */
-export function withLatestFrom<I, T1, T2, T3, T4, T5, T6, T7>(...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>]): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4, T5, T6, T7]> // prettier-ignore
+export function withLatestFrom<I, T1, T2, T3, T4, T5, T6, T7>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>]
+): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4, T5, T6, T7]> // prettier-ignore
 /** @hidden */
-export function withLatestFrom<I, T1, T2, T3, T4, T5, T6, T7, T8>(...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>]): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4, T5, T6, T7, T8]> // prettier-ignore
+export function withLatestFrom<I, T1, T2, T3, T4, T5, T6, T7, T8>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>]
+): (source: Out<I>) => NodeRef<[I, T1, T2, T3, T4, T5, T6, T7, T8]> // prettier-ignore
 export function withLatestFrom<I>(...nodes: Out[]): Operator<I, unknown[]>
 /**
  * Pulls the latest values from the passed nodes.
@@ -82,9 +92,9 @@ export function withLatestFrom<I>(...nodes: Out[]) {
  * @typeParam O - The type of the fixed value to map to.
  * @category Operators
  */
-export function mapTo<I, O>(value: O): Operator<I, O> {
+export function mapTo<I, TOut>(value: TOut): Operator<I, TOut> {
   return (source, eng) => {
-    const sink = eng.streamInstance<O>()
+    const sink = eng.streamInstance<TOut>()
     eng.connect({
       map: (done) => () => {
         done(value)
@@ -115,11 +125,11 @@ export function mapTo<I, O>(value: O): Operator<I, O> {
  * // filtered2$ type is Stream<string | null>
  * ```
  */
-export function filter<I, O extends I>(predicate: (value: I) => value is O): Operator<I, O>
+export function filter<I, TOut extends I>(predicate: (value: I) => value is TOut): Operator<I, TOut>
 export function filter<I>(predicate: (value: I) => boolean): Operator<I, I>
-export function filter<I, O extends I>(predicate: ((value: I) => boolean) | ((value: I) => value is O)): Operator<I, O> {
+export function filter<I, TOut extends I>(predicate: ((value: I) => boolean) | ((value: I) => value is TOut)): Operator<I, TOut> {
   return (source, eng) => {
-    const sink = eng.streamInstance<O>()
+    const sink = eng.streamInstance<TOut>()
     eng.connect({
       map: (done) => (value) => {
         if (predicate(value as I)) {
@@ -165,9 +175,9 @@ export function once<I>(): Operator<I, I> {
  * @typeParam O - The type of the accumulated value.
  * @category Operators
  */
-export function scan<I, O>(accumulator: (current: O, value: I) => O, seed: O): Operator<I, O> {
+export function scan<I, TOut>(accumulator: (current: TOut, value: I) => TOut, seed: TOut): Operator<I, TOut> {
   return (source, eng) => {
-    const sink = eng.streamInstance<O>()
+    const sink = eng.streamInstance<TOut>()
     let result = seed
     eng.connect({
       map: (done) => {
@@ -261,9 +271,9 @@ export function delayWithMicrotask<I>(): Operator<I, I> {
  * @typeParam O - The type of values that the buffer node will emit.
  * @category Operators
  */
-export function onNext<I, O>(bufNode: NodeRef<O>): Operator<I, [I, O]> {
+export function onNext<I, TOut>(bufNode: NodeRef<TOut>): Operator<I, [I, TOut]> {
   return (source, eng) => {
-    const sink = eng.streamInstance<[I, O]>()
+    const sink = eng.streamInstance<[I, TOut]>()
     const bufferValue = Symbol()
     let pendingValue: I | typeof bufferValue = bufferValue
     eng.connect({
@@ -302,9 +312,8 @@ export function handlePromise<I, OutSuccess, OnLoad, OutError>(
       if (value !== null && typeof value === 'object' && 'then' in value) {
         eng.pub(sink, onLoad())
         value
-          .then((value) => {
-            eng.pub(sink, onSuccess(value))
-            return
+          .then((resolved) => {
+            eng.pub(sink, onSuccess(resolved))
           })
           .catch((error: unknown) => {
             eng.pub(sink, onError(error))

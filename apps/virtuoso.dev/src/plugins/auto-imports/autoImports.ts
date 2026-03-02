@@ -1,13 +1,12 @@
-import type { Root, RootContent } from 'mdast'
-
 import { createProgram } from '@virtuoso.dev/m2dx-utils'
-
-import type { RemarkPlugin, VFile } from '../types'
 
 import { capitalize, shortHash, toCamelCase } from '../common'
 import { findUnresolved } from './findUnresolved'
 import { getExports } from './getExports'
 import { toImport } from './toImport'
+
+import type { RemarkPlugin, VFile } from '../types'
+import type { Root, RootContent } from 'mdast'
 
 interface Options {
   autoImportFile: string
@@ -19,7 +18,7 @@ export function autoImports(options: Options): RemarkPlugin {
   return async (tree: Root, file: VFile) => {
     const dir = file.dirname
 
-    if (!dir) {
+    if (dir === undefined) {
       return
     }
 
@@ -42,6 +41,7 @@ export function autoImports(options: Options): RemarkPlugin {
         if (!imports.includes(alias)) {
           imports.push(alias)
           const program = createProgram(toImport(exp, alias))
+          // oxlint-disable-next-line typescript-eslint(no-unsafe-type-assertion)
           tree.children.unshift(program as unknown as RootContent)
         }
       } else {

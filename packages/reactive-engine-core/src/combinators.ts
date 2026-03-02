@@ -1,9 +1,9 @@
-import type { O } from './operators'
-import type { Inp, NodeRef, Out, Subscription } from './types'
-
 import { Stream } from './nodes'
 import { addNodeInit } from './nodeUtils'
 import { tap } from './utils'
+
+import type { O } from './operators'
+import type { Inp, NodeRef, Out, Subscription } from './types'
 
 /** @hidden */
 export function combine<T1>(...nodes: [Out<T1>]): Out<T1> // prettier-ignore
@@ -16,33 +16,166 @@ export function combine<T1, T2, T3, T4>(...nodes: [Out<T1>, Out<T2>, Out<T3>, Ou
 /** @hidden */
 export function combine<T1, T2, T3, T4, T5>(...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>]): Out<[T1, T2, T3, T4, T5]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6>( ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>] ): Out<[T1, T2, T3, T4, T5, T6]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>]
+): Out<[T1, T2, T3, T4, T5, T6]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7>( ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>] ): Out<[T1, T2, T3, T4, T5, T6, T7]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>]
+): Out<[T1, T2, T3, T4, T5, T6, T7]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8>( ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9>( ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>( ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>( ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>( ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>( ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(
+  ...nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>( ...nodes: [ Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>, Out<T14>, ] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(
+  ...nodes: [
+    Out<T1>,
+    Out<T2>,
+    Out<T3>,
+    Out<T4>,
+    Out<T5>,
+    Out<T6>,
+    Out<T7>,
+    Out<T8>,
+    Out<T9>,
+    Out<T10>,
+    Out<T11>,
+    Out<T12>,
+    Out<T13>,
+    Out<T14>,
+  ]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>( ...nodes: [ Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>, Out<T14>, Out<T15>, ] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(
+  ...nodes: [
+    Out<T1>,
+    Out<T2>,
+    Out<T3>,
+    Out<T4>,
+    Out<T5>,
+    Out<T6>,
+    Out<T7>,
+    Out<T8>,
+    Out<T9>,
+    Out<T10>,
+    Out<T11>,
+    Out<T12>,
+    Out<T13>,
+    Out<T14>,
+    Out<T15>,
+  ]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>( ...nodes: [ Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>, Out<T14>, Out<T15>, Out<T16>, ] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(
+  ...nodes: [
+    Out<T1>,
+    Out<T2>,
+    Out<T3>,
+    Out<T4>,
+    Out<T5>,
+    Out<T6>,
+    Out<T7>,
+    Out<T8>,
+    Out<T9>,
+    Out<T10>,
+    Out<T11>,
+    Out<T12>,
+    Out<T13>,
+    Out<T14>,
+    Out<T15>,
+    Out<T16>,
+  ]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>( ...nodes: [ Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>, Out<T14>, Out<T15>, Out<T16>, Out<T17>, ] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>(
+  ...nodes: [
+    Out<T1>,
+    Out<T2>,
+    Out<T3>,
+    Out<T4>,
+    Out<T5>,
+    Out<T6>,
+    Out<T7>,
+    Out<T8>,
+    Out<T9>,
+    Out<T10>,
+    Out<T11>,
+    Out<T12>,
+    Out<T13>,
+    Out<T14>,
+    Out<T15>,
+    Out<T16>,
+    Out<T17>,
+  ]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>( ...nodes: [ Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>, Out<T14>, Out<T15>, Out<T16>, Out<T17>, Out<T18>, ] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>(
+  ...nodes: [
+    Out<T1>,
+    Out<T2>,
+    Out<T3>,
+    Out<T4>,
+    Out<T5>,
+    Out<T6>,
+    Out<T7>,
+    Out<T8>,
+    Out<T9>,
+    Out<T10>,
+    Out<T11>,
+    Out<T12>,
+    Out<T13>,
+    Out<T14>,
+    Out<T15>,
+    Out<T16>,
+    Out<T17>,
+    Out<T18>,
+  ]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18]> // prettier-ignore
 /** @hidden */
-export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>( ...nodes: [ Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>, Out<T9>, Out<T10>, Out<T11>, Out<T12>, Out<T13>, Out<T14>, Out<T15>, Out<T16>, Out<T17>, Out<T18>, Out<T19>, ] ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]> // prettier-ignore
+export function combine<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>(
+  ...nodes: [
+    Out<T1>,
+    Out<T2>,
+    Out<T3>,
+    Out<T4>,
+    Out<T5>,
+    Out<T6>,
+    Out<T7>,
+    Out<T8>,
+    Out<T9>,
+    Out<T10>,
+    Out<T11>,
+    Out<T12>,
+    Out<T13>,
+    Out<T14>,
+    Out<T15>,
+    Out<T16>,
+    Out<T17>,
+    Out<T18>,
+    Out<T19>,
+  ]
+): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19]> // prettier-ignore
 export function combine(...nodes: Out[]): Out
 /**
  * Combines the values from multiple nodes into a single node that emits an array of the latest values of the nodes.
@@ -97,33 +230,222 @@ export function merge<T1, T2, T3, T4>(s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4:
 /** @hidden */
 export function merge<T1, T2, T3, T4, T5>(s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>): Out<T1 | T2 | T3 | T4 | T5> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6> ): Out<T1 | T2 | T3 | T4 | T5 | T6> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>
+): Out<T1 | T2 | T3 | T4 | T5 | T6> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10>, s11: Out<T11> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>,
+  s11: Out<T11>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10>, s11: Out<T11>, s12: Out<T12> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>,
+  s11: Out<T11>,
+  s12: Out<T12>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10>, s11: Out<T11>, s12: Out<T12>, s13: Out<T13> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>,
+  s11: Out<T11>,
+  s12: Out<T12>,
+  s13: Out<T13>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10>, s11: Out<T11>, s12: Out<T12>, s13: Out<T13>, s14: Out<T14> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>,
+  s11: Out<T11>,
+  s12: Out<T12>,
+  s13: Out<T13>,
+  s14: Out<T14>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10>, s11: Out<T11>, s12: Out<T12>, s13: Out<T13>, s14: Out<T14>, s15: Out<T15> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>,
+  s11: Out<T11>,
+  s12: Out<T12>,
+  s13: Out<T13>,
+  s14: Out<T14>,
+  s15: Out<T15>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10>, s11: Out<T11>, s12: Out<T12>, s13: Out<T13>, s14: Out<T14>, s15: Out<T15>, s16: Out<T16> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15 | T16> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>,
+  s11: Out<T11>,
+  s12: Out<T12>,
+  s13: Out<T13>,
+  s14: Out<T14>,
+  s15: Out<T15>,
+  s16: Out<T16>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15 | T16> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10>, s11: Out<T11>, s12: Out<T12>, s13: Out<T13>, s14: Out<T14>, s15: Out<T15>, s16: Out<T16>, s17: Out<T17> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15 | T16 | T17> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>,
+  s11: Out<T11>,
+  s12: Out<T12>,
+  s13: Out<T13>,
+  s14: Out<T14>,
+  s15: Out<T15>,
+  s16: Out<T16>,
+  s17: Out<T17>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15 | T16 | T17> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10>, s11: Out<T11>, s12: Out<T12>, s13: Out<T13>, s14: Out<T14>, s15: Out<T15>, s16: Out<T16>, s17: Out<T17>, s18: Out<T18> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15 | T16 | T17 | T18> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>,
+  s11: Out<T11>,
+  s12: Out<T12>,
+  s13: Out<T13>,
+  s14: Out<T14>,
+  s15: Out<T15>,
+  s16: Out<T16>,
+  s17: Out<T17>,
+  s18: Out<T18>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15 | T16 | T17 | T18> // prettier-ignore
 /** @hidden */
-export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>( s1: Out<T1>, s2: Out<T2>, s3: Out<T3>, s4: Out<T4>, s5: Out<T5>, s6: Out<T6>, s7: Out<T7>, s8: Out<T8>, s9: Out<T9>, s10: Out<T10>, s11: Out<T11>, s12: Out<T12>, s13: Out<T13>, s14: Out<T14>, s15: Out<T15>, s16: Out<T16>, s17: Out<T17>, s18: Out<T18>, s19: Out<T19> ): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15 | T16 | T17 | T18 | T19> // prettier-ignore
+export function merge<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>(
+  s1: Out<T1>,
+  s2: Out<T2>,
+  s3: Out<T3>,
+  s4: Out<T4>,
+  s5: Out<T5>,
+  s6: Out<T6>,
+  s7: Out<T7>,
+  s8: Out<T8>,
+  s9: Out<T9>,
+  s10: Out<T10>,
+  s11: Out<T11>,
+  s12: Out<T12>,
+  s13: Out<T13>,
+  s14: Out<T14>,
+  s15: Out<T15>,
+  s16: Out<T16>,
+  s17: Out<T17>,
+  s18: Out<T18>,
+  s19: Out<T19>
+): Out<T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 | T12 | T13 | T14 | T15 | T16 | T17 | T18 | T19> // prettier-ignore
 export function merge(...sources: Out[]): Out
 /**
  * Merges multiple nodes into a single stream that emits whenever any source emits.
@@ -177,13 +499,25 @@ export function subMultiple<T1, T2, T3>(nodes: [Out<T1>, Out<T2>, Out<T3>], subs
 /** @hidden */
 export function subMultiple<T1, T2, T3, T4>(nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>], subscription: Subscription<[T1, T2, T3, T4]>): void // prettier-ignore
 /** @hidden */
-export function subMultiple<T1, T2, T3, T4, T5>( nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>], subscription: Subscription<[T1, T2, T3, T4, T5]> ): void // prettier-ignore
+export function subMultiple<T1, T2, T3, T4, T5>(
+  nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>],
+  subscription: Subscription<[T1, T2, T3, T4, T5]>
+): void // prettier-ignore
 /** @hidden */
-export function subMultiple<T1, T2, T3, T4, T5, T6>( nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>], subscription: Subscription<[T1, T2, T3, T4, T5, T6]> ): void // prettier-ignore
+export function subMultiple<T1, T2, T3, T4, T5, T6>(
+  nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>],
+  subscription: Subscription<[T1, T2, T3, T4, T5, T6]>
+): void // prettier-ignore
 /** @hidden */
-export function subMultiple<T1, T2, T3, T4, T5, T6, T7>( nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>], subscription: Subscription<[T1, T2, T3, T4, T5, T6, T7]> ): void // prettier-ignore
+export function subMultiple<T1, T2, T3, T4, T5, T6, T7>(
+  nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>],
+  subscription: Subscription<[T1, T2, T3, T4, T5, T6, T7]>
+): void // prettier-ignore
 /** @hidden */
-export function subMultiple<T1, T2, T3, T4, T5, T6, T7, T8>( nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>], subscription: Subscription<[T1, T2, T3, T4, T5, T6, T7, T8]> ): void // prettier-ignore
+export function subMultiple<T1, T2, T3, T4, T5, T6, T7, T8>(
+  nodes: [Out<T1>, Out<T2>, Out<T3>, Out<T4>, Out<T5>, Out<T6>, Out<T7>, Out<T8>],
+  subscription: Subscription<[T1, T2, T3, T4, T5, T6, T7, T8]>
+): void // prettier-ignore
 export function subMultiple(nodes: Out[], subscription: Subscription<unknown>): void
 /**
  * Subscribes to multiple nodes at once. This function is overloaded to support up to 8 nodes with proper type inference.
@@ -215,8 +549,6 @@ export function subMultiple(nodes: Out[], subscription: Subscription<unknown>): 
  *
  * @category Combinators
  */
-//biome-ignore lint/suspicious/noExplicitAny: this is ok
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function subMultiple(nodes: Out[], subscription: Subscription<any>): void {
   if (nodes.length > 0) {
     addNodeInit(
@@ -241,13 +573,25 @@ export function pipe<T, O1, O2, O3, O4>(s: Out<T>, ...o: [O<T, O1>, O<O1, O2>, O
 /** @hidden */
 export function pipe<T, O1, O2, O3, O4, O5>(s: Out<T>, ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>]): NodeRef<O5> // prettier-ignore
 /** @hidden */
-export function pipe<T, O1, O2, O3, O4, O5, O6>( s: Out<T>, ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>] ): NodeRef<O6> // prettier-ignore
+export function pipe<T, O1, O2, O3, O4, O5, O6>(
+  s: Out<T>,
+  ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>]
+): NodeRef<O6> // prettier-ignore
 /** @hidden */
-export function pipe<T, O1, O2, O3, O4, O5, O6, O7>( s: Out<T>, ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>] ): NodeRef<O7> // prettier-ignore
+export function pipe<T, O1, O2, O3, O4, O5, O6, O7>(
+  s: Out<T>,
+  ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>]
+): NodeRef<O7> // prettier-ignore
 /** @hidden */
-export function pipe<T, O1, O2, O3, O4, O5, O6, O7, O8>( s: Out<T>, ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>, O<O7, O8>] ): NodeRef<O8> // prettier-ignore
+export function pipe<T, O1, O2, O3, O4, O5, O6, O7, O8>(
+  s: Out<T>,
+  ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>, O<O7, O8>]
+): NodeRef<O8> // prettier-ignore
 /** @hidden */
-export function pipe<T, O1, O2, O3, O4, O5, O6, O7, O8, O9>( s: Out<T>, ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>, O<O7, O8>, O<O8, O9>] ): NodeRef<O9> // prettier-ignore
+export function pipe<T, O1, O2, O3, O4, O5, O6, O7, O8, O9>(
+  s: Out<T>,
+  ...o: [O<T, O1>, O<O1, O2>, O<O2, O3>, O<O3, O4>, O<O4, O5>, O<O5, O6>, O<O6, O7>, O<O7, O8>, O<O8, O9>]
+): NodeRef<O9> // prettier-ignore
 export function pipe<T>(source$: Out<T>, ...operators: O<unknown, unknown>[]): NodeRef
 /**
  * Creates a new node that emits the values of the source node transformed through the specified operators.
@@ -285,6 +629,7 @@ export function pipe<T>(source$: Out<T>, ...operators: O<unknown, unknown>[]): N
 export function pipe<T>(source$: Out<T>, ...operators: O<unknown, unknown>[]): NodeRef {
   return tap(Stream<unknown>(), (sink$) => {
     addNodeInit((eng) => {
+      // oxlint-disable-next-line no-useless-call
       const pipe$ = eng.pipe.apply(eng, [source$, ...operators])
       eng.link(pipe$, sink$)
       // call this after the sink has been linked

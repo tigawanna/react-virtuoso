@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: tests */
-
 import { act, renderHook } from '@testing-library/react'
 import { Cell } from '@virtuoso.dev/reactive-engine-core'
 import { EngineProvider, useCellValue, usePublisher } from '@virtuoso.dev/reactive-engine-react'
@@ -59,7 +57,9 @@ describe('Storage Linked Cells', () => {
         result.current.publish(42)
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 100)
+      })
 
       const stored = localStorage.getItem('count')
       expect(stored).toBe('42')
@@ -90,7 +90,9 @@ describe('Storage Linked Cells', () => {
         result.current.publish(new Date('2024-06-15'))
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 100)
+      })
 
       const stored = localStorage.getItem('date')
       expect(stored).toBe('2024-06-15T00:00:00.000Z')
@@ -137,10 +139,14 @@ describe('Storage Linked Cells', () => {
         result.current.publish(3)
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
       expect(localStorage.getItem('counter')).toBeNull()
 
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 100)
+      })
       expect(localStorage.getItem('counter')).toBe('3')
     })
 
@@ -167,7 +173,9 @@ describe('Storage Linked Cells', () => {
         result.current.publish('updated')
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
 
       expect(localStorage.getItem('test')).toBe('"updated"')
     })
@@ -195,7 +203,9 @@ describe('Storage Linked Cells', () => {
         result.current.publish('updated')
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
 
       expect(localStorage.getItem('my-app:test')).toBe('"updated"')
     })
@@ -257,7 +267,9 @@ describe('Storage Linked Cells', () => {
         result.current.publish('updated')
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
 
       const stored = sessionStorage.getItem('temp')
       expect(stored).toBe('"updated"')
@@ -285,7 +297,9 @@ describe('Storage Linked Cells', () => {
         result.current.publish('updated')
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 10))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 10)
+      })
       expect(sessionStorage.getItem('fast')).toBe('"updated"')
     })
   })
@@ -314,7 +328,9 @@ describe('Storage Linked Cells', () => {
         result.current.publish('updated')
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
 
       expect(document.cookie).toContain('pref="updated"')
     })
@@ -345,7 +361,9 @@ describe('Storage Linked Cells', () => {
         result.current.publish('updated')
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
 
       expect(document.cookie).toContain('test-cookie="updated"')
     })
@@ -373,7 +391,9 @@ describe('Storage Linked Cells', () => {
         result.current.publish('updated')
       })
 
-      await new Promise((resolve) => setTimeout(resolve, 50))
+      await new Promise((resolve) => {
+        setTimeout(resolve, 50)
+      })
 
       expect(document.cookie).toContain('my-cookie=')
       expect(document.cookie).not.toContain('my-app:')
