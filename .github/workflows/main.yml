@@ -75,6 +75,18 @@ jobs:
         run: |
           gh pr merge --squash --auto "${{ steps.changesets.outputs.pullRequestNumber }}"
 
+      - name: Create GitHub Releases
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -c '.[]' | while read -r pkg; do
+            name=$(echo "$pkg" | jq -r '.name')
+            version=$(echo "$pkg" | jq -r '.version')
+            tag="${name}@${version}"
+            gh release create "$tag" --generate-notes --title "${name}@${version}"
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Upload Playwright report
         if: failure()
         uses: actions/upload-artifact@v6

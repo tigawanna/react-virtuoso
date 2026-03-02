@@ -13,7 +13,7 @@
     "test": "pnpm run --if-present --parallel --no-bail test",
     "e2e": "pnpm run --if-present --parallel --no-bail e2e",
     "build": "pnpm --if-present --recursive run build",
-    "release": "pnpm build && pnpm publish -r",
+    "release": "pnpm build && pnpm exec changeset publish",
     "changeset-add": "pnpm changeset add",
     "dev:docs": "pnpm --filter @virtuoso.dev/virtuoso.dev run dev",
     "build-virtuoso.dev": "pnpm --filter @virtuoso.dev/virtuoso.dev run build",
