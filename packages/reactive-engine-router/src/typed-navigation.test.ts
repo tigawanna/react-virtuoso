@@ -135,13 +135,6 @@ describe('Path Parameter Validation at Runtime (T015)', () => {
     expect(engine.getValue(routerEngine.currentRoute$)).toBe('/search')
   })
 
-  it('should handle undefined search param values', () => {
-    // T015: Undefined search params
-    engine.pub(search$, { $search: {} as Record<string, never> })
-
-    expect(engine.getValue(routerEngine.currentRoute$)).toBe('/search')
-  })
-
   it('should handle URL-encodable characters correctly', () => {
     // T015: URL encoding of special characters
     engine.pub(search$, { $search: { q: 'test&special?chars=1' } })

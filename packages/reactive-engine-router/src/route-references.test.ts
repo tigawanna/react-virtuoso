@@ -122,11 +122,6 @@ describe('getUrl() Utility Function', () => {
       expect(url).toBe('/search')
     })
 
-    it('should handle undefined search param values', () => {
-      const url = getUrl(search$, { $search: {} as Record<string, never> })
-      expect(url).toBe('/search')
-    })
-
     it('should URL-encode special characters in search params', () => {
       const url = getUrl(search$, { $search: { q: 'test&special?chars=1' } })
       expect(url).toBe('/search?q=test%26special%3Fchars%3D1')

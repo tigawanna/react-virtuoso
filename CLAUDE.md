@@ -247,9 +247,9 @@ This project uses [lefthook](https://github.com/evilmartians/lefthook) for git h
 
 On every commit, the following checks run automatically on staged files:
 
+- **Code formatting**: Formats `.ts/.tsx/.js/.jsx` files with oxfmt and `.astro` files with prettier; changes are auto-staged via `stage_fixed`
 - **Markdown linting**: Validates .md files with markdownlint
 - **Code linting**: Validates code files with oxlint
-- **Type checking**: Runs TypeScript compiler on affected packages
 
 ### Skipping Hooks
 
