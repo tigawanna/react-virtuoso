@@ -126,6 +126,7 @@ export class Realm {
   private readonly pipeMap = new Map<symbol, symbol>()
   private readonly singletonSubscriptions = new Map<symbol, Subscription<unknown>>()
   private readonly state = new Map<symbol, unknown>()
+  private readonly combinedCells: { cell: Out; sources: Out[] }[] = []
   private readonly subscriptions = new SetMap<Subscription<unknown>>()
 
   /**
@@ -559,6 +560,14 @@ export class Realm {
     ]
   ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21]> // prettier-ignore
   combineCells(...sources: Out[]): Out {
+    const existing = this.combinedCells.find((entry) => {
+      return sources.length === entry.sources.length && sources.every((s, i) => s === entry.sources[i])
+    })
+
+    if (existing) {
+      return existing.cell
+    }
+
     return tap(
       this.cellInstance(
         sources.map((source) => this.getValue(source)),
@@ -574,6 +583,7 @@ export class Realm {
           sink,
           sources,
         })
+        this.combinedCells.push({ cell: sink, sources })
       }
     )
   }
