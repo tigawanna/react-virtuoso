@@ -25,12 +25,9 @@ function useCellValueWithStore<T>(cell: Out<T>): T {
   realm.register(cell)
 
   const cb = React.useCallback((c: () => void) => realm.sub(cell, c), [realm, cell])
+  const getSnapshot = React.useCallback(() => realm.getValue(cell), [realm, cell])
 
-  return React.useSyncExternalStore(
-    cb,
-    () => realm.getValue(cell),
-    () => realm.getValue(cell)
-  )
+  return React.useSyncExternalStore(cb, getSnapshot, getSnapshot)
 }
 
 function useCellValueWithState<T>(cell: Out<T>): T {

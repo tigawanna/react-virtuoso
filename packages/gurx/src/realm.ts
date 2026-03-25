@@ -37,6 +37,7 @@ interface RealmProjection<T extends unknown[] = unknown[]> {
   map: ProjectionFunc<T>
   pulls: Set<symbol>
   sink: symbol
+  sourceAndPullNodes: symbol[]
   sources: Set<symbol>
 }
 
@@ -126,6 +127,7 @@ export class Realm {
   private readonly pipeMap = new Map<symbol, symbol>()
   private readonly singletonSubscriptions = new Map<symbol, Subscription<unknown>>()
   private readonly state = new Map<symbol, unknown>()
+  private readonly combinedCells: { cell: Out; sources: Out[] }[] = []
   private readonly subscriptions = new SetMap<Subscription<unknown>>()
 
   /**
@@ -559,6 +561,14 @@ export class Realm {
     ]
   ): Out<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21]> // prettier-ignore
   combineCells(...sources: Out[]): Out {
+    const existing = this.combinedCells.find((entry) => {
+      return sources.length === entry.sources.length && sources.every((s, i) => s === entry.sources[i])
+    })
+
+    if (existing) {
+      return existing.cell
+    }
+
     return tap(
       this.cellInstance(
         sources.map((source) => this.getValue(source)),
@@ -574,6 +584,7 @@ export class Realm {
           sink,
           sources,
         })
+        this.combinedCells.push({ cell: sink, sources })
       }
     )
   }
@@ -608,6 +619,7 @@ export class Realm {
       map,
       pulls: new Set(pulls),
       sink: this.register(sink),
+      sourceAndPullNodes: [...sources, ...pulls],
       sources: new Set(sources),
     }
 
@@ -618,6 +630,8 @@ export class Realm {
     }
 
     this.executionMaps.clear()
+
+    return dependency
   }
   /**
    * Gets the current value of a node. The node must be stateful.
@@ -747,7 +761,8 @@ export class Realm {
   // oxlint-disable-next-line typescript/unified-signatures - this is intentional
   pub<T>(node: Inp<T>, value: T): void
   pub<T>(node: Inp<T>, value?: T) {
-    this.pubIn({ [node]: value })
+    const id = this.pipeMap.get(node) ?? node
+    this.execute([id], { [id]: value })
   }
   /**
    * Publishes into multiple nodes simultaneously, triggering a single re-computation cycle.
@@ -763,29 +778,46 @@ export class Realm {
    * ```
    */
   pubIn(values: Record<symbol, unknown>) {
-    // if we have pipe nodes, we need to use their input symbols for publishing instead
-    const ids = Object.getOwnPropertySymbols(values).map((id) => {
-      return this.pipeMap.get(id) ?? id
-    })
-
-    const mappedValues = Object.getOwnPropertySymbols(values).reduce<Record<symbol, unknown>>((acc, key) => {
-      const value = values[key]
-      const pipeMappedKey: symbol = this.pipeMap.get(key) ?? key
-      acc[pipeMappedKey] = value
-      return acc
-    }, {})
-
+    const keys = Object.getOwnPropertySymbols(values)
+    if (this.pipeMap.size === 0) {
+      this.execute(keys, values)
+      return
+    }
+    const ids = new Array<symbol>(keys.length)
+    let remapped = false
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]!
+      const id = this.pipeMap.get(key) ?? key
+      ids[i] = id
+      if (id !== key) {
+        remapped = true
+      }
+    }
+    if (!remapped) {
+      this.execute(ids, values)
+      return
+    }
+    const mapped: Record<symbol, unknown> = {}
+    for (let i = 0; i < keys.length; i++) {
+      mapped[ids[i]!] = values[keys[i]!]
+    }
+    this.execute(ids, mapped)
+  }
+  private execute(ids: symbol[], rootValues: Record<symbol, unknown>) {
     const map = this.getExecutionMap(ids)
     const refCount = map.refCount.clone()
-    const participatingNodeKeys = map.participatingNodes.slice()
-    const transientState = new Map<symbol, unknown>(this.state)
+    const participatingNodeKeys = map.participatingNodes
+    const dirtyState = new Map<symbol, unknown>()
+    const skipSet = new Set<symbol>()
+
+    const readState = (nodeId: symbol) => (dirtyState.has(nodeId) ? dirtyState.get(nodeId) : this.state.get(nodeId))
 
     const nodeWillNotEmit = (key: symbol) => {
       this.graph.use(key, (projections) => {
         for (const { sink, sources } of projections) {
           if (sources.has(key)) {
             refCount.decrement(sink, () => {
-              participatingNodeKeys.splice(participatingNodeKeys.indexOf(sink), 1)
+              skipSet.add(sink)
               nodeWillNotEmit(sink)
             })
           }
@@ -793,51 +825,50 @@ export class Realm {
       })
     }
 
-    while (true) {
-      const nextId = participatingNodeKeys.shift()
-      if (nextId === undefined) {
-        break
-      }
-      const id = nextId
-      let resolved = false
-      const done = (value: unknown) => {
-        const dnRef = this.distinctNodes.get(id)
-        if (dnRef?.(transientState.get(id), value) === true) {
-          resolved = false
-          return
+    this.inContext(() => {
+      for (const nextId of participatingNodeKeys) {
+        if (skipSet.has(nextId)) {
+          continue
         }
-        resolved = true
-        transientState.set(id, value)
-        if (this.state.has(id)) {
-          this.state.set(id, value)
-        }
-      }
-      if (Object.hasOwn(mappedValues, id)) {
-        done(mappedValues[id])
-      } else {
-        map.projections.use(id, (nodeProjections) => {
-          for (const projection of nodeProjections) {
-            const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map((nodeId) => transientState.get(nodeId))
-            projection.map(done)(...args)
+        let resolved = false
+        const done = (value: unknown) => {
+          const dnRef = this.distinctNodes.get(nextId)
+          if (dnRef?.(readState(nextId), value) === true) {
+            resolved = false
+            return
           }
-        })
-      }
+          resolved = true
+          dirtyState.set(nextId, value)
+          if (this.state.has(nextId)) {
+            this.state.set(nextId, value)
+          }
+        }
+        if (Object.hasOwn(rootValues, nextId)) {
+          done(rootValues[nextId])
+        } else {
+          map.projections.use(nextId, (nodeProjections) => {
+            for (const projection of nodeProjections) {
+              const args = projection.sourceAndPullNodes.map(readState)
+              projection.map(done)(...args)
+            }
+          })
+        }
 
-      if (resolved) {
-        const value = transientState.get(id)
-        this.inContext(() => {
-          this.subscriptions.use(id, (nodeSubscriptions) => {
+        if (resolved) {
+          const value = dirtyState.get(nextId)
+          this.subscriptions.use(nextId, (nodeSubscriptions) => {
             for (const subscription of nodeSubscriptions) {
               subscription(value)
             }
           })
-        })
-        this.singletonSubscriptions.get(id)?.(value)
-      } else {
-        nodeWillNotEmit(id)
+          this.singletonSubscriptions.get(nextId)?.(value)
+        } else {
+          nodeWillNotEmit(nextId)
+        }
       }
-    }
+    })
   }
+
   /**
    * Explicitly includes the specified cell/signal/pipe reference in the realm.
    * Most of the time you don't need to do that, since any interaction with the node through a realm will register it.
@@ -993,7 +1024,7 @@ export class Realm {
   subMultiple(nodes: Out[], subscription: Subscription<any>): UnsubscribeHandle
   subMultiple(nodes: Out[], subscription: Subscription<any>): UnsubscribeHandle {
     const sink = this.signalInstance()
-    this.connect({
+    const projection = this.connect({
       map:
         (done) =>
         (...args) => {
@@ -1002,7 +1033,17 @@ export class Realm {
       sink,
       sources: nodes,
     })
-    return this.sub(sink, subscription)
+    const unsubscribe = this.sub(sink, subscription)
+    return () => {
+      unsubscribe()
+      for (const node of nodes) {
+        this.graph.get(node)?.delete(projection)
+      }
+      this.graph.delete(sink)
+      this.subscriptions.delete(sink)
+      this.state.delete(sink)
+      this.executionMaps.clear()
+    }
   }
   /**
    * Works as a reverse pipe.
