@@ -825,48 +825,48 @@ export class Realm {
       })
     }
 
-    for (const nextId of participatingNodeKeys) {
-      if (skipSet.has(nextId)) {
-        continue
-      }
-      let resolved = false
-      const done = (value: unknown) => {
-        const dnRef = this.distinctNodes.get(nextId)
-        if (dnRef?.(readState(nextId), value) === true) {
-          resolved = false
-          return
+    this.inContext(() => {
+      for (const nextId of participatingNodeKeys) {
+        if (skipSet.has(nextId)) {
+          continue
         }
-        resolved = true
-        dirtyState.set(nextId, value)
-        if (this.state.has(nextId)) {
-          this.state.set(nextId, value)
-        }
-      }
-      if (Object.hasOwn(rootValues, nextId)) {
-        done(rootValues[nextId])
-      } else {
-        map.projections.use(nextId, (nodeProjections) => {
-          for (const projection of nodeProjections) {
-            const args = projection.sourceAndPullNodes.map(readState)
-            projection.map(done)(...args)
+        let resolved = false
+        const done = (value: unknown) => {
+          const dnRef = this.distinctNodes.get(nextId)
+          if (dnRef?.(readState(nextId), value) === true) {
+            resolved = false
+            return
           }
-        })
-      }
+          resolved = true
+          dirtyState.set(nextId, value)
+          if (this.state.has(nextId)) {
+            this.state.set(nextId, value)
+          }
+        }
+        if (Object.hasOwn(rootValues, nextId)) {
+          done(rootValues[nextId])
+        } else {
+          map.projections.use(nextId, (nodeProjections) => {
+            for (const projection of nodeProjections) {
+              const args = projection.sourceAndPullNodes.map(readState)
+              projection.map(done)(...args)
+            }
+          })
+        }
 
-      if (resolved) {
-        const value = dirtyState.get(nextId)
-        this.inContext(() => {
+        if (resolved) {
+          const value = dirtyState.get(nextId)
           this.subscriptions.use(nextId, (nodeSubscriptions) => {
             for (const subscription of nodeSubscriptions) {
               subscription(value)
             }
           })
-        })
-        this.singletonSubscriptions.get(nextId)?.(value)
-      } else {
-        nodeWillNotEmit(nextId)
+          this.singletonSubscriptions.get(nextId)?.(value)
+        } else {
+          nodeWillNotEmit(nextId)
+        }
       }
-    }
+    })
   }
 
   /**

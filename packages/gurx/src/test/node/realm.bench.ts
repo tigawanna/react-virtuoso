@@ -615,6 +615,95 @@ describe('simulated React mount/unmount cycles', () => {
 })
 
 // ---------------------------------------------------------------------------
+// inContext overhead: chains where every node has a subscriber
+// (measures per-node closure + try/finally cost in the propagation loop)
+// ---------------------------------------------------------------------------
+
+describe('inContext per-node overhead', () => {
+  bench('depth 10, subscriber on every node', () => {
+    const r = new Realm()
+    const entry = Signal<number>()
+    let current = r.pipe(
+      entry,
+      map((v) => v + 1)
+    )
+    r.sub(current, () => {})
+    for (let i = 1; i < 10; i++) {
+      current = r.pipe(
+        current,
+        map((v) => v + 1)
+      )
+      r.sub(current, () => {})
+    }
+
+    for (let i = 0; i < 1000; i++) {
+      r.pub(entry, i)
+    }
+  })
+
+  bench('depth 10, subscriber only on leaf', () => {
+    const r = new Realm()
+    const entry = Signal<number>()
+    let current = r.pipe(
+      entry,
+      map((v) => v + 1)
+    )
+    for (let i = 1; i < 10; i++) {
+      current = r.pipe(
+        current,
+        map((v) => v + 1)
+      )
+    }
+    r.sub(current, () => {})
+
+    for (let i = 0; i < 1000; i++) {
+      r.pub(entry, i)
+    }
+  })
+
+  bench('depth 50, subscriber on every node', () => {
+    const r = new Realm()
+    const entry = Signal<number>()
+    let current = r.pipe(
+      entry,
+      map((v) => v + 1)
+    )
+    r.sub(current, () => {})
+    for (let i = 1; i < 50; i++) {
+      current = r.pipe(
+        current,
+        map((v) => v + 1)
+      )
+      r.sub(current, () => {})
+    }
+
+    for (let i = 0; i < 1000; i++) {
+      r.pub(entry, i)
+    }
+  })
+
+  bench('depth 50, subscriber only on leaf', () => {
+    const r = new Realm()
+    const entry = Signal<number>()
+    let current = r.pipe(
+      entry,
+      map((v) => v + 1)
+    )
+    for (let i = 1; i < 50; i++) {
+      current = r.pipe(
+        current,
+        map((v) => v + 1)
+      )
+    }
+    r.sub(current, () => {})
+
+    for (let i = 0; i < 1000; i++) {
+      r.pub(entry, i)
+    }
+  })
+})
+
+// ---------------------------------------------------------------------------
 // Combined: retention + state map scaling interaction
 // ---------------------------------------------------------------------------
 
