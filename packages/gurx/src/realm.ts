@@ -806,8 +806,9 @@ export class Realm {
   private execute(ids: symbol[], rootValues: Record<symbol, unknown>) {
     const map = this.getExecutionMap(ids)
     const refCount = map.refCount.clone()
-    const participatingNodeKeys = map.participatingNodes.slice()
+    const participatingNodeKeys = map.participatingNodes
     const dirtyState = new Map<symbol, unknown>()
+    const skipSet = new Set<symbol>()
 
     const readState = (nodeId: symbol) => (dirtyState.has(nodeId) ? dirtyState.get(nodeId) : this.state.get(nodeId))
 
@@ -816,7 +817,7 @@ export class Realm {
         for (const { sink, sources } of projections) {
           if (sources.has(key)) {
             refCount.decrement(sink, () => {
-              participatingNodeKeys.splice(participatingNodeKeys.indexOf(sink), 1)
+              skipSet.add(sink)
               nodeWillNotEmit(sink)
             })
           }
@@ -824,10 +825,9 @@ export class Realm {
       })
     }
 
-    while (true) {
-      const nextId = participatingNodeKeys.shift()
-      if (nextId === undefined) {
-        break
+    for (const nextId of participatingNodeKeys) {
+      if (skipSet.has(nextId)) {
+        continue
       }
       let resolved = false
       const done = (value: unknown) => {
