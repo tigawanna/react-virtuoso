@@ -789,7 +789,9 @@ export class Realm {
     const map = this.getExecutionMap(ids)
     const refCount = map.refCount.clone()
     const participatingNodeKeys = map.participatingNodes.slice()
-    const transientState = new Map<symbol, unknown>(this.state)
+    const dirtyState = new Map<symbol, unknown>()
+
+    const readState = (nodeId: symbol) => (dirtyState.has(nodeId) ? dirtyState.get(nodeId) : this.state.get(nodeId))
 
     const nodeWillNotEmit = (key: symbol) => {
       this.graph.use(key, (projections) => {
@@ -812,12 +814,12 @@ export class Realm {
       let resolved = false
       const done = (value: unknown) => {
         const dnRef = this.distinctNodes.get(nextId)
-        if (dnRef?.(transientState.get(nextId), value) === true) {
+        if (dnRef?.(readState(nextId), value) === true) {
           resolved = false
           return
         }
         resolved = true
-        transientState.set(nextId, value)
+        dirtyState.set(nextId, value)
         if (this.state.has(nextId)) {
           this.state.set(nextId, value)
         }
@@ -827,14 +829,14 @@ export class Realm {
       } else {
         map.projections.use(nextId, (nodeProjections) => {
           for (const projection of nodeProjections) {
-            const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map((nodeId) => transientState.get(nodeId))
+            const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map(readState)
             projection.map(done)(...args)
           }
         })
       }
 
       if (resolved) {
-        const value = transientState.get(nextId)
+        const value = dirtyState.get(nextId)
         this.inContext(() => {
           this.subscriptions.use(nextId, (nodeSubscriptions) => {
             for (const subscription of nodeSubscriptions) {
