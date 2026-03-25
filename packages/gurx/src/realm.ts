@@ -628,6 +628,8 @@ export class Realm {
     }
 
     this.executionMaps.clear()
+
+    return dependency
   }
   /**
    * Gets the current value of a node. The node must be stateful.
@@ -1003,7 +1005,7 @@ export class Realm {
   subMultiple(nodes: Out[], subscription: Subscription<any>): UnsubscribeHandle
   subMultiple(nodes: Out[], subscription: Subscription<any>): UnsubscribeHandle {
     const sink = this.signalInstance()
-    this.connect({
+    const projection = this.connect({
       map:
         (done) =>
         (...args) => {
@@ -1012,7 +1014,17 @@ export class Realm {
       sink,
       sources: nodes,
     })
-    return this.sub(sink, subscription)
+    const unsubscribe = this.sub(sink, subscription)
+    return () => {
+      unsubscribe()
+      for (const node of nodes) {
+        this.graph.get(node)?.delete(projection)
+      }
+      this.graph.delete(sink)
+      this.subscriptions.delete(sink)
+      this.state.delete(sink)
+      this.executionMaps.clear()
+    }
   }
   /**
    * Works as a reverse pipe.
