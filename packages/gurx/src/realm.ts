@@ -778,14 +778,30 @@ export class Realm {
    * ```
    */
   pubIn(values: Record<symbol, unknown>) {
-    const ids: symbol[] = []
-    const mappedValues: Record<symbol, unknown> = {}
-    for (const key of Object.getOwnPropertySymbols(values)) {
-      const id = this.pipeMap.get(key) ?? key
-      ids.push(id)
-      mappedValues[id] = values[key]
+    const keys = Object.getOwnPropertySymbols(values)
+    if (this.pipeMap.size === 0) {
+      this.execute(keys, values)
+      return
     }
-    this.execute(ids, mappedValues)
+    const ids = new Array<symbol>(keys.length)
+    let remapped = false
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]!
+      const id = this.pipeMap.get(key) ?? key
+      ids[i] = id
+      if (id !== key) {
+        remapped = true
+      }
+    }
+    if (!remapped) {
+      this.execute(ids, values)
+      return
+    }
+    const mapped: Record<symbol, unknown> = {}
+    for (let i = 0; i < keys.length; i++) {
+      mapped[ids[i]!] = values[keys[i]!]
+    }
+    this.execute(ids, mapped)
   }
   private execute(ids: symbol[], rootValues: Record<symbol, unknown>) {
     const map = this.getExecutionMap(ids)
