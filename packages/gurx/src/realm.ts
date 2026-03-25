@@ -37,6 +37,7 @@ interface RealmProjection<T extends unknown[] = unknown[]> {
   map: ProjectionFunc<T>
   pulls: Set<symbol>
   sink: symbol
+  sourceAndPullNodes: symbol[]
   sources: Set<symbol>
 }
 
@@ -618,6 +619,7 @@ export class Realm {
       map,
       pulls: new Set(pulls),
       sink: this.register(sink),
+      sourceAndPullNodes: [...sources, ...pulls],
       sources: new Set(sources),
     }
 
@@ -829,7 +831,7 @@ export class Realm {
       } else {
         map.projections.use(nextId, (nodeProjections) => {
           for (const projection of nodeProjections) {
-            const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map(readState)
+            const args = projection.sourceAndPullNodes.map(readState)
             projection.map(done)(...args)
           }
         })
