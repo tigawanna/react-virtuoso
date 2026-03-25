@@ -759,7 +759,8 @@ export class Realm {
   // oxlint-disable-next-line typescript/unified-signatures - this is intentional
   pub<T>(node: Inp<T>, value: T): void
   pub<T>(node: Inp<T>, value?: T) {
-    this.pubIn({ [node]: value })
+    const id = this.pipeMap.get(node) ?? node
+    this.execute([id], { [id]: value })
   }
   /**
    * Publishes into multiple nodes simultaneously, triggering a single re-computation cycle.
@@ -775,18 +776,16 @@ export class Realm {
    * ```
    */
   pubIn(values: Record<symbol, unknown>) {
-    // if we have pipe nodes, we need to use their input symbols for publishing instead
-    const ids = Object.getOwnPropertySymbols(values).map((id) => {
-      return this.pipeMap.get(id) ?? id
-    })
-
-    const mappedValues = Object.getOwnPropertySymbols(values).reduce<Record<symbol, unknown>>((acc, key) => {
-      const value = values[key]
-      const pipeMappedKey: symbol = this.pipeMap.get(key) ?? key
-      acc[pipeMappedKey] = value
-      return acc
-    }, {})
-
+    const ids: symbol[] = []
+    const mappedValues: Record<symbol, unknown> = {}
+    for (const key of Object.getOwnPropertySymbols(values)) {
+      const id = this.pipeMap.get(key) ?? key
+      ids.push(id)
+      mappedValues[id] = values[key]
+    }
+    this.execute(ids, mappedValues)
+  }
+  private execute(ids: symbol[], rootValues: Record<symbol, unknown>) {
     const map = this.getExecutionMap(ids)
     const refCount = map.refCount.clone()
     const participatingNodeKeys = map.participatingNodes.slice()
@@ -810,24 +809,23 @@ export class Realm {
       if (nextId === undefined) {
         break
       }
-      const id = nextId
       let resolved = false
       const done = (value: unknown) => {
-        const dnRef = this.distinctNodes.get(id)
-        if (dnRef?.(transientState.get(id), value) === true) {
+        const dnRef = this.distinctNodes.get(nextId)
+        if (dnRef?.(transientState.get(nextId), value) === true) {
           resolved = false
           return
         }
         resolved = true
-        transientState.set(id, value)
-        if (this.state.has(id)) {
-          this.state.set(id, value)
+        transientState.set(nextId, value)
+        if (this.state.has(nextId)) {
+          this.state.set(nextId, value)
         }
       }
-      if (Object.hasOwn(mappedValues, id)) {
-        done(mappedValues[id])
+      if (Object.hasOwn(rootValues, nextId)) {
+        done(rootValues[nextId])
       } else {
-        map.projections.use(id, (nodeProjections) => {
+        map.projections.use(nextId, (nodeProjections) => {
           for (const projection of nodeProjections) {
             const args = [...Array.from(projection.sources), ...Array.from(projection.pulls)].map((nodeId) => transientState.get(nodeId))
             projection.map(done)(...args)
@@ -836,20 +834,21 @@ export class Realm {
       }
 
       if (resolved) {
-        const value = transientState.get(id)
+        const value = transientState.get(nextId)
         this.inContext(() => {
-          this.subscriptions.use(id, (nodeSubscriptions) => {
+          this.subscriptions.use(nextId, (nodeSubscriptions) => {
             for (const subscription of nodeSubscriptions) {
               subscription(value)
             }
           })
         })
-        this.singletonSubscriptions.get(id)?.(value)
+        this.singletonSubscriptions.get(nextId)?.(value)
       } else {
-        nodeWillNotEmit(id)
+        nodeWillNotEmit(nextId)
       }
     }
   }
+
   /**
    * Explicitly includes the specified cell/signal/pipe reference in the realm.
    * Most of the time you don't need to do that, since any interaction with the node through a realm will register it.
