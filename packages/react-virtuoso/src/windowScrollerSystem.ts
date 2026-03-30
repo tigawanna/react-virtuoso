@@ -13,9 +13,9 @@ export const windowScrollerSystem = u.system(([{ scrollContainerState, scrollTo 
   u.connect(
     u.pipe(
       u.combineLatest(windowScrollContainerState, windowViewportRect),
-      u.map(([{ scrollHeight, scrollTop: windowScrollTop, viewportHeight }, { offsetTop }]) => {
+      u.map(([{ scrollTop: windowScrollTop, viewportHeight }, { offsetTop, listHeight }]) => {
         return {
-          scrollHeight: Math.max(0, scrollHeight - offsetTop),
+          scrollHeight: listHeight,
           scrollTop: Math.max(0, windowScrollTop - offsetTop),
           viewportHeight,
         }
