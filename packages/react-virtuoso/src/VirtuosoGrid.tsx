@@ -234,7 +234,7 @@ const WindowViewport: React.FC<React.PropsWithChildren> = ({ children }) => {
   React.useEffect(() => {
     if (ctx) {
       itemDimensions({ height: ctx.itemHeight, width: ctx.itemWidth })
-      windowViewportRect({ offsetTop: 0, visibleHeight: ctx.viewportHeight, visibleWidth: ctx.viewportWidth })
+      windowViewportRect({ listHeight: 0, offsetTop: 0, visibleHeight: ctx.viewportHeight, visibleWidth: ctx.viewportWidth })
     }
   }, [ctx, windowViewportRect, itemDimensions])
 

@@ -33,6 +33,7 @@ export default function useWindowViewportRectRef(
       }
 
       viewportInfo.current = {
+        listHeight: rect.height,
         offsetTop,
         visibleHeight,
         visibleWidth,

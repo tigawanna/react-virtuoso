@@ -796,6 +796,8 @@ export type TopItemListProps = Pick<React.ComponentProps<'div'>, 'children' | 's
  * @group Common
  */
 export interface WindowViewportInfo {
+  /** The rendered height of the list container element in pixels */
+  listHeight: number
   /** The offset from the top of the document to the list container in pixels */
   offsetTop: number
   /** The visible height of the window viewport in pixels */
