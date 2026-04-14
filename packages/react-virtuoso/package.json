@@ -54,7 +54,7 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "ladle": "LADLE=true ladle serve",
-    "ci-setup": "npx playwright install --with-deps"
+    "ci-setup": "npx playwright install --with-deps chromium"
   },
   "devDependencies": {
     "@emotion/styled": "^11.10.8",
