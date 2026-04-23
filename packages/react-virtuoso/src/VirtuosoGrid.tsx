@@ -9,7 +9,7 @@ import { systemToComponent } from './react-urx'
 import * as u from './urx'
 import { VirtuosoGridMockContext } from './utils/context'
 import { correctItemSize } from './utils/correctItemSize'
-import { buildScroller, buildWindowScroller, contextPropIfNotDomElement, identity, viewportStyle } from './Virtuoso'
+import { buildScroller, buildWindowScroller, contextPropIfNotDomElement, identity, viewportStyle, windowViewportStyle } from './Virtuoso'
 
 import type { VirtuosoGridHandle, VirtuosoGridProps } from './component-interfaces/VirtuosoGrid'
 import type { GridComponents, GridComputeItemKey, GridItemContent, GridRootProps } from './interfaces'
@@ -229,6 +229,7 @@ const WindowViewport: React.FC<React.PropsWithChildren> = ({ children }) => {
   const windowViewportRect = usePublisher('windowViewportRect')
   const itemDimensions = usePublisher('itemDimensions')
   const customScrollParent = useEmitterValue('customScrollParent')
+  const useWindowScroll = useEmitterValue('useWindowScroll')
   const viewportRef = useWindowViewportRectRef(windowViewportRect, customScrollParent, false)
 
   React.useEffect(() => {
@@ -239,7 +240,7 @@ const WindowViewport: React.FC<React.PropsWithChildren> = ({ children }) => {
   }, [ctx, windowViewportRect, itemDimensions])
 
   return (
-    <div ref={viewportRef} style={viewportStyle(false)}>
+    <div ref={viewportRef} style={windowViewportStyle(false, useWindowScroll)}>
       {children}
     </div>
   )

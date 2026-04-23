@@ -16,6 +16,7 @@ import {
   identity,
   itemPropIfNotDomElement,
   viewportStyle,
+  windowViewportStyle,
 } from './Virtuoso'
 
 import type {
@@ -274,6 +275,7 @@ const WindowViewport: React.FC<React.PropsWithChildren> = ({ children }) => {
   const windowViewportRect = usePublisher('windowViewportRect')
   const fixedItemHeight = usePublisher('fixedItemHeight')
   const customScrollParent = useEmitterValue('customScrollParent')
+  const useWindowScroll = useEmitterValue('useWindowScroll')
   const viewportRef = useWindowViewportRectRef(
     windowViewportRect,
     customScrollParent,
@@ -288,7 +290,7 @@ const WindowViewport: React.FC<React.PropsWithChildren> = ({ children }) => {
   }, [ctx, windowViewportRect, fixedItemHeight])
 
   return (
-    <div data-viewport-type="window" ref={viewportRef} style={viewportStyle(false)}>
+    <div data-viewport-type="window" ref={viewportRef} style={windowViewportStyle(false, useWindowScroll)}>
       {children}
     </div>
   )

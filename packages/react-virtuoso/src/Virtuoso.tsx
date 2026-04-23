@@ -227,6 +227,12 @@ export const viewportStyle: (alignToBottom: boolean) => React.CSSProperties = (a
   ...(alignToBottom ? { display: 'flex', flexDirection: 'column' } : undefined),
 })
 
+export const windowViewportStyle = (alignToBottom: boolean, useWindowScroll: boolean, topOffset = 0): React.CSSProperties => ({
+  ...viewportStyle(alignToBottom),
+  position: useWindowScroll ? 'relative' : 'absolute',
+  top: useWindowScroll ? -topOffset : 0,
+})
+
 const topItemListStyle: React.CSSProperties = {
   position: positionStickyCssValue(),
   top: 0,
@@ -407,6 +413,8 @@ const WindowViewport: React.FC<React.PropsWithChildren> = ({ children }) => {
   const windowViewportRect = usePublisher('windowViewportRect')
   const fixedItemHeight = usePublisher('fixedItemHeight')
   const customScrollParent = useEmitterValue('customScrollParent')
+  const useWindowScroll = useEmitterValue('useWindowScroll')
+  const topListHeight = useEmitterValue('topListHeight')
   const viewportRef = useWindowViewportRectRef(
     windowViewportRect,
     customScrollParent,
@@ -422,7 +430,7 @@ const WindowViewport: React.FC<React.PropsWithChildren> = ({ children }) => {
   }, [ctx, windowViewportRect, fixedItemHeight])
 
   return (
-    <div data-viewport-type="window" ref={viewportRef} style={viewportStyle(alignToBottom)}>
+    <div data-viewport-type="window" ref={viewportRef} style={windowViewportStyle(alignToBottom, useWindowScroll, topListHeight)}>
       {children}
     </div>
   )
