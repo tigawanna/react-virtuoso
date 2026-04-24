@@ -1,5 +1,11 @@
 # react-virtuoso
 
+## 4.18.6
+
+### Patch Changes
+
+- [#1393](https://github.com/petyosi/react-virtuoso/pull/1393) [`fa9dd31`](https://github.com/petyosi/react-virtuoso/commit/fa9dd3194f7d276c311b97fd5d10677a53db6ed3) Thanks [@petyosi](https://github.com/petyosi)! - Fix `useWindowScroll` SSR layout collapse by rendering the window viewport in normal flow while preserving sticky top items.
+
 ## 4.18.5
 
 ### Patch Changes
